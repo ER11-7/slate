@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLATE | Energy and Policy Strategist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <style>
+        /* TAILWIND CONFIG */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        /* Inline Tailwind Configuration */
+        /* Note: Using Tailwind's theme extension for color variables */
+        /* The CSS below manually applies these styles for consistency */
+    </style>
+    <style>
+        /* --- INTEGRATED STYLE.CSS & COMPONENT STYLES --- */
+
+        /* GENERAL/BODY STYLES (From style.css) */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* CUSTOM SCROLLBAR (From style.css) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F3F4F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #008080;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #006666;
+        }
+
+        /* BASE LAYOUT STYLES */
+        .content-padding {
+            padding-top: 80px; /* Pushes content down to clear the sticky header */
+        }
+
+        /* NAVBAR STYLES (Modified custom-navbar.js styles) */
+        nav {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            justify-content: space-between;
+            flex-wrap: wrap;
+            height: 80px; /* From style.css */
+        }
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            min-width: 280px;
+        }
+        .logo {
+            color: #008080; /* Teal 500 */
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .datetime-display {
+            /* FINAL FIX: Uses site font (Inter) */
+            font-size: 0.9rem;
+            color: #374151; /* Slate 800 */
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            border-left: 2px solid #008080;
+            padding-left: 1rem;
+        }
+        .time-display {
+            font-weight: 600;
+            color: #008080; /* Teal 500 */
+        }
+        .date-display {
+            font-size: 0.8rem; /* Final Size */
+            opacity: 0.8;
+        }
+        .nav-main {
+            display: flex;
+            align-items: center;
+            flex-grow: 1; 
+            justify-content: flex-end; /* FINAL FIX: Pushes links to the right */
+            gap: 3rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem; /* FINAL FIX: Spacing for right-side alignment */
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links a {
+            color: #374151; /* Slate 800 */
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .nav-links a::after { /* Nav Hover Underline (from style.css) */
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #008080;
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .search-bar-container {
+            display: flex;
+            align-items: center;
+            min-width: 240px;
+            position: relative;
+        }
+        .search-input {
+            border: 2px solid #008080;
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+            width: 100%;
+            background: white;
+            transition: all 0.3s;
+        }
+        /* FOOTER STYLES */
+        .footer-style {
+            background: #1a202c; /* Dark color for contrast */
+            color: white;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #008080;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            text-align: center;
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+        /* END CUSTOM STYLES */
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans">
+    
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-6 py-3 flex items-center justify-between">
+            
+            <div class="brand-container">
+                <div class="logo">SLATE</div>
+                <div class="datetime-display">
+                    <span id="time" class="time-display"></span>
+                    <span id="date" class="date-display"></span>
+                </div>
+            </div>
+
+            <div class="nav-main">
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#insights">Insights & Analytics</a></li>
+                    <li><a href="#nexus">Energy Nexus</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+                
+                <div class="search-bar-container relative hidden lg:block">
+                    <input type="text" placeholder="Search reports..." class="search-input">
+                    <i data-feather="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-teal-500 w-5 h-5"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="content-padding">
+        
+        <section id="home" class="relative h-screen flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2400&q=80')] bg-cover bg-center">
+            <div class="absolute inset-0 bg-white/75"></div>
+            <div class="relative z-10 text-center px-4 mx-auto w-full max-w-5xl">
+                <h1 class="text-7xl md:text-8xl font-bold mb-8 tracking-tight">SLATE</h1>
+                <p class="text-xl md:text-2xl mb-10 leading-relaxed max-w-3xl mx-auto">Energy and Policy Strategist: Publishing Data-Driven Analysis and Reports on the Global Transition</p>
+                <a href="#insights" class="inline-block bg-teal-500 hover:bg-teal-600 text-white font-medium py-4 px-10 rounded-lg transition-all duration-300 transform hover:scale-105">
+                    Explore Insights
+                </a>
+            </div>
+        </section>
+        
+        <section id="insights" class="py-20 px-4 max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 uppercase tracking-wider">Insights and Analytics</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                    <div class="p-6">
+                        <div class="text-teal-500 mb-4">
+                            <i data-feather="file-text" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Green Hydrogen Policy</h3>
+                        <p class="text-gray-600 mb-5">Comprehensive analysis of emerging policies shaping the green hydrogen economy worldwide.</p>
+                        <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
+                            Read Report
+                            <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                    <div class="p-6">
+                        <div class="text-teal-500 mb-4">
+                            <i data-feather="cpu" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Digital Project Execution</h3>
+                        <p class="text-gray-600 mb-5">Strategies for successful digital transformation in energy infrastructure projects.</p>
+                        <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
+                            Learn More
+                            <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                    <div class="p-6">
+                        <div class="text-teal-500 mb-4">
+                            <i data-feather="trending-up" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">ESG Transition Strategy</h3>
+                        <p class="text-gray-600 mb-5">Framework for organizations navigating the complex ESG compliance landscape.</p>
+                        <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
+                            Download Guide
+                            <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                    <div class="p-6">
+                        <div class="text-teal-500 mb-4">
+                            <i data-feather="code" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Technical QA Automation</h3>
+                        <p class="text-gray-600 mb-5">Innovative approaches to quality assurance in energy technology deployments.</p>
+                        <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
+                            View Case Study
+                            <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="nexus" class="py-20 bg-white px-4">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 uppercase tracking-wider">Energy Nexus: Policy Tech and Project Pulse</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="border-l-4 border-teal-500 pl-4">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-teal-500/10 p-2 rounded-full mr-4">
+                                <i data-feather="compass" class="w-6 h-6 text-teal-500"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Policy Updates</h3>
+                        </div>
+                        <p class="text-gray-600">Latest regulatory changes impacting renewable energy investments across key markets.</p>
+                    </div>
+                    <div class="border-l-4 border-teal-500 pl-4">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-teal-500/10 p-2 rounded-full mr-4">
+                                <i data-feather="bar-chart-2" class="w-6 h-6 text-teal-500"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Tech Trends</h3>
+                        </div>
+                        <p class="text-gray-600">Emerging technologies transforming energy production, storage, and distribution.</p>
+                    </div>
+                    <div class="border-l-4 border-teal-500 pl-4">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-teal-500/10 p-2 rounded-full mr-4">
+                                <i data-feather="zap" class="w-6 h-6 text-teal-500"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Project Spotlights</h3>
+                        </div>
+                        <p class="text-gray-600">Notable energy transition projects making measurable impact globally.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="py-20 px-4 bg-slate-100">
+            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-8 md:p-12">
+                <h2 class="text-3xl font-bold text-center mb-8 uppercase tracking-wider">Contact Us</h2>
+                <form class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                        <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
+                        <input type="tel" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                        <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </section>
+    </div>
+    
+    <footer class="footer-style">
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="footer-logo">SLATE</div>
+                <p>Energy and Policy Strategist publishing data-driven analysis on the global energy transition.</p>
+                <div class="social-links">
+                    <a href="#"><i data-feather="twitter" class="w-4 h-4"></i></a>
+                    <a href="#"><i data-feather="linkedin" class="w-4 h-4"></i></a>
+                    <a href="#"><i data-feather="mail" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#insights">Insights & Analytics</a></li>
+                    <li><a href="#nexus">Energy Nexus</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Policy Analysis</a></li>
+                    <li><a href="#">Strategic Consulting</a></li>
+                    <li><a href="#">Research Reports</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 SLATE. All rights reserved.
+        </div>
+    </footer>
+    
+    <script>
+        // --- JAVASCRIPT INTEGRATION ---
+
+        // 1. Clock/Date Logic (from script.js)
+        function updateClock() {
+            const now = new Date();
+            const timeElement = document.getElementById('time');
+            const dateElement = document.getElementById('date');
+            
+            if (timeElement) {
+                let hours = now.getHours();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                timeElement.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+            }
+            
+            if (dateElement) {
+                const options = { weekday: 'short', month: 'short', day: 'numeric' };
+                dateElement.textContent = now.toLocaleDateString('en-US', options);
+            }
+        }
+
+        // 2. Utility & Event Listeners (from script.js)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial update and set interval for clock
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Form submission handling
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Thank you for your message! We will get back to you soon.');
+                    form.reset();
+                });
+            }
+
+            // Initialize search functionality (using the integrated input field)
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        alert('Search functionality would show results for: ' + searchInput.value);
+                        searchInput.value = '';
+                    }
+                });
+            }
+
+            // Initialize Feather Icons
+            if (window.feather) {
+                window.feather.replace();
+            }
+        });
+    </script>
+</body>
+</html>
