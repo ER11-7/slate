@@ -135,11 +135,17 @@
             text-align: center;
         }
         .footer-logo {
-            font-size: 1.5rem;
+            color: #008080; /* Retain SLATE color */
             font-weight: 700;
-            color: #008080;
-            margin-bottom: 1rem;
+            font-size: 1.5rem; /* Match original SLATE size */
+            margin-bottom: 0.5rem; /* Space between SLATE and your name */
             text-transform: uppercase;
+        }
+        .footer-name {
+            font-size: 1.1rem; /* Slightly smaller than SLATE */
+            font-weight: 500;
+            color: #e5e7eb; /* Lighter white for contrast */
+            margin-bottom: 1rem; /* Space before social links */
         }
         .copyright {
             margin-top: 3rem;
@@ -177,6 +183,7 @@
             display: flex;
             gap: 1rem;
             margin-top: 1.5rem;
+            justify-content: center; /* Center the social links */
         }
         .social-links a {
             color: white;
@@ -220,12 +227,10 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans">
     
-    <!-- Navigation Bar (Fully Integrated) -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+        <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
         <div class="container mx-auto px-6 py-3 flex items-center justify-between">
             
-            <!-- Left Zone - Branding & Data -->
-            <div class="brand-container">
+                                <div class="brand-container">
                 <div class="logo">SLATE</div>
                 <div class="datetime-display">
                     <span id="time" class="time-display"></span>
@@ -233,8 +238,7 @@
                 </div>
             </div>
 
-            <!-- Right Zones - Navigation and Search -->
-            <div class="nav-main">
+                                <div class="nav-main">
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#insights">Insights & Analytics</a></li>
@@ -252,28 +256,22 @@
     
     <div class="content-padding">
         
-        <!-- Hero Section -->
-        <section id="home" class="relative h-screen flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2400&q=80')] bg-cover bg-center">
+                <section id="home" class="relative h-screen flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2400&q=80')] bg-cover bg-center">
             <div class="absolute inset-0 bg-white/75"></div>
             <div class="relative z-10 text-center px-4 mx-auto w-full max-w-5xl">
                 <h1 class="text-7xl md:text-8xl font-bold mb-8 tracking-tight">SLATE</h1>
                 <p class="text-xl md:text-2xl mb-10 leading-relaxed max-w-3xl mx-auto">
                     Quantifiable Strategy for a Net-Zero Future. Technology, Data, and Decarbonization.
                 </p>
-                <a href="#insights" class="inline-block bg-teal-500 hover:bg-teal-600 text-white font-medium py-4 px-10 rounded-lg transition-all duration-300 transform hover:scale-105">
-                    Explore Insights
-                </a>
-            </div>
+                </div>
         </section>
 
         
-        <!-- Insights and Analytics Section -->
-        <section id="insights" class="py-20 px-4 max-w-7xl mx-auto">
+                <section id="insights" class="py-20 px-4 max-w-7xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 uppercase tracking-wider">Insights and Analytics</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 
-                <!-- Card 1: Reports -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
                             <i data-feather="book-open" class="w-8 h-8"></i>
@@ -287,8 +285,7 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Analytics -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
                             <i data-feather="bar-chart-2" class="w-8 h-8"></i>
@@ -302,8 +299,7 @@
                     </div>
                 </div>
 
-                <!-- Card 3: Papers -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
                             <i data-feather="feather" class="w-8 h-8"></i>
@@ -317,8 +313,7 @@
                     </div>
                 </div>
 
-                <!-- Card 4: Articles -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
                             <i data-feather="edit" class="w-8 h-8"></i>
@@ -334,8 +329,8 @@
             </div>
         </section>
 
-        <!-- Energy Nexus Section -->
-        <section id="nexus" class="py-20 bg-white px-4">
+        
+                <section id="nexus" class="py-20 bg-white px-4">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 uppercase tracking-wider">Energy Nexus</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -370,15 +365,13 @@
             </div>
         </section>
 
-        <!-- Technical Competencies Section (FINAL PLACEMENT AND VISUALIZATION) -->
-        <section id="tech-skills" class="py-20 px-4 bg-slate-100">
+                <section id="tech-skills" class="py-20 px-4 bg-slate-100">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 uppercase tracking-wider text-navy-charcoal">Technical Competencies</h2>
                 
                 <div class="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     
-                    <!-- Column 1: Strategic Analysis & Policy Informatics (CLEANED) -->
-                    <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
+                                        <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
                         <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center">
                             <i data-feather="trending-up" class="w-7 h-7 mr-3"></i>
                             Strategic Analysis & Policy Informatics
@@ -405,8 +398,7 @@
                         </div>
                     </div>
 
-                    <!-- Column 2: Digital Platform Engineering -->
-                    <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
+                                        <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
                         <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center">
                             <i data-feather="monitor" class="w-7 h-7 mr-3"></i>
                             Digital Platform Engineering
@@ -433,8 +425,7 @@
                         </div>
                     </div>
 
-                    <!-- Column 3: Automation, Visualization & QA -->
-                    <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
+                                        <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
                         <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center">
                             <i data-feather="settings" class="w-7 h-7 mr-3"></i>
                             Automation, Viz & QA
@@ -462,8 +453,7 @@
                     </div>
                 </div>
 
-                <!-- Summary Tags -->
-                <div class="mt-12 max-w-4xl mx-auto text-center">
+                                <div class="mt-12 max-w-4xl mx-auto text-center">
                     <h4 class="font-semibold text-xl mb-4 text-slate-800">Key Areas of Expertise:</h4>
                     <div class="flex flex-wrap justify-center gap-3">
                         <span class="skill-tag">Policy Informatics</span>
@@ -477,8 +467,7 @@
         </section>
 
         
-        <!-- Contact Section (MODIFIED) -->
-        <section id="contact" class="py-20 px-4 bg-slate-100">
+                <section id="contact" class="py-20 px-4 bg-slate-100">
             <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-8 md:p-12">
                 <h2 class="text-3xl font-bold text-center mb-8 uppercase tracking-wider">Let's Connect</h2>
                 <form class="space-y-6">
@@ -510,32 +499,13 @@
         <div class="footer-content">
             <div class="footer-about">
                 <div class="footer-logo">SLATE</div>
-                <p>Energy and Policy Strategist publishing data-driven analysis on the global energy transition.</p>
+                <div class="footer-name">By Emil Roby</div>
                 <div class="social-links">
-                    <a href="#"><i data-feather="twitter" class="w-4 h-4"></i></a>
-                    <a href="#"><i data-feather="linkedin" class="w-4 h-4"></i></a>
-                    <a href="#"><i data-feather="mail" class="w-4 h-4"></i></a>
+                    <a href="https://www.linkedin.com/in/emil-roby-878792314/" target="_blank" rel="noopener noreferrer"><i data-feather="linkedin" class="w-4 h-4"></i></a>
+                    <a href="mailto:emilroby9@gmail.com"><i data-feather="mail" class="w-4 h-4"></i></a>
                 </div>
             </div>
-            <div class="footer-links">
-                <h3>Navigation</h3>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#insights">Insights & Analytics</a></li>
-                    <li><a href="#nexus">Energy Nexus</a></li>
-                    <li><a href="#contact">Let's Connect</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h3>Services</h3>
-                <ul>
-                    <li><a href="#">Policy Analysis</a></li>
-                    <li><a href="#">Strategic Consulting</a></li>
-                    <li><a href="#">Energy Data Analytics</a></li>
-                    <li><a href="#">Digital Energy Solutions</a></li>
-                </ul>
-            </div>
-        </div>
+                    </div>
         <div class="copyright">
             &copy; 2025 SLATE. All rights reserved.
         </div>
