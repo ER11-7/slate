@@ -10,15 +10,11 @@
     <style>
         /* TAILWIND CONFIG */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        
-        /* Inline Tailwind Configuration */
-        /* Note: Using Tailwind's theme extension for color variables */
-        /* The CSS below manually applies these styles for consistency */
     </style>
     <style>
         /* --- INTEGRATED STYLE.CSS & COMPONENT STYLES --- */
 
-        /* GENERAL/BODY STYLES (From style.css) */
+        /* GENERAL/BODY STYLES */
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
@@ -44,7 +40,7 @@
             padding-top: 80px; /* Pushes content down to clear the sticky header */
         }
 
-        /* NAVBAR STYLES (Modified custom-navbar.js styles) */
+        /* NAVBAR STYLES (Fixed, Utlity-focused) */
         nav {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
@@ -58,7 +54,7 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
             justify-content: space-between;
             flex-wrap: wrap;
-            height: 80px; /* From style.css */
+            height: 80px; 
         }
         .brand-container {
             display: flex;
@@ -76,7 +72,6 @@
             white-space: nowrap;
         }
         .datetime-display {
-            /* FINAL FIX: Uses site font (Inter) */
             font-size: 0.9rem;
             color: #374151; /* Slate 800 */
             display: flex;
@@ -90,19 +85,19 @@
             color: #008080; /* Teal 500 */
         }
         .date-display {
-            font-size: 0.8rem; /* Final Size */
+            font-size: 0.8rem;
             opacity: 0.8;
         }
         .nav-main {
             display: flex;
             align-items: center;
             flex-grow: 1; 
-            justify-content: flex-end; /* FINAL FIX: Pushes links to the right */
+            justify-content: flex-end; 
             gap: 3rem;
         }
         .nav-links {
             display: flex;
-            gap: 2.5rem; /* FINAL FIX: Spacing for right-side alignment */
+            gap: 2.5rem; 
             list-style: none;
             margin: 0;
             padding: 0;
@@ -114,16 +109,6 @@
             position: relative;
             transition: all 0.3s;
             white-space: nowrap;
-        }
-        .nav-links a::after { /* Nav Hover Underline (from style.css) */
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: #008080;
-            transition: width 0.3s;
         }
         .nav-links a:hover::after {
             width: 100%;
@@ -144,18 +129,10 @@
         }
         /* FOOTER STYLES */
         .footer-style {
-            background: #1a202c; /* Dark color for contrast */
+            background: #1a202c; 
             color: white;
             padding: 4rem 2rem 2rem;
             text-align: center;
-        }
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            text-align: left;
         }
         .footer-logo {
             font-size: 1.5rem;
@@ -172,14 +149,82 @@
             font-size: 0.875rem;
             color: #9ca3af;
         }
+        /* Footer Links (added from custom-footer.js for integrated styling) */
+        .footer-links h3 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            color: #008080;
+        }
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-links a {
+            color: #e5e7eb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: #008080;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .social-links a {
+            color: white;
+            background: #374151;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            background: #008080;
+            transform: translateY(-3px);
+        }
+
+        /* Tech Visualization Styles */
+        .tech-category-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            height: 100%;
+        }
+        .tech-category-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 128, 128, 0.15);
+        }
+        .skill-tag {
+            background-color: #008080;
+            color: white;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            box-shadow: 0 2px 4px rgba(0, 128, 128, 0.4);
+        }
         /* END CUSTOM STYLES */
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans">
     
+    <!-- Navigation Bar (Fully Integrated) -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
         <div class="container mx-auto px-6 py-3 flex items-center justify-between">
             
+            <!-- Left Zone - Branding & Data -->
             <div class="brand-container">
                 <div class="logo">SLATE</div>
                 <div class="datetime-display">
@@ -188,12 +233,13 @@
                 </div>
             </div>
 
+            <!-- Right Zones - Navigation and Search -->
             <div class="nav-main">
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#insights">Insights & Analytics</a></li>
                     <li><a href="#nexus">Energy Nexus</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#contact">Let's Connect</a></li>
                 </ul>
                 
                 <div class="search-bar-container relative hidden lg:block">
@@ -206,71 +252,81 @@
     
     <div class="content-padding">
         
+        <!-- Hero Section -->
         <section id="home" class="relative h-screen flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2400&q=80')] bg-cover bg-center">
             <div class="absolute inset-0 bg-white/75"></div>
             <div class="relative z-10 text-center px-4 mx-auto w-full max-w-5xl">
                 <h1 class="text-7xl md:text-8xl font-bold mb-8 tracking-tight">SLATE</h1>
-                <p class="text-xl md:text-2xl mb-10 leading-relaxed max-w-3xl mx-auto">Energy and Policy Strategist: Publishing Data-Driven Analysis and Reports on the Global Transition</p>
+                <p class="text-xl md:text-2xl mb-10 leading-relaxed max-w-3xl mx-auto">
+                    Quantifiable Strategy for a Net-Zero Future. Technology, Data, and Decarbonization.
+                </p>
                 <a href="#insights" class="inline-block bg-teal-500 hover:bg-teal-600 text-white font-medium py-4 px-10 rounded-lg transition-all duration-300 transform hover:scale-105">
                     Explore Insights
                 </a>
             </div>
         </section>
+
         
+        <!-- Insights and Analytics Section -->
         <section id="insights" class="py-20 px-4 max-w-7xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 uppercase tracking-wider">Insights and Analytics</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Card 1: Reports -->
                 <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
-                            <i data-feather="file-text" class="w-8 h-8"></i>
+                            <i data-feather="book-open" class="w-8 h-8"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Green Hydrogen Policy</h3>
-                        <p class="text-gray-600 mb-5">Comprehensive analysis of emerging policies shaping the green hydrogen economy worldwide.</p>
+                        <h3 class="text-xl font-bold mb-3">Reports</h3>
+                        <p class="text-gray-600 mb-5">Comprehensive analysis and findings from in-depth research and strategic projects.</p>
                         <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
-                            Read Report
+                            View All Reports
                             <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
                         </a>
                     </div>
                 </div>
 
+                <!-- Card 2: Analytics -->
                 <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
-                            <i data-feather="cpu" class="w-8 h-8"></i>
+                            <i data-feather="bar-chart-2" class="w-8 h-8"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Digital Project Execution</h3>
-                        <p class="text-gray-600 mb-5">Strategies for successful digital transformation in energy infrastructure projects.</p>
+                        <h3 class="text-xl font-bold mb-3">Analytics</h3>
+                        <p class="text-gray-600 mb-5">Data-driven insights, visualizations, and project impact metrics from technical modeling.</p>
                         <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
-                            Learn More
+                            View Project Data
                             <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
                         </a>
                     </div>
                 </div>
 
+                <!-- Card 3: Papers -->
                 <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
-                            <i data-feather="trending-up" class="w-8 h-8"></i>
+                            <i data-feather="feather" class="w-8 h-8"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">ESG Transition Strategy</h3>
-                        <p class="text-gray-600 mb-5">Framework for organizations navigating the complex ESG compliance landscape.</p>
+                        <h3 class="text-xl font-bold mb-3">Papers</h3>
+                        <p class="text-gray-600 mb-5">Academic and professional papers detailing methodologies and strategic frameworks.</p>
                         <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
-                            Download Guide
+                            View All Papers
                             <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
                         </a>
                     </div>
                 </div>
 
+                <!-- Card 4: Articles -->
                 <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
-                            <i data-feather="code" class="w-8 h-8"></i>
+                            <i data-feather="edit" class="w-8 h-8"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Technical QA Automation</h3>
-                        <p class="text-gray-600 mb-5">Innovative approaches to quality assurance in energy technology deployments.</p>
+                        <h3 class="text-xl font-bold mb-3">Articles</h3>
+                        <p class="text-gray-600 mb-5">Short-form commentary and policy insights on current energy market trends.</p>
                         <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
-                            View Case Study
+                            View Articles
                             <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
                         </a>
                     </div>
@@ -278,9 +334,10 @@
             </div>
         </section>
 
+        <!-- Energy Nexus Section -->
         <section id="nexus" class="py-20 bg-white px-4">
             <div class="max-w-7xl mx-auto">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 uppercase tracking-wider">Energy Nexus: Policy Tech and Project Pulse</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 uppercase tracking-wider">Energy Nexus</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="border-l-4 border-teal-500 pl-4">
                         <div class="flex items-center mb-4">
@@ -296,9 +353,9 @@
                             <div class="bg-teal-500/10 p-2 rounded-full mr-4">
                                 <i data-feather="bar-chart-2" class="w-6 h-6 text-teal-500"></i>
                             </div>
-                            <h3 class="text-xl font-bold">Tech Trends</h3>
+                            <h3 class="text-xl font-bold">Digital Energy Solutions</h3>
                         </div>
-                        <p class="text-gray-600">Emerging technologies transforming energy production, storage, and distribution.</p>
+                        <p class="text-gray-600">Digital solutions, energy analytics platforms, and technical innovations driving efficiency.</p>
                     </div>
                     <div class="border-l-4 border-teal-500 pl-4">
                         <div class="flex items-center mb-4">
@@ -312,10 +369,118 @@
                 </div>
             </div>
         </section>
+
+        <!-- Technical Competencies Section (FINAL PLACEMENT AND VISUALIZATION) -->
+        <section id="tech-skills" class="py-20 px-4 bg-slate-100">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 uppercase tracking-wider text-navy-charcoal">Technical Competencies</h2>
+                
+                <div class="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    
+                    <!-- Column 1: Strategic Analysis & Policy Informatics (CLEANED) -->
+                    <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
+                        <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center">
+                            <i data-feather="trending-up" class="w-7 h-7 mr-3"></i>
+                            Strategic Analysis & Policy Informatics
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Policy & Finance Tools</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">ESG/TCFD Strategy</span>
+                                    <span class="skill-tag">Policy Feasibility Assessment</span>
+                                    <span class="skill-tag">LCOE/LCOH Assessment</span>
+                                    <span class="skill-tag">Socio-economic Analysis</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Quantitative Modeling (Python/R)</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">R (Econometrics/Statistics)</span>
+                                    <span class="skill-tag">Statistical Analysis (SPSS/Stata)</span>
+                                    <span class="skill-tag">Risk Modeling</span>
+                                    <span class="skill-tag">Data Cleaning & Prep</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Digital Platform Engineering -->
+                    <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
+                        <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center">
+                            <i data-feather="monitor" class="w-7 h-7 mr-3"></i>
+                            Digital Platform Engineering
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Full-Stack & Front-End</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">HTML5 / CSS3</span>
+                                    <span class="skill-tag">JavaScript (ES6+)</span>
+                                    <span class="skill-tag">Tailwind CSS (UI/UX)</span>
+                                    <span class="skill-tag">Dashboard Architecture</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Data & Cloud Infrastructure</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">SQL & Database Mgt.</span>
+                                    <span class="skill-tag">Cloud Deployment (General)</span>
+                                    <span class="skill-tag">Linux Environments</span>
+                                    <span class="skill-tag">Git/GitHub Workflow</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 3: Automation, Visualization & QA -->
+                    <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
+                        <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center">
+                            <i data-feather="settings" class="w-7 h-7 mr-3"></i>
+                            Automation, Viz & QA
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Process Automation & QA</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">Selenium WebDriver</span>
+                                    <span class="skill-tag">Python Scripting</span>
+                                    <span class="skill-tag">JIRA / VBA</span>
+                                    <span class="skill-tag">Verilog / HDL (Hardware Ref.)</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Business Intelligence (BI)</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">Tableau</span>
+                                    <span class="skill-tag">Power BI</span>
+                                    <span class="skill-tag">Alteryx (Data Prep)</span>
+                                    <span class="skill-tag">FFmpeg / GIS Mapping</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Tags -->
+                <div class="mt-12 max-w-4xl mx-auto text-center">
+                    <h4 class="font-semibold text-xl mb-4 text-slate-800">Key Areas of Expertise:</h4>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <span class="skill-tag">Policy Informatics</span>
+                        <span class="skill-tag">Energy Modeling</span>
+                        <span class="skill-tag">Digital QA</span>
+                        <span class="skill-tag">Full Stack Data Viz</span>
+                        <span class="skill-tag">ESG Strategy</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         
+        <!-- Contact Section (MODIFIED) -->
         <section id="contact" class="py-20 px-4 bg-slate-100">
             <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-8 md:p-12">
-                <h2 class="text-3xl font-bold text-center mb-8 uppercase tracking-wider">Contact Us</h2>
+                <h2 class="text-3xl font-bold text-center mb-8 uppercase tracking-wider">Let's Connect</h2>
                 <form class="space-y-6">
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
@@ -358,7 +523,7 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#insights">Insights & Analytics</a></li>
                     <li><a href="#nexus">Energy Nexus</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#contact">Let's Connect</a></li>
                 </ul>
             </div>
             <div class="footer-links">
@@ -366,7 +531,8 @@
                 <ul>
                     <li><a href="#">Policy Analysis</a></li>
                     <li><a href="#">Strategic Consulting</a></li>
-                    <li><a href="#">Research Reports</a></li>
+                    <li><a href="#">Energy Data Analytics</a></li>
+                    <li><a href="#">Digital Energy Solutions</a></li>
                 </ul>
             </div>
         </div>
@@ -378,7 +544,7 @@
     <script>
         // --- JAVASCRIPT INTEGRATION ---
 
-        // 1. Clock/Date Logic (from script.js)
+        // 1. Clock/Date Logic
         function updateClock() {
             const now = new Date();
             const timeElement = document.getElementById('time');
@@ -400,7 +566,7 @@
             }
         }
 
-        // 2. Utility & Event Listeners (from script.js)
+        // 2. Utility & Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
             // Initial update and set interval for clock
             updateClock();
@@ -421,7 +587,8 @@
             if (form) {
                 form.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    alert('Thank you for your message! We will get back to you soon.');
+                    // Using console.log instead of alert for better UX in modern apps
+                    console.log('Form submitted. Details will be handled by backend.');
                     form.reset();
                 });
             }
@@ -431,7 +598,8 @@
             if (searchInput) {
                 searchInput.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
-                        alert('Search functionality would show results for: ' + searchInput.value);
+                        // Display search action in console
+                        console.log('Search executed for: ' + searchInput.value);
                         searchInput.value = '';
                     }
                 });
