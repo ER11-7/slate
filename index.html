@@ -137,27 +137,27 @@
             transition: all 0.3s;
         }
 
-        /* --- DROPDOWN STYLES (NEW) --- */
+        /* --- DROPDOWN STYLES (ENHANCED) --- */
         .dropdown {
             position: relative;
-            /* FIX: Ensure dropdown list item is aligned like the simple links */
             display: flex; 
             align-items: center;
-            height: 100%; /* Important for vertical centering */
+            height: 100%; 
         }
         .dropdown-menu {
             display: none;
             position: absolute;
-            top: 100%; /* Position below the link */
+            top: 100%; 
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
-            background-color: white;
-            min-width: 200px;
+            /* Enhanced styling */
+            background-color: #f7f7f7; /* Slightly off-white background */
+            min-width: 220px; /* Slightly wider */
             border-radius: 0.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 128, 128, 0.2); /* Teal shadow */
             border-top: 3px solid #008080;
-            padding: 0.5rem 0;
+            padding: 0; /* Removed overall padding, rely on item padding */
             margin-top: 0.5rem;
             opacity: 0;
             visibility: hidden;
@@ -170,15 +170,21 @@
         }
         .dropdown-item {
             display: block;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem; /* Increased padding */
             color: #374151;
             font-weight: 500;
-            transition: background-color 0.2s, color 0.2s;
             text-align: center;
+            border-bottom: 1px solid #e0e0e0; /* Separator line */
+            transition: background-color 0.2s, color 0.2s;
+        }
+        /* Remove separator for last item */
+        .dropdown-item:last-child {
+            border-bottom: none;
         }
         .dropdown-item:hover {
-            background-color: #F3F4F6;
-            color: #008080;
+            background-color: #008080; /* Teal background on hover */
+            color: white; /* White text on hover */
+            font-weight: 600;
         }
         /* Ensure the main link style is applied to the dropdown trigger text */
         .dropdown-trigger {
@@ -187,7 +193,7 @@
             font-weight: 500;
             cursor: pointer;
             padding: 0.5rem 0; /* Apply consistent padding here as well */
-            display: flex; /* Use flex to align icon and text perfectly */
+            display: flex; 
             align-items: center;
             transition: color 0.3s;
             height: 100%;
