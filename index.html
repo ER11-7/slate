@@ -127,6 +127,62 @@
             background: white;
             transition: all 0.3s;
         }
+
+        /* --- DROPDOWN STYLES (NEW) --- */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%; /* Position below the link */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            background-color: white;
+            min-width: 200px;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-top: 3px solid #008080;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+        .dropdown-item {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: #374151;
+            font-weight: 500;
+            transition: background-color 0.2s, color 0.2s;
+            text-align: center;
+        }
+        .dropdown-item:hover {
+            background-color: #F3F4F6;
+            color: #008080;
+        }
+        /* Ensure the main link style is applied to the dropdown trigger text */
+        .dropdown-trigger {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            display: block;
+            transition: color 0.3s;
+        }
+        .dropdown-trigger:hover {
+            color: #008080;
+        }
+        /* --- END DROPDOWN STYLES --- */
+
+
         /* FOOTER STYLES */
         .footer-style {
             background: #1a202c; 
@@ -312,8 +368,28 @@
             <div class="nav-main">
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#insights">Insights & Analytics</a></li>
-                    <li><a href="#nexus">Energy Nexus</a></li>
+                    
+                    <!-- Dropdown 1: Insights & Analytics -->
+                    <li class="dropdown">
+                        <div class="dropdown-trigger">Insights & Analytics <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
+                        <div class="dropdown-menu">
+                            <a href="#insights-reports" class="dropdown-item">Reports</a>
+                            <a href="#insights-analytics" class="dropdown-item">Analytics</a>
+                            <a href="#insights-papers" class="dropdown-item">Papers</a>
+                            <a href="#insights-articles" class="dropdown-item">Articles</a>
+                        </div>
+                    </li>
+                    
+                    <!-- Dropdown 2: Energy Nexus -->
+                    <li class="dropdown">
+                        <div class="dropdown-trigger">Energy Nexus <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
+                        <div class="dropdown-menu">
+                            <a href="#nexus-policy" class="dropdown-item">Policy Updates</a>
+                            <a href="#nexus-digital" class="dropdown-item">Digital Energy Solutions</a>
+                            <a href="#nexus-project" class="dropdown-item">Project Spotlights</a>
+                        </div>
+                    </li>
+                    
                     <li><a href="#contact">Let's Connect</a></li>
                 </ul>
                 
@@ -359,8 +435,8 @@
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 uppercase tracking-wider">Insights and Analytics</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 
-                <!-- Card 1: Reports -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                <!-- Card 1: Reports (Target: #insights-reports) -->
+                <div id="insights-reports" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
                             <i data-feather="book-open" class="w-8 h-8"></i>
@@ -374,8 +450,8 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Analytics -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                <!-- Card 2: Analytics (Target: #insights-analytics) -->
+                <div id="insights-analytics" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
                             <i data-feather="bar-chart-2" class="w-8 h-8"></i>
@@ -389,8 +465,8 @@
                     </div>
                 </div>
 
-                <!-- Card 3: Papers -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                <!-- Card 3: Papers (Target: #insights-papers) -->
+                <div id="insights-papers" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
                             <i data-feather="feather" class="w-8 h-8"></i>
@@ -404,8 +480,8 @@
                     </div>
                 </div>
 
-                <!-- Card 4: Articles -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
+                <!-- Card 4: Articles (Target: #insights-articles) -->
+                <div id="insights-articles" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
                             <i data-feather="edit" class="w-8 h-8"></i>
@@ -427,7 +503,8 @@
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 uppercase tracking-wider">Energy Nexus</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="border-l-4 border-teal-500 pl-4">
+                    <!-- Policy Updates (Target: #nexus-policy) -->
+                    <div id="nexus-policy" class="border-l-4 border-teal-500 pl-4">
                         <div class="flex items-center mb-4">
                             <div class="bg-teal-500/10 p-2 rounded-full mr-4">
                                 <i data-feather="compass" class="w-6 h-6 text-teal-500"></i>
@@ -436,7 +513,8 @@
                         </div>
                         <p class="text-gray-600">Latest regulatory changes impacting renewable energy investments across key markets.</p>
                     </div>
-                    <div class="border-l-4 border-teal-500 pl-4">
+                    <!-- Digital Energy Solutions (Target: #nexus-digital) -->
+                    <div id="nexus-digital" class="border-l-4 border-teal-500 pl-4">
                         <div class="flex items-center mb-4">
                             <div class="bg-teal-500/10 p-2 rounded-full mr-4">
                                 <i data-feather="bar-chart-2" class="w-6 h-6 text-teal-500"></i>
@@ -445,7 +523,8 @@
                         </div>
                         <p class="text-gray-600">Digital solutions, energy analytics platforms, and technical innovations driving efficiency.</p>
                     </div>
-                    <div class="border-l-4 border-teal-500 pl-4">
+                    <!-- Project Spotlights (Target: #nexus-project) -->
+                    <div id="nexus-project" class="border-l-4 border-teal-500 pl-4">
                         <div class="flex items-center mb-4">
                             <div class="bg-teal-500/10 p-2 rounded-full mr-4">
                                 <i data-feather="zap" class="w-6 h-6 text-teal-500"></i>
@@ -654,12 +733,25 @@
 
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
+                // Check if the anchor link is part of the main navigation and not a dropdown trigger
+                const isDropdownItem = anchor.closest('.dropdown-menu');
+                
+                if (isDropdownItem || anchor.getAttribute('href') === '#home' || anchor.getAttribute('href') === '#contact') {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        
+                        // Handle scrolling only for valid anchor links to sections
+                        if (targetId && targetId !== '#') {
+                            const targetElement = document.querySelector(targetId);
+                            if (targetElement) {
+                                targetElement.scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            }
+                        }
                     });
-                });
+                }
             });
 
             // Form submission handling
