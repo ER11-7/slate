@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLATE | Policy Updates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <style>
+        /* TAILWIND CONFIG */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    </style>
+    <style>
+        /* --- INTEGRATED STYLE.CSS & COMPONENT STYLES (Copied from index.html) --- */
+
+        /* GENERAL/BODY STYLES */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* CUSTOM SCROLLBAR (From style.css) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F3F4F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #008080;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #006666;
+        }
+
+        /* BASE LAYOUT STYLES */
+        .content-padding {
+            padding-top: 80px; /* Pushes content down to clear the sticky header */
+        }
+
+        /* NAVBAR STYLES (Fixed, Utlity-focused) */
+        nav {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            justify-content: space-between;
+            flex-wrap: wrap;
+            height: 80px; 
+        }
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            min-width: 280px;
+        }
+        .logo {
+            color: #008080; /* Teal 500 */
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .datetime-display {
+            font-size: 0.9rem;
+            color: #374151; /* Slate 800 */
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            border-left: 2px solid #008080;
+            padding-left: 1rem;
+        }
+        .time-display {
+            font-weight: 600;
+            color: #008080; /* Teal 500 */
+        }
+        .date-display {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        .nav-main {
+            display: flex;
+            align-items: center;
+            flex-grow: 1; 
+            justify-content: flex-end; 
+            gap: 3rem;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center; 
+            justify-content: space-between;
+            max-width: 600px; 
+            width: 100%; 
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links > li > a {
+            padding: 0.5rem 0; 
+            display: block;
+        }
+        .nav-links a {
+            color: #374151; 
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .search-bar-container {
+            display: flex;
+            align-items: center;
+            min-width: 240px;
+            position: relative;
+        }
+        .search-input {
+            border: 2px solid #008080;
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+            width: 100%;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        /* --- DROPDOWN STYLES (ENHANCED) --- */
+        .dropdown {
+            position: relative;
+            display: flex; 
+            align-items: center;
+            height: 100%; 
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%; 
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            background-color: #f7f7f7; 
+            min-width: 220px; 
+            border-radius: 0.5rem;
+            box-shadow: 0 6px 20px rgba(0, 128, 128, 0.2); 
+            border-top: 3px solid #008080;
+            padding: 0; 
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1.5rem; 
+            color: #374151;
+            font-weight: 500;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0; 
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .dropdown-item:hover {
+            background-color: #008080; 
+            color: white; 
+            font-weight: 600;
+        }
+        .dropdown-trigger {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.5rem 0; 
+            display: flex; 
+            align-items: center;
+            transition: color 0.3s;
+            height: 100%;
+        }
+        .dropdown-trigger:hover {
+            color: #008080;
+        }
+        .dropdown-trigger i {
+            margin-left: 0.25rem;
+        }
+        /* --- END DROPDOWN STYLES --- */
+
+
+        /* FOOTER STYLES */
+        .footer-style {
+            background: #1a202c; 
+            color: white;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+        .footer-logo {
+            color: #008080; 
+            font-weight: 700;
+            font-size: 1.5rem; 
+            margin-bottom: 0.5rem; 
+            text-transform: uppercase;
+        }
+        .footer-name {
+            font-size: 1.1rem; 
+            font-weight: 500;
+            color: #e5e7eb; 
+            margin-bottom: 1rem; 
+        }
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            text-align: center;
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+        .footer-links {
+            text-align: left; 
+        }
+        .footer-links h3 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            color: #008080;
+        }
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-links a {
+            color: #e5e7eb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: #008080;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center; 
+        }
+        .social-links a {
+            color: white;
+            background: #374151;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            background: #008080;
+            transform: translateY(-3px);
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px; 
+            margin: 0 auto;
+            gap: 2rem;
+        }
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+                max-width: 800px;
+                text-align: left;
+            }
+            .footer-about {
+                text-align: left;
+            }
+            .social-links {
+                justify-content: flex-start;
+            }
+        }
+        /* Page Header Styles */
+        .page-header {
+            background-color: #f3f4f6;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 3px solid #008080;
+        }
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #008080;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            font-size: 1.25rem;
+            color: #4B5563;
+        }
+        /* Main Content Placeholder Styles */
+        .main-content-placeholder {
+            min-height: 400px;
+            padding: 4rem 2rem;
+            background-color: white;
+            text-align: center;
+        }
+        .placeholder-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 1rem;
+        }
+        .placeholder-cta {
+            font-size: 1.1rem;
+            color: #6B7280;
+            line-height: 1.6;
+        }
+        /* --- MODAL STYLES (Copied from index.html) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 3rem 2rem;
+            border-radius: 0.75rem;
+            max-width: 90%;
+            width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 128, 128, 0.5);
+            text-align: center;
+            position: relative;
+            animation: modalPop 0.3s ease-out;
+        }
+        .modal-title {
+            color: #008080;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .modal-subtitle {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #4B5563;
+            margin-bottom: 1.5rem;
+        }
+        .modal-cta {
+            font-size: 1rem;
+            color: #6B7280;
+            line-height: 1.6;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #9CA3AF;
+            transition: color 0.2s;
+        }
+        .modal-close:hover {
+            color: #374151;
+        }
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* END CUSTOM STYLES */
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans">
+    
+    <!-- Navigation Bar (Fixed) -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-6 py-3 flex items-center justify-between">
+            
+            <!-- Left Zone - Branding & Data -->
+            <div class="brand-container">
+                <div class="logo">SLATE</div>
+                <div class="datetime-display">
+                    <span id="time" class="time-display"></span>
+                    <span id="date" class="date-display"></span>
+                </div>
+            </div>
+
+            <!-- Right Zones - Navigation and Search -->
+            <div class="nav-main">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    
+                    <!-- Dropdown 1: Insights & Analytics -->
+                    <li class="dropdown">
+                        <div class="dropdown-trigger">Insights & Analytics <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
+                        <div class="dropdown-menu">
+                            <a href="reports.html" class="dropdown-item">Reports</a>
+                            <a href="analytics.html" class="dropdown-item">Analytics</a>
+                            <a href="papers.html" class="dropdown-item">Papers</a>
+                            <a href="articles.html" class="dropdown-item">Articles</a>
+                        </div>
+                    </li>
+                    
+                    <!-- Dropdown 2: Energy Nexus (LINKS UPDATED TO NEW FILES) -->
+                    <li class="dropdown">
+                        <div class="dropdown-trigger">Energy Nexus <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
+                        <div class="dropdown-menu">
+                            <a href="policy.html" class="dropdown-item">Policy Updates</a>
+                            <a href="digital.html" class="dropdown-item">Digital Energy Solutions</a>
+                            <a href="project.html" class="dropdown-item">Project Spotlights</a>
+                        </div>
+                    </li>
+                    
+                    <li><a href="index.html#contact">Let's Connect</a></li>
+                </ul>
+                
+                <div class="search-bar-container relative hidden lg:block">
+                    <input type="text" placeholder="Search reports..." class="search-input">
+                    <i data-feather="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-teal-500 w-5 h-5"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="content-padding">
+        
+        <div class="page-header">
+            <h1>Policy Updates</h1>
+            <p>Latest regulatory changes impacting renewable energy investments across key markets.</p>
+        </div>
+
+        <section class="main-content-placeholder max-w-7xl mx-auto">
+            <div class="placeholder-title">
+                The Data Revolution is Brewing.
+            </div>
+            <p class="placeholder-cta">
+                We're currently finalizing the quantifiable data and strategic frameworks for the Policy Updates section. It's coming soon and will be worth the wait!
+                <br><br>
+                Check back shortly for deep dives, project forecasts, and actionable insights that will define the next phase of the energy transition.
+            </p>
+        </section>
+        
+        <!-- REMOVED CONTACT SECTION -->
+    </div>
+    
+    <!-- Footer Section -->
+    <footer class="footer-style">
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="footer-logo">SLATE</div>
+                <div class="footer-name">Insights from Emil Roby</div>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/emil-roby-878792314/" target="_blank" rel="noopener noreferrer"><i data-feather="linkedin" class="w-4 h-4"></i></a>
+                    <a href="mailto:emilroby9@gmail.com"><i data-feather="mail" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+            <!-- SERVICES SECTION -->
+            <div class="footer-links">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Policy Analysis</a></li>
+                    <li><a href="#">Strategic Consulting</a></li>
+                    <li><a href="#">Energy Data Analytics</a></li>
+                    <li><a href="#">Digital Energy Solutions</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 SLATE. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Modal HTML/JS (MUST be present in all files if called by modal links) -->
+    <div id="coming-soon-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeComingSoonModal()">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+            <div class="modal-title">
+                <span id="modal-topic-title"></span>
+            </div>
+            <div class="modal-subtitle">
+                The Data Revolution is Brewing.
+            </div>
+            <p class="modal-cta">
+                We're currently finalizing the **quantifiable data and strategic frameworks** for this **<span id="modal-topic-placeholder" class="font-bold text-teal-600"></span>** section. It's coming soon and will be worth the wait!
+            </p>
+            <a href="#" class="back-button" onclick="closeComingSoonModal()">
+                Got It! Take Me Back
+            </a>
+        </div>
+    </div>
+
+    
+    <script>
+        // --- JAVASCRIPT INTEGRATION ---
+
+        // 1. Clock/Date Logic
+        function updateClock() {
+            const now = new Date();
+            const timeElement = document.getElementById('time');
+            const dateElement = document.getElementById('date');
+            
+            if (timeElement) {
+                let hours = now.getHours();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                timeElement.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+            }
+            
+            if (dateElement) {
+                const options = { weekday: 'short', month: 'short', day: 'numeric' };
+                dateElement.textContent = now.toLocaleDateString('en-US', options);
+            }
+        }
+
+        // 2. Modal Functions (NEW)
+        function showComingSoonModal(topic) {
+            const modal = document.getElementById('coming-soon-modal-overlay');
+            document.getElementById('modal-topic-title').textContent = topic;
+            document.getElementById('modal-topic-placeholder').textContent = topic;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling underneath the modal
+            // Stop page default action
+            event.preventDefault(); 
+        }
+
+        function closeComingSoonModal() {
+            const modal = document.getElementById('coming-soon-modal-overlay');
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+
+        // 3. Utility & Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial update and set interval for clock
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            // Smooth scrolling for anchor links (only for #contact and on this page)
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                const targetId = anchor.getAttribute('href');
+                
+                // Only allow local smooth scroll for links on the current page that are anchor tags
+                if (targetId === '#contact') { 
+                     anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                } else if (targetId === '#contact') {
+                    // This ensures that clicking #contact on subpages takes you to index.html#contact
+                    anchor.href = "index.html#contact"; 
+                }
+            });
+
+            // Form submission handling
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // Using console.log instead of alert for better UX in modern apps
+                    console.log('Form submitted. Details will be handled by backend.');
+                    form.reset();
+                });
+            }
+
+            // Initialize search functionality (using the integrated input field)
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        // Display search action in console
+                        console.log('Search executed for: ' + searchInput.value);
+                        searchInput.value = '';
+                    }
+                });
+            }
+
+            // Initialize Feather Icons
+            if (window.feather) {
+                window.feather.replace();
+            }
+        });
+    </script>
+</body>
+</html>
