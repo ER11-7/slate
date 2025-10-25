@@ -266,7 +266,6 @@
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1.5rem;
             justify-content: center; /* Center the social links */
         }
         .social-links a {
@@ -371,6 +370,65 @@
             color: white; /* Ensure text is visible over the dark overlay */
         }
 
+        /* --- MODAL STYLES --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 3rem 2rem;
+            border-radius: 0.75rem;
+            max-width: 90%;
+            width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 128, 128, 0.5);
+            text-align: center;
+            position: relative;
+            animation: modalPop 0.3s ease-out;
+        }
+        .modal-title {
+            color: #008080;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .modal-subtitle {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #4B5563;
+            margin-bottom: 1.5rem;
+        }
+        .modal-cta {
+            font-size: 1rem;
+            color: #6B7280;
+            line-height: 1.6;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #9CA3AF;
+            transition: color 0.2s;
+        }
+        .modal-close:hover {
+            color: #374151;
+        }
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         /* END CUSTOM STYLES */
     </style>
 </head>
@@ -392,26 +450,26 @@
             <!-- Right Zones - Navigation and Search -->
             <div class="nav-main">
                 <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     
                     <!-- Dropdown 1: Insights & Analytics -->
                     <li class="dropdown">
                         <div class="dropdown-trigger">Insights & Analytics <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
                         <div class="dropdown-menu">
-                            <a href="#insights-reports" class="dropdown-item">Reports</a>
-                            <a href="#insights-analytics" class="dropdown-item">Analytics</a>
-                            <a href="#insights-papers" class="dropdown-item">Papers</a>
-                            <a href="#insights-articles" class="dropdown-item">Articles</a>
+                            <a href="reports.html" class="dropdown-item">Reports</a>
+                            <a href="analytics.html" class="dropdown-item">Analytics</a>
+                            <a href="papers.html" class="dropdown-item">Papers</a>
+                            <a href="articles.html" class="dropdown-item">Articles</a>
                         </div>
                     </li>
                     
-                    <!-- Dropdown 2: Energy Nexus -->
+                    <!-- Dropdown 2: Energy Nexus (STILL USES MODAL) -->
                     <li class="dropdown">
                         <div class="dropdown-trigger">Energy Nexus <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
                         <div class="dropdown-menu">
-                            <a href="#nexus-policy" class="dropdown-item">Policy Updates</a>
-                            <a href="#nexus-digital" class="dropdown-item">Digital Energy Solutions</a>
-                            <a href="#nexus-project" class="dropdown-item">Project Spotlights</a>
+                            <a href="#" onclick="showComingSoonModal('Policy Updates')" class="dropdown-item">Policy Updates</a>
+                            <a href="#" onclick="showComingSoonModal('Digital Energy Solutions')" class="dropdown-item">Digital Energy Solutions</a>
+                            <a href="#" onclick="showComingSoonModal('Project Spotlights')" class="dropdown-item">Project Spotlights</a>
                         </div>
                     </li>
                     
@@ -460,7 +518,7 @@
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 uppercase tracking-wider">Insights and Analytics</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 
-                <!-- Card 1: Reports (Target: #insights-reports) -->
+                <!-- Card 1: Reports (Target: reports.html) -->
                 <div id="insights-reports" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
@@ -468,14 +526,14 @@
                         </div>
                         <h3 class="text-xl font-bold mb-3">Reports</h3>
                         <p class="text-gray-600 mb-5">Comprehensive analysis and findings from in-depth research and strategic projects.</p>
-                        <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
+                        <a href="reports.html" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
                             View All Reports
                             <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
                         </a>
                     </div>
                 </div>
 
-                <!-- Card 2: Analytics (Target: #insights-analytics) -->
+                <!-- Card 2: Analytics (Target: analytics.html) -->
                 <div id="insights-analytics" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
@@ -483,14 +541,14 @@
                         </div>
                         <h3 class="text-xl font-bold mb-3">Analytics</h3>
                         <p class="text-gray-600 mb-5">Data-driven insights, visualizations, and project impact metrics from technical modeling.</p>
-                        <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
+                        <a href="analytics.html" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
                             View Project Data
                             <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
                         </a>
                     </div>
                 </div>
 
-                <!-- Card 3: Papers (Target: #insights-papers) -->
+                <!-- Card 3: Papers (Target: papers.html) -->
                 <div id="insights-papers" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
@@ -498,14 +556,14 @@
                         </div>
                         <h3 class="text-xl font-bold mb-3">Papers</h3>
                         <p class="text-gray-600 mb-5">Academic and professional papers detailing methodologies and strategic frameworks.</p>
-                        <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
+                        <a href="papers.html" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
                             View All Papers
                             <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
                         </a>
                     </div>
                 </div>
 
-                <!-- Card 4: Articles (Target: #insights-articles) -->
+                <!-- Card 4: Articles (Target: articles.html) -->
                 <div id="insights-articles" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-300 border-l-4 border-teal-500">
                     <div class="p-6">
                         <div class="text-teal-500 mb-4">
@@ -513,7 +571,7 @@
                         </div>
                         <h3 class="text-xl font-bold mb-3">Articles</h3>
                         <p class="text-gray-600 mb-5">Short-form commentary and policy insights on current energy market trends.</p>
-                        <a href="#" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
+                        <a href="articles.html" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600">
                             View Articles
                             <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
                         </a>
@@ -724,6 +782,28 @@
             &copy; 2025 SLATE. All rights reserved.
         </div>
     </footer>
+
+    <!-- Modal HTML/JS (MUST be present in all files if called by modal links) -->
+    <div id="coming-soon-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeComingSoonModal()">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+            <div class="modal-title">
+                <span id="modal-topic-title"></span>
+            </div>
+            <div class="modal-subtitle">
+                The Data Revolution is Brewing.
+            </div>
+            <p class="modal-cta">
+                We're currently finalizing the **quantifiable data and strategic frameworks** for this **<span id="modal-topic-placeholder" class="font-bold text-teal-600"></span>** section. It's coming soon and will be worth the wait!
+            </p>
+            <a href="#" class="back-button" onclick="closeComingSoonModal()">
+                Got It! Take Me Back
+            </a>
+        </div>
+    </div>
+
     
     <script>
         // --- JAVASCRIPT INTEGRATION ---
@@ -750,32 +830,48 @@
             }
         }
 
-        // 2. Utility & Event Listeners
+        // 2. Modal Functions (NEW)
+        function showComingSoonModal(topic) {
+            const modal = document.getElementById('coming-soon-modal-overlay');
+            document.getElementById('modal-topic-title').textContent = topic;
+            document.getElementById('modal-topic-placeholder').textContent = topic;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling underneath the modal
+            // Stop page default action
+            event.preventDefault(); 
+        }
+
+        function closeComingSoonModal() {
+            const modal = document.getElementById('coming-soon-modal-overlay');
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+
+        // 3. Utility & Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
             // Initial update and set interval for clock
             updateClock();
             setInterval(updateClock, 1000);
 
-            // Smooth scrolling for anchor links
+            // Smooth scrolling for anchor links (only for #contact and on this page)
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                // Check if the anchor link is part of the main navigation and not a dropdown trigger
-                const isDropdownItem = anchor.closest('.dropdown-menu');
+                const targetId = anchor.getAttribute('href');
                 
-                if (isDropdownItem || anchor.getAttribute('href') === '#home' || anchor.getAttribute('href') === '#contact') {
-                    anchor.addEventListener('click', function (e) {
+                // Only allow local smooth scroll for links on the current page that are anchor tags
+                if (targetId === '#contact') { 
+                     anchor.addEventListener('click', function (e) {
                         e.preventDefault();
-                        const targetId = this.getAttribute('href');
-                        
-                        // Handle scrolling only for valid anchor links to sections
-                        if (targetId && targetId !== '#') {
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                targetElement.scrollIntoView({
-                                    behavior: 'smooth'
-                                });
-                            }
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth'
+                            });
                         }
                     });
+                } else if (targetId === '#contact') {
+                    // This ensures that clicking #contact on subpages takes you to index.html#contact
+                    anchor.href = "index.html#contact"; 
                 }
             });
 
