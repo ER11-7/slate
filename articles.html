@@ -32,7 +32,7 @@
         }
         
         // Export necessary functions for use in the main script block
-        window.addDownloadRecord = async (articleId, articleTitle, userName, userEmail, userOrganization) => {
+        window.addDownloadRecord = async (articleId, articleTitle, userName, userEmail, userOrganization, userReason) => {
             if (!window.db || !window.auth.currentUser) {
                 console.error("Firestore not initialized or user not authenticated.");
                 return false;
@@ -47,13 +47,15 @@
                     articleTitle: articleTitle,
                     userName: userName,
                     userEmail: userEmail,
-                    userOrganization: userOrganization, // ADDED ORGANIZATION FIELD
+                    userOrganization: userOrganization,
+                    userReason: userReason, 
+                    status: 'PENDING_REVIEW', // Status remains PENDING_REVIEW
                     timestamp: serverTimestamp()
                 });
-                console.log("Download record successfully added to Firestore.");
+                console.log("Download request successfully logged to Firestore.");
                 return true;
             } catch (e) {
-                console.error("Error adding document: ", e);
+                console.error("Error logging request to Firestore: ", e);
                 return false;
             }
         };
@@ -265,7 +267,6 @@
             color: #008080; 
             font-weight: 700;
             font-size: 1.5rem; 
-            margin-bottom: 0.5rem; 
             text-transform: uppercase;
         }
         .footer-name {
@@ -418,6 +419,35 @@
             margin-top: 1rem;
             border-radius: 0.5rem;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* Ensure the content is hidden by default */
+            display: none; 
+        }
+        /* Style for the summary box */
+        .summary-box {
+            background-color: #e5f5f5; /* Light teal background */
+            border: 1px solid #008080;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+        .summary-content {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+        .summary-image-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: #d1e8e8;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #008080;
+            font-weight: 600;
         }
         .download-link-box {
             margin-top: 1rem;
@@ -611,17 +641,17 @@
             
             <div class="article-main-grid">
                 
-                <!-- Article List and PDF Viewer (Left/Main Column) -->
+                <!-- Article List and Summary Display (Left/Main Column) -->
                 <div class="lg:col-span-2">
                     <!-- Article List -->
                     <div class="article-list-grid">
                         <!-- Article 1 Card -->
-                        <div class="article-card" data-id="article_1" data-title="Domestic Market Pathways and Carbon Abatement">
+                        <div class="article-card" data-id="article_1" data-title="Domestic Market Pathways and Carbon Abatement" data-desc="Analysis of market adoption routes and regulatory hurdles for Green Hydrogen/Ammonia.">
                             <h4>Domestic Market Pathways and Carbon Abatement</h4>
                             <p class="text-gray-500 text-sm mb-3">Analysis of market adoption routes and regulatory hurdles for Green Hydrogen/Ammonia.</p>
-                            <a href="#" onclick="viewArticle('article_1')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
-                                View Article
-                                <i data-feather="eye" class="ml-1 w-4 h-4"></i>
+                            <a href="#" onclick="viewSummary('article_1')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                                View Summary
+                                <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
                             <a href="#" onclick="openDownloadModal(event, 'article_1', 'Domestic Market Pathways and Carbon Abatement')" class="text-indigo-500 font-medium inline-flex items-center hover:text-indigo-600">
                                 Download PDF
@@ -630,12 +660,12 @@
                         </div>
 
                         <!-- Article 2 Card -->
-                        <div class="article-card" data-id="article_2" data-title="Financing Green Ammonia in India Blended Finance">
+                        <div class="article-card" data-id="article_2" data-title="Financing Green Ammonia in India Blended Finance" data-desc="Exploring capital structures, blended finance, and risk mitigation strategies.">
                             <h4>Financing Green Ammonia in India Blended Finance</h4>
                             <p class="text-gray-500 text-sm mb-3">Exploring capital structures, blended finance, and risk mitigation strategies.</p>
-                            <a href="#" onclick="viewArticle('article_2')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
-                                View Article
-                                <i data-feather="eye" class="ml-1 w-4 h-4"></i>
+                            <a href="#" onclick="viewSummary('article_2')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                                View Summary
+                                <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
                             <a href="#" onclick="openDownloadModal(event, 'article_2', 'Financing Green Ammonia in India Blended Finance')" class="text-indigo-500 font-medium inline-flex items-center hover:text-indigo-600">
                                 Download PDF
@@ -644,12 +674,12 @@
                         </div>
 
                         <!-- Article 3 Card -->
-                        <div class="article-card" data-id="article_3" data-title="Reverse Auctions and Cost Discovery in India">
+                        <div class="article-card" data-id="article_3" data-title="Reverse Auctions and Cost Discovery in India" data-desc="A study on current auction mechanisms and their impact on project viability.">
                             <h4>Reverse Auctions and Cost Discovery in India</h4>
                             <p class="text-gray-500 text-sm mb-3">A study on current auction mechanisms and their impact on project viability.</p>
-                            <a href="#" onclick="viewArticle('article_3')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
-                                View Article
-                                <i data-feather="eye" class="ml-1 w-4 h-4"></i>
+                            <a href="#" onclick="viewSummary('article_3')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                                View Summary
+                                <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
                             <a href="#" onclick="openDownloadModal(event, 'article_3', 'Reverse Auctions and Cost Discovery in India')" class="text-indigo-500 font-medium inline-flex items-center hover:text-indigo-600">
                                 Download PDF
@@ -658,12 +688,12 @@
                         </div>
 
                         <!-- Article 4 Card -->
-                        <div class="article-card" data-id="article_4" data-title="Strategic Analysis of India’s Green Ammonia Market">
+                        <div class="article-card" data-id="article_4" data-title="Strategic Analysis of India’s Green Ammonia Market" data-desc="Comprehensive outlook on supply chains, demand drivers, and long-term trends.">
                             <h4>Strategic Analysis of India’s Green Ammonia Market</h4>
                             <p class="text-gray-500 text-sm mb-3">Comprehensive outlook on supply chains, demand drivers, and long-term trends.</p>
-                            <a href="#" onclick="viewArticle('article_4')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
-                                View Article
-                                <i data-feather="eye" class="ml-1 w-4 h-4"></i>
+                            <a href="#" onclick="viewSummary('article_4')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                                View Summary
+                                <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
                             <a href="#" onclick="openDownloadModal(event, 'article_4', 'Strategic Analysis of India’s Green Ammonia Market')" class="text-indigo-500 font-medium inline-flex items-center hover:text-indigo-600">
                                 Download PDF
@@ -672,16 +702,20 @@
                         </div>
                     </div>
 
-                    <!-- PDF Viewer Area -->
-                    <div id="pdf-viewer-area" class="pdf-viewer-container hidden">
-                        <h3 id="pdf-title" class="text-xl font-bold text-slate-800"></h3>
-                        <div id="pdf-iframe-container" class="viewer-box">
-                            <!-- The PDF will be embedded here -->
-                        </div>
-                        <div id="download-prompt" class="download-link-box text-center">
-                            <p class="text-sm text-gray-700">To save this file, click the Download PDF button above and submit a quick request.</p>
+                    <!-- Article Summary Display Area -->
+                    <div id="summary-display-area" class="summary-box hidden">
+                        <h3 id="summary-title" class="text-xl font-bold text-slate-800 border-b pb-2 mb-3"></h3>
+                        <div id="summary-content" class="summary-content">
+                            <!-- AI-generated summary content goes here -->
+                            <div class="chat-message chat-ai">
+                                <div class="chat-ai-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
+                                </div>
+                                <div class="chat-bubble chat-loading"></div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
                 <!-- AI Chat Panel (Right Column) -->
@@ -723,8 +757,8 @@
                 <div class="footer-logo">SLATE</div>
                 <div class="footer-name">Insights from Emil Roby</div>
                 <div class="social-links">
-                    <a href="https://www.linkedin.com/in/emil-roby-878792314/" target="_blank" rel="noopener noreferrer"><i data-feather="linkedin" class="w-4 h-4"></i></a>
-                    <a href="mailto:emilroby9@gmail.com"><i data-feather="mail" class="w-4 h-4"></i></a>
+                    <a href="index.html#contact"><i data-feather="linkedin" class="w-4 h-4"></i></a>
+                    <a href="index.html#contact"><i data-feather="mail" class="w-4 h-4"></i></a>
                 </div>
             </div>
             <!-- SERVICES SECTION -->
@@ -773,15 +807,18 @@
                 <textarea id="form-reason" rows="3" placeholder="e.g., Market research, academic study, client proposal" required></textarea>
 
                 <button type="submit" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300">
-                    Submit Request & Get Link
+                    Download Now
                 </button>
             </form>
             
             <div id="download-success" class="hidden mt-4">
-                <p class="text-green-600 font-semibold mb-3">✅ Access Granted!</p>
-                <a id="final-download-link" href="#" download class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg">
-                    Click Here to Download
-                </a>
+                <p class="text-green-600 font-semibold mb-3">✅ Submission Received!</p>
+                <p class="text-base font-semibold mt-3">The download link will be shared with you via email after a brief review process.</p>
+                <!-- Removed final download link to enforce email delivery -->
+                
+                <button onclick="closeDownloadModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg mt-4 transition-colors">
+                    Close
+                </button>
             </div>
         </div>
     </div>
@@ -789,70 +826,92 @@
 
     
     <script>
-        // --- PDF DATA STRUCTURE (Using GitHub /articles folder) ---
-        // NOTE: These URLs must be the RAW links from GitHub or links from a public CDN/Storage bucket.
+        // --- PDF DATA STRUCTURE (Using Google Drive Viewer for VIEWING / RAW CDN for DOWNLOAD) ---
+        
+        // These are the public Google Drive FILE IDs from your URLs, used for VIEWING and DOWNLOAD.
+        const ARTICLE_VIEWER_BASE = 'https://drive.google.com/file/d/';
+        
         const articleData = {
             'article_1': { 
                 title: 'Domestic Market Pathways and Carbon Abatement',
-                // FIX: Used encodeURIComponent and replaced spaces with %20 for robust URL construction
-                url: encodeURIComponent('articles/Domestic Market Pathways and Carbon Abatement Economics of Green Ammonia.pdf').replace(/%20/g, ' ')
+                fileId: '1CEAq6Y5hhTo5fU_iBamczj86Vcoa0oGE',
+                description: 'Analysis of market adoption routes and regulatory hurdles for Green Hydrogen/Ammonia.'
             },
             'article_2': { 
                 title: 'Financing Green Ammonia in India Blended Finance',
-                url: encodeURIComponent('articles/Financing Green Ammonia in India Blended Finance, CFDs, and Fiscal Incentives.pdf').replace(/%20/g, ' ')
+                fileId: '15C0JKyr-ZYuO-or2gJwfCMBuuYJA9Lg5',
+                description: 'Exploring capital structures, blended finance, and risk mitigation strategies.'
             },
             'article_3': { 
                 title: 'Reverse Auctions and Cost Discovery in India',
-                url: encodeURIComponent('articles/Reverse Auctions and Cost Discovery in India’s Green Ammonia Sector.pdf').replace(/%20/g, ' ')
+                fileId: '1docymroBLsvbn-F1aIjBfPDgdTY5nO2s',
+                description: 'A study analyzing the outcomes and effectiveness of the SECI Tranche I Reverse Auction, identifying key trends in cost discovery and the resulting capacity awarded to major producers.'
             },
             'article_4': { 
                 title: 'Strategic Analysis of India’s Green Ammonia Market',
-                url: encodeURIComponent('articles/Strategic Analysis of India’s Green Ammonia Market From Domestic Market and Export Perspectives.pdf').replace(/%20/g, ' ')
+                fileId: '1yxJcFU2n42J0VoEp3_yAybIZ95fefnF6',
+                description: 'This strategic overview assesses the long-term potential of India’s Green Ammonia market, covering critical supply chain challenges, demand drivers, and policy steps required to establish global export leadership.'
             }
         };
 
         let chatHistoryArticle = [];
-        const ARTICLE_SYSTEM_INSTRUCTION = "You are Greenie, an expert Article Assistant. Use Google Search to provide context and answer questions related to the topics listed, such as Green Ammonia financing, Reverse Auctions, or Carbon Abatement. Be helpful and concise.";
+        const ARTICLE_SYSTEM_INSTRUCTION = "You are Greenie, an expert Article Assistant. Your task is to provide a concise, one-paragraph summary (max 70 words) about the article requested, and provide relevant context. Use Google Search for the most current information and links related to the article topic if necessary. Never use asterisks or any markdown formatting in your response.";
         const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=";
 
 
-        // --- Core Application Logic ---
+        // --- Core Application Logic (Hoisted Functions) ---
 
-        function viewArticle(articleId) {
+        async function viewSummary(articleId) {
             const article = articleData[articleId];
-            const viewerArea = document.getElementById('pdf-viewer-area');
-            const iframeContainer = document.getElementById('pdf-iframe-container');
-            const pdfTitle = document.getElementById('pdf-title');
+            const displayArea = document.getElementById('summary-display-area');
+            const summaryTitle = document.getElementById('summary-title');
+            const summaryContent = document.getElementById('summary-content');
+            
+            if (!article) return;
 
-            if (!article) {
-                 console.error("Article data not found.");
-                 return;
+            summaryTitle.textContent = article.title;
+            summaryContent.innerHTML = `
+                <div class="chat-message chat-ai">
+                    <div class="chat-ai-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
+                    </div>
+                    <div class="chat-bubble chat-loading"></div>
+                </div>
+            `;
+            displayArea.classList.remove('hidden');
+            displayArea.scrollIntoView({ behavior: 'smooth' });
+
+            try {
+                // FIX: Modified userQuery to restrict AI access to specific content.
+                const userQuery = `Provide a single, concise paragraph summary (max 70 words) about the general topic: "${article.title}". Do not reveal the contents of the specific file itself. Focus on external context and relevance.`;
+                
+                // Call LLM for summary
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: userQuery }] }],
+                        systemInstruction: { parts: [{ text: ARTICLE_SYSTEM_INSTRUCTION }] },
+                        tools: [{ "google_search": {} }] // Crucial for external data
+                    })
+                });
+
+                const result = await response.json();
+                const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Summary is unavailable right now, but the topic covers key trends in clean energy finance and market mechanisms."; 
+
+                // Update the loading bubble with the final text
+                const loadingBubble = displayArea.querySelector('.chat-loading');
+                if (loadingBubble) {
+                    loadingBubble.classList.remove('chat-loading');
+                    loadingBubble.textContent = aiText;
+                }
+                
+            } catch (error) {
+                summaryContent.textContent = `Error generating summary. Please try again or proceed to download request.`;
+                console.error("AI Summary generation failed:", error);
             }
-
-            pdfTitle.textContent = article.title;
-            
-            // Clear previous content
-            iframeContainer.innerHTML = '';
-
-            // Create iframe for PDF viewing
-            const embedElement = document.createElement('iframe');
-            
-            // FIX: The URL must be decoded here for the browser to read the path correctly,
-            // but the original paths used encodeURIComponent which might cause problems.
-            // We revert to a straight path assuming the GitHub Pages deployment handles the paths.
-            // If the paths don't work, the user needs to provide the RAW GitHub URLs.
-            embedElement.src = article.url + '#toolbar=0&navpanes=0&scrollbar=0'; 
-            
-            embedElement.className = 'w-full h-full';
-            embedElement.frameBorder = '0';
-            
-            iframeContainer.appendChild(embedElement);
-            
-            // FIX: Ensure the viewer is visible
-            viewerArea.style.display = 'flex';
-            viewerArea.classList.remove('hidden');
-            viewerArea.scrollIntoView({ behavior: 'smooth' });
         }
+
 
         function openDownloadModal(event, articleId, articleTitle) {
             event.preventDefault();
@@ -882,26 +941,85 @@
             const articleTitle = document.getElementById('form-article-title').value;
             const userName = document.getElementById('form-name').value;
             const userEmail = document.getElementById('form-email').value;
-            const userOrganization = document.getElementById('form-organization').value; // Get Organization
+            const userOrganization = document.getElementById('form-organization').value;
+            const userReason = document.getElementById('form-reason').value; // Get Reason
 
-            // Check if Firebase functions are available (required for tracking)
+            // 1. Log the download request to Firestore (for your backend review)
             if (typeof window.addDownloadRecord !== 'function') {
-                console.error("Firebase tracking function is not available.");
+                console.error("Firebase tracking function is not available. Logging locally only.");
             } else {
-                // Log the download request to Firestore (asynchronous)
-                await window.addDownloadRecord(articleId, articleTitle, userName, userEmail, userOrganization);
+                await window.addDownloadRecord(articleId, articleTitle, userName, userEmail, userOrganization, userReason);
             }
             
-            // Hide form and show success message with actual download link
+            // 2. Hide form and show success message (NO DOWNLOAD TRIGGER)
             form.style.display = 'none';
-            
-            const downloadLinkElement = document.getElementById('final-download-link');
-            const articleUrl = articleData[articleId].url;
-            
-            // Provide the direct download link (forcing download attribute)
-            downloadLinkElement.href = articleUrl;
-            
             document.getElementById('download-success').classList.remove('hidden');
+            
+            // NO ACTION is needed here to trigger download; the process is now manual/email-based.
+        }
+
+        async function sendAIChatMessage(event, analysisType) {
+            event.preventDefault();
+
+            const inputElement = document.getElementById('chat-input-article');
+            const messagesContainer = document.getElementById('chat-messages-article');
+            const userQuery = inputElement.value.trim();
+
+            if (!userQuery) return;
+            
+            // 1. Display user message
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'chat-message chat-user';
+            userMessageDiv.innerHTML = `<div class="chat-bubble">${userQuery}</div>`;
+            messagesContainer.appendChild(userMessageDiv);
+            
+            // 2. Add user message to history
+            chatHistoryArticle.push({ role: "user", parts: [{ text: userQuery }] });
+
+            // 3. Display AI loading indicator
+            const aiMessageDiv = document.createElement('div');
+            aiMessageDiv.className = 'chat-message chat-ai';
+            aiMessageDiv.innerHTML = `<div class="chat-ai-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
+                                      </div><div class="chat-bubble chat-loading"></div>`;
+            messagesContainer.appendChild(aiMessageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Clear input
+            inputElement.value = '';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: chatHistoryArticle,
+                        systemInstruction: { parts: [{ text: ARTICLE_SYSTEM_INSTRUCTION }] },
+                        tools: [{ "google_search": {} }] // Enable Google Search
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that request.";
+
+                // 4. Update AI response
+                aiMessageDiv.querySelector('.chat-bubble').classList.remove('chat-loading');
+                aiMessageDiv.querySelector('.chat-bubble').textContent = aiText;
+                
+                // 5. Add AI response to history
+                chatHistoryArticle.push({ role: "model", parts: [{ text: aiText }] });
+
+            } catch (error) {
+                console.error("AI API Call Failed:", error);
+                aiMessageDiv.querySelector('.chat-bubble').classList.remove('chat-loading');
+                aiMessageDiv.querySelector('.chat-bubble').textContent = "Error: Could not connect to the insight engine.";
+            }
+
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         
