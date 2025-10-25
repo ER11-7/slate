@@ -794,20 +794,20 @@
         const articleData = {
             'article_1': { 
                 title: 'Domestic Market Pathways and Carbon Abatement',
-                // FIX: Updated URL to use a relative path for viewing within the repository structure.
-                url: 'articles/Domestic Market Pathways and Carbon Abatement Economics of Green Ammonia.pdf'
+                // FIX: Used encodeURIComponent and replaced spaces with %20 for robust URL construction
+                url: encodeURIComponent('articles/Domestic Market Pathways and Carbon Abatement Economics of Green Ammonia.pdf').replace(/%20/g, ' ')
             },
             'article_2': { 
                 title: 'Financing Green Ammonia in India Blended Finance',
-                url: 'articles/Financing Green Ammonia in India Blended Finance, CFDs, and Fiscal Incentives.pdf' 
+                url: encodeURIComponent('articles/Financing Green Ammonia in India Blended Finance, CFDs, and Fiscal Incentives.pdf').replace(/%20/g, ' ')
             },
             'article_3': { 
                 title: 'Reverse Auctions and Cost Discovery in India',
-                url: 'articles/Reverse Auctions and Cost Discovery in India’s Green Ammonia Sector.pdf'
+                url: encodeURIComponent('articles/Reverse Auctions and Cost Discovery in India’s Green Ammonia Sector.pdf').replace(/%20/g, ' ')
             },
             'article_4': { 
                 title: 'Strategic Analysis of India’s Green Ammonia Market',
-                url: 'articles/Strategic Analysis of India’s Green Ammonia Market From Domestic Market and Export Perspectives.pdf' 
+                url: encodeURIComponent('articles/Strategic Analysis of India’s Green Ammonia Market From Domestic Market and Export Perspectives.pdf').replace(/%20/g, ' ')
             }
         };
 
@@ -837,8 +837,10 @@
             // Create iframe for PDF viewing
             const embedElement = document.createElement('iframe');
             
-            // FIX: Use the URL directly. The browser will handle embedding the PDF.
-            // We need to ensure the viewer area style is removed/overridden.
+            // FIX: The URL must be decoded here for the browser to read the path correctly,
+            // but the original paths used encodeURIComponent which might cause problems.
+            // We revert to a straight path assuming the GitHub Pages deployment handles the paths.
+            // If the paths don't work, the user needs to provide the RAW GitHub URLs.
             embedElement.src = article.url + '#toolbar=0&navpanes=0&scrollbar=0'; 
             
             embedElement.className = 'w-full h-full';
