@@ -135,6 +135,10 @@
         /* --- DROPDOWN STYLES (NEW) --- */
         .dropdown {
             position: relative;
+            /* FIX: Ensure dropdown list item is aligned like the simple links */
+            display: flex; 
+            align-items: center;
+            height: 100%; /* Important for vertical centering */
         }
         .dropdown-menu {
             display: none;
@@ -177,12 +181,19 @@
             text-decoration: none;
             font-weight: 500;
             cursor: pointer;
-            padding: 0.5rem 0;
-            display: block;
+            /* Removed vertical padding from trigger as it interferes with li height */
+            padding: 0 0; 
+            display: flex; /* Use flex to align icon and text perfectly */
+            align-items: center;
             transition: color 0.3s;
+            height: 100%;
         }
         .dropdown-trigger:hover {
             color: #008080;
+        }
+        /* Fix icon margin for better spacing */
+        .dropdown-trigger i {
+            margin-left: 0.25rem;
         }
         /* --- END DROPDOWN STYLES --- */
 
