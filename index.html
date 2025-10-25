@@ -106,6 +106,11 @@
             margin: 0;
             padding: 0;
         }
+        /* FIX: Ensure simple links are vertically centered like the dropdown triggers */
+        .nav-links > li > a {
+            padding: 0.5rem 0; /* Apply padding to lift the text to the vertical center */
+            display: block;
+        }
         .nav-links a {
             color: #374151; /* Slate 800 */
             text-decoration: none;
@@ -181,8 +186,7 @@
             text-decoration: none;
             font-weight: 500;
             cursor: pointer;
-            /* Removed vertical padding from trigger as it interferes with li height */
-            padding: 0 0; 
+            padding: 0.5rem 0; /* Apply consistent padding here as well */
             display: flex; /* Use flex to align icon and text perfectly */
             align-items: center;
             transition: color 0.3s;
@@ -561,14 +565,14 @@
                     
                     <!-- Column 1: Strategic Analysis & Policy Informatics -->
                     <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
-                        <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center">
+                        <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center justify-center">
                             <i data-feather="trending-up" class="w-7 h-7 mr-3"></i>
                             Strategic Analysis & Policy Informatics
                         </h3>
                         <div class="space-y-4">
                             <div>
-                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Policy & Finance Tools</h4>
-                                <div class="flex flex-wrap gap-2">
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800 text-center">Policy & Finance Tools</h4>
+                                <div class="flex flex-wrap gap-2 justify-center">
                                     <span class="skill-tag">ESG/TCFD Strategy</span>
                                     <span class="skill-tag">Policy Feasibility Assessment</span>
                                     <span class="skill-tag">LCOE/LCOH Assessment</span>
@@ -576,8 +580,8 @@
                                 </div>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Quantitative Modeling (Python/R)</h4>
-                                <div class="flex flex-wrap gap-2">
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800 text-center">Quantitative Modeling (Python/R)</h4>
+                                <div class="flex flex-wrap gap-2 justify-center">
                                     <span class="skill-tag">R (Econometrics/Statistics)</span>
                                     <span class="skill-tag">Statistical Analysis (SPSS/Stata)</span>
                                     <span class="skill-tag">Risk Modeling</span>
@@ -589,14 +593,14 @@
 
                     <!-- Column 2: Digital Platform Engineering -->
                     <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
-                        <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center">
+                        <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center justify-center">
                             <i data-feather="monitor" class="w-7 h-7 mr-3"></i>
                             Digital Platform Engineering
                         </h3>
                         <div class="space-y-4">
                             <div>
-                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Full-Stack & Front-End</h4>
-                                <div class="flex flex-wrap gap-2">
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800 text-center">Full-Stack & Front-End</h4>
+                                <div class="flex flex-wrap gap-2 justify-center">
                                     <span class="skill-tag">HTML5 / CSS3</span>
                                     <span class="skill-tag">JavaScript (ES6+)</span>
                                     <span class="skill-tag">Tailwind CSS (UI/UX)</span>
@@ -604,8 +608,8 @@
                                 </div>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Data & Cloud Infrastructure</h4>
-                                <div class="flex flex-wrap gap-2">
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800 text-center">Data & Cloud Infrastructure</h4>
+                                <div class="flex flex-wrap gap-2 justify-center">
                                     <span class="skill-tag">SQL & Database Mgt.</span>
                                     <span class="skill-tag">Cloud Deployment (General)</span>
                                     <span class="skill-tag">Linux Environments</span>
@@ -617,14 +621,14 @@
 
                     <!-- Column 3: Automation, Visualization & QA -->
                     <div class="p-8 bg-white rounded-xl shadow-lg border-t-4 border-teal-500">
-                        <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center">
+                        <h3 class="text-2xl font-bold mb-6 text-teal-500 flex items-center justify-center">
                             <i data-feather="settings" class="w-7 h-7 mr-3"></i>
                             Automation, Viz & QA
                         </h3>
                         <div class="space-y-4">
                             <div>
-                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Process Automation & QA</h4>
-                                <div class="flex flex-wrap gap-2">
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800 text-center">Process Automation & QA</h4>
+                                <div class="flex flex-wrap gap-2 justify-center">
                                     <span class="skill-tag">Selenium WebDriver</span>
                                     <span class="skill-tag">Python Scripting</span>
                                     <span class="skill-tag">JIRA / VBA</span>
@@ -632,8 +636,8 @@
                                 </div>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-lg mb-2 text-slate-800">Business Intelligence (BI)</h4>
-                                <div class="flex flex-wrap gap-2">
+                                <h4 class="font-semibold text-lg mb-2 text-slate-800 text-center">Business Intelligence (BI)</h4>
+                                <div class="flex flex-wrap gap-2 justify-center">
                                     <span class="skill-tag">Tableau</span>
                                     <span class="skill-tag">Power BI</span>
                                     <span class="skill-tag">Alteryx (Data Prep)</span>
