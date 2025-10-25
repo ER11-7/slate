@@ -215,7 +215,6 @@
             color: #008080; 
             font-weight: 700;
             font-size: 1.5rem; 
-            margin-bottom: 0.5rem; 
             text-transform: uppercase;
         }
         .footer-name {
@@ -290,9 +289,52 @@
             .footer-content {
                 flex-direction: row;
                 justify-content: space-between;
+                align-items: flex-start;
+                max-width: 800px;
+                text-align: left;
+            }
+            .footer-about {
+                text-align: left;
+            }
+            .social-links {
+                justify-content: flex-start;
             }
         }
-        
+        /* Page Header Styles */
+        .page-header {
+            background-color: #f3f4f6;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 3px solid #008080;
+        }
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #008080;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            font-size: 1.25rem;
+            color: #4B5563;
+        }
+        /* Main Content Placeholder Styles */
+        .main-content-placeholder {
+            min-height: 400px;
+            padding: 4rem 2rem;
+            background-color: white;
+            text-align: center;
+        }
+        .placeholder-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 1rem;
+        }
+        .placeholder-cta {
+            font-size: 1.1rem;
+            color: #6B7280;
+            line-height: 1.6;
+        }
         /* D3 Chart Styles */
         .chart-panel {
             background: #fff;
@@ -464,7 +506,6 @@
             100% { opacity: 0.5; }
         }
 
-
         /* Card styles for initial visualization prompt */
         .visualization-card {
             background-color: white;
@@ -543,7 +584,7 @@
                         </div>
                     </li>
                     
-                    <!-- Dropdown 2: Energy Nexus (LINKS UPDATED TO NEW FILES) -->
+                    <!-- Dropdown 2: Energy Nexus (STILL USES MODAL) -->
                     <li class="dropdown">
                         <div class="dropdown-trigger">Energy Nexus <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
                         <div class="dropdown-menu">
@@ -798,7 +839,8 @@
 
         // --- DATA AND D3.JS VISUALIZATION LOGIC ---
 
-        // ********** START: Utility Functions moved up **********
+        // ********** START: Hoisted Functions **********
+        
         // --- Toggle Functions ---
         function showVisualization(type) {
             // Hide all visuals first
@@ -819,9 +861,9 @@
                 auctionViz.scrollIntoView({ behavior: 'smooth' });
             } else if (type === 'policy' && policyViz) {
                 policyViz.classList.remove('hidden');
-                drawPolicyBarChart(); // New horizontal bar chart function
-                drawIncentiveRadarChart(); // Radar Chart
-                populateIncentiveTable(); // Populate the table
+                drawPolicyBarChart();
+                drawIncentiveRadarChart(); 
+                populateIncentiveTable();
                 policyViz.scrollIntoView({ behavior: 'smooth' });
             }
             window.dispatchEvent(new Event('resize')); 
@@ -838,7 +880,81 @@
             }
             document.getElementById('intro-card-grid').classList.remove('hidden');
         }
-        // ********** END: Utility Functions moved up **********
+        
+        // --- LLM CHAT FUNCTIONALITY ---
+        async function sendAIChatMessage(event, analysisType) {
+            event.preventDefault();
+
+            const inputId = `chat-input-${analysisType}`;
+            const messagesId = `chat-messages-${analysisType}`;
+            const inputElement = document.getElementById(inputId);
+            const messagesContainer = document.getElementById(messagesId);
+            const userQuery = inputElement.value.trim();
+
+            if (!userQuery) return;
+
+            const currentHistory = analysisType === 'auction' ? chatHistoryAuction : chatHistoryPolicy;
+            const dataContext = analysisType === 'auction' ? JSON.stringify(auctionData) : JSON.stringify(policyScoring);
+            
+            let systemInstruction = SYSTEM_INSTRUCTION_BASE + 
+                " Base your analysis only on the charts and the raw policy data provided. Additionally, you can use Google Search for external, up-to-date context when the data context is insufficient.";
+
+            // 1. Display user message
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'chat-message chat-user';
+            userMessageDiv.innerHTML = `<div class="chat-bubble">${userQuery}</div>`;
+            messagesContainer.appendChild(userMessageDiv);
+            
+            // 2. Add user message to history
+            currentHistory.push({ role: "user", parts: [{ text: userQuery }] });
+
+            // 3. Display AI loading indicator
+            const aiMessageDiv = document.createElement('div');
+            aiMessageDiv.className = 'chat-message chat-ai';
+            aiMessageDiv.innerHTML = `<div class="chat-ai-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
+                                      </div><div class="chat-bubble chat-loading"></div>`;
+            messagesContainer.appendChild(aiMessageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Clear input
+            inputElement.value = '';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: currentHistory,
+                        systemInstruction: { parts: [{ text: systemInstruction }] },
+                        tools: [{ "google_search": {} }] 
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that request.";
+
+                // 4. Update AI response
+                aiMessageDiv.querySelector('.chat-bubble').classList.remove('chat-loading');
+                aiMessageDiv.querySelector('.chat-bubble').textContent = aiText;
+                
+                // 5. Add AI response to history
+                currentHistory.push({ role: "model", parts: [{ text: aiText }] });
+
+            } catch (error) {
+                console.error("AI API Call Failed:", error);
+                aiMessageDiv.querySelector('.chat-bubble').classList.remove('chat-loading');
+                aiMessageDiv.querySelector('.chat-bubble').textContent = "Error: Could not connect to the insight engine.";
+            }
+
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // --- D3 Visualization Functions (Moved for Hoisting) ---
 
         // Consolidated and Processed Data for Ammonia Auction
         const auctionData = [
@@ -863,7 +979,6 @@
         ).map(([winner, totalCapacity]) => ({ winner, totalCapacity }));
 
         // Consolidated and Processed Data for Green Hydrogen Policy (Incentives)
-        // FIX: Defined fullRawPolicyData here
         const fullRawPolicyData = [
             { state: "Odisha", ElecWaiver: "100% * 20 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "Yes" },
             { state: "Madhya Pradesh", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "50", CapSubsidy: "100%", InfraSupport: "Yes" },
@@ -880,7 +995,6 @@
             { state: "Assam", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
             { state: "Telangana", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
         ];
-
 
         // Scoring for Radar Chart (Higher Score = More Comprehensive Policy)
         const policyScoring = fullRawPolicyData.map(d => {
@@ -1164,17 +1278,6 @@
             const radarScale = d3.scaleLinear().range([0, radarChartRadius]).domain([0, maxScore]);
             const stateColors = d3.scaleOrdinal().domain(topStates.map(d => d.state)).range(d3.schemeCategory10);
 
-            // Function to generate the radar coordinates
-            const dataToPoints = (dataPoint, index, radarScale, centerX, centerY) => {
-                const angle = angleSlice * index - Math.PI / 2;
-                return {
-                    x: centerX + Math.cos(angle) * radarScale(dataPoint),
-                    y: centerY + Math.sin(angle) * radarScale(dataPoint),
-                    angle: angle,
-                    value: dataPoint
-                };
-            };
-
             // Draw circular grid lines (0, 2, 4, 6 score levels)
             svg.selectAll(".grid-circle")
                 .data(d3.range(0, maxScore + 1, 2).reverse())
@@ -1445,81 +1548,6 @@
                 .html(d => d.value);
         }
 
-
-        // --- LLM CHAT FUNCTIONALITY ---
-        async function sendAIChatMessage(event, analysisType) {
-            event.preventDefault();
-
-            const inputId = `chat-input-${analysisType}`;
-            const messagesId = `chat-messages-${analysisType}`;
-            const inputElement = document.getElementById(inputId);
-            const messagesContainer = document.getElementById(messagesId);
-            const userQuery = inputElement.value.trim();
-
-            if (!userQuery) return;
-
-            // Determine the correct context and history based on the analysis type
-            let currentHistory = analysisType === 'auction' ? chatHistoryAuction : chatHistoryPolicy;
-            const dataContext = analysisType === 'auction' ? JSON.stringify(auctionData) : JSON.stringify(policyScoring);
-            
-            let systemInstruction = SYSTEM_INSTRUCTION_BASE + 
-                " Base your analysis only on the charts and the raw policy data provided. Additionally, you can use Google Search for external, up-to-date context when the data context is insufficient.";
-
-            // 1. Display user message
-            const userMessageDiv = document.createElement('div');
-            userMessageDiv.className = 'chat-message chat-user';
-            userMessageDiv.innerHTML = `<div class="chat-bubble">${userQuery}</div>`;
-            messagesContainer.appendChild(userMessageDiv);
-            
-            // 2. Add user message to history
-            currentHistory.push({ role: "user", parts: [{ text: userQuery }] });
-
-            // 3. Display AI loading indicator
-            const aiMessageDiv = document.createElement('div');
-            aiMessageDiv.className = 'chat-message chat-ai';
-            aiMessageDiv.innerHTML = `<div class="chat-ai-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
-                                      </div><div class="chat-bubble chat-loading"></div>`;
-            messagesContainer.appendChild(aiMessageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            // Clear input
-            inputElement.value = '';
-
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: currentHistory,
-                        systemInstruction: { parts: [{ text: systemInstruction }] },
-                        tools: [{ "google_search": {} }] // Enable Google Search
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that request.";
-
-                // 4. Update AI response
-                aiMessageDiv.querySelector('.chat-bubble').classList.remove('chat-loading');
-                aiMessageDiv.querySelector('.chat-bubble').textContent = aiText;
-                
-                // 5. Add AI response to history
-                currentHistory.push({ role: "model", parts: [{ text: aiText }] });
-
-            } catch (error) {
-                console.error("AI API Call Failed:", error);
-                aiMessageDiv.querySelector('.chat-bubble').classList.remove('chat-loading');
-                aiMessageDiv.querySelector('.chat-bubble').textContent = "Error: Could not connect to the insight engine.";
-            }
-
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
         // --- UTILITY FUNCTIONS ---
         
         // 1. Clock/Date Logic
@@ -1576,31 +1604,9 @@
                 }
             });
 
-            // Form submission handling
-            const form = document.querySelector('form');
-            if (form) {
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    console.log('Form submitted. Details will be handled by backend.');
-                    form.reset();
-                });
-            }
-
             // Initialize Feather Icons
             if (window.feather) {
                 window.feather.replace();
-            }
-            
-            // Initial Check for Visualization (Hides all visuals until card is clicked)
-            const visualizationContentAuction = document.getElementById('auction-visualization');
-            const visualizationContentPolicy = document.getElementById('policy-visualization');
-            const introCardAuction = document.querySelector('.visualization-card[onclick*="auction"]');
-
-            if (introCardAuction && visualizationContentAuction && visualizationContentPolicy) {
-                if (!introCardAuction.classList.contains('hidden') && !visualizationContentAuction.classList.contains('hidden')) {
-                    visualizationContentAuction.classList.add('hidden');
-                    visualizationContentPolicy.classList.add('hidden');
-                }
             }
         });
 
