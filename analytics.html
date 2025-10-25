@@ -470,20 +470,20 @@
         <div id="visualization-content" class="main-container hidden">
             <h1 class="text-3xl md:text-4xl font-bold text-center mb-6 uppercase tracking-wider text-slate-800">SECI Green Ammonia Auction Analysis</h1>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 gap-6"> 
                 
-                <!-- Winner Breakdown (Col 1) -->
+                <!-- Chart 1: Winner Breakdown (Full Width) -->
                 <div class="chart-panel flex flex-col">
                     <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Capacity Awarded by Winner</h3>
-                    <div id="winner-chart" class="flex-grow min-h-[350px]">
+                    <div id="winner-chart" class="flex-grow min-h-[400px]">
                         <!-- Bar chart visualization will be rendered here -->
                     </div>
                 </div>
 
-                <!-- Price Analysis (Col 2) -->
+                <!-- Chart 2: Price Analysis (Full Width) -->
                 <div class="chart-panel flex flex-col">
-                    <h3 class="text-xl font-semibold mb-4 border-b pb-2">Competitiveness: Bid Price vs. Capacity</h3>
-                    <div id="price-capacity-chart" class="flex-grow min-h-[350px]">
+                    <h3 class="text-xl font-semibold mb-4 border-b pb-2">Competitiveness: Bid Price vs. Capacity by Producer</h3>
+                    <div id="price-capacity-chart" class="flex-grow min-h-[500px]">
                         <!-- Scatter/Dual-Axis chart will be rendered here -->
                     </div>
                 </div>
@@ -552,7 +552,7 @@
     <script>
         // --- DATA AND D3.JS VISUALIZATION LOGIC ---
 
-        // Consolidated and Processed Data from the table image
+        // Consolidated and Processed Data from the table image.
         const auctionData = [
             { producer: "Paradeep Phos.", location: "Paradeep", state: "Odisha", capacity: 75000, bidPrice: 55.75, winner: "Acme" },
             { producer: "Krishna Phos.", location: "Meghnagar", state: "Madhya Pradesh", capacity: 70000, bidPrice: 51.8, winner: "NTPC" },
@@ -592,8 +592,6 @@
 
         // --- D3.js Visualization Functions ---
         
-        // Removed drawMapChart function entirely
-
         function drawWinnerChart() {
             const container = document.getElementById('winner-chart');
             const parentWidth = container.offsetWidth;
@@ -742,7 +740,7 @@
             // Y-axis Label (Right: Price)
             svg.append("text")
                 .attr("transform", "rotate(90)")
-                .attr("y", -(width + margin.right - 65))
+                .attr("y", -(width + margin.right - 65) + 15) /* FIX: Added 15px to move the label away from the ticks */
                 .attr("x", (height / 2))
                 .style("text-anchor", "middle")
                 .style("font-weight", "600")
