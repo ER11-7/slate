@@ -437,7 +437,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            border-left: 1px solid #e0e0e0;
+            border: 1px solid #e0e0e0; /* Changed from border-left to full border */
             background-color: #FAFAFA;
             border-radius: 0.75rem;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
@@ -540,7 +540,7 @@
         .main-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding-top: 3rem;
+            padding: 3rem 2rem; /* Added horizontal padding to main content */
         }
 
         /* New Grid Layout for multiple cards */
@@ -609,7 +609,7 @@
 
         <h1 class="text-3xl md:text-4xl font-bold text-center mb-6 uppercase tracking-wider text-slate-800 pt-8">Interactive Analysis Dashboard</h1>
         
-        <section class="max-w-7xl mx-auto">
+        <section class="max-w-7xl mx-auto px-6">
             
             <!-- Initial Card View Grid -->
             <div id="intro-card-grid" class="analytics-dashboard-grid">
@@ -634,7 +634,7 @@
                     <p class="text-gray-500">
                         Compare incentives across Indian states: Financial, Tax, and Infrastructure support.
                     </p>
-                    <div class="text-teal-500 font-medium inline-flex items-center mt-3 hover:text-teal-600">
+                    <div class="text-teal-500 font-medium inline-flex items-flex items-center mt-3 hover:text-teal-600">
                         View Policy Analysis
                         <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
                     </div>
@@ -644,133 +644,134 @@
             
             <!-- Visualization Containers (Hidden until clicked) -->
             
-            <!-- 1. SECI Auction Analysis Dashboard -->
-            <div id="auction-visualization" class="main-container hidden">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                    <!-- VISUALIZATIONS (COL 1 & 2) -->
-                    <div class="lg:col-span-2">
-                        <div class="flex justify-between items-center mb-6 border-b pb-3">
-                            <h2 class="text-2xl font-bold text-slate-800">Analysis: SECI Ammonia Auction Results</h2>
-                            <button onclick="hideVisualization('auction')" class="text-gray-500 hover:text-teal-500 transition">
-                                 <i data-feather="minimize" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-                        <div class="grid grid-cols-1 gap-6"> 
-                            <!-- Chart 1: Winner Breakdown -->
-                            <div class="chart-panel flex flex-col">
-                                <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Capacity Awarded by Winner</h3>
-                                <div id="winner-chart" class="flex-grow min-h-[400px]"></div>
-                            </div>
-                            <!-- Chart 2: Price Analysis (Dual-Axis) -->
-                            <div class="chart-panel flex flex-col">
-                                <h3 class="text-xl font-semibold mb-4 border-b pb-2">Competitiveness: Bid Price vs. Capacity by Producer</h3>
-                                <div id="price-capacity-chart" class="flex-grow min-h-[500px]"></div>
-                            </div>
-                        </div>
-                        <div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left">
-                            <p class="font-semibold text-teal-600">Executive Summary (Auction):</p>
-                            <p>The auction revealed strong competition, with bids concentrated in key locations enabling better logistics and economies of scale. ACME Cleantech secured the lowest bid at Rs 49.75/kg, leveraging high-volume capacity commitments. The dual-axis chart highlights the inverse relationship between capacity awarded (bars) and bid price (bubble size).</p>
-                        </div>
+            <!-- 1. SECI Auction Analysis Dashboard (Updated for stacking and full-width chat) -->
+            <div id="auction-visualization" class="main-container hidden px-0"> <!-- Remove default padding here -->
+                <div class="flex justify-between items-center mb-6 border-b pb-3 mx-6">
+                    <h2 class="text-2xl font-bold text-slate-800">Analysis: SECI Ammonia Auction Results</h2>
+                    <button onclick="hideVisualization('auction')" class="text-gray-500 hover:text-teal-500 transition">
+                            <i data-feather="minimize" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                
+                <!-- CHARTS AREA (Full Width, Stacked) -->
+                <div class="grid grid-cols-1 gap-6 px-6">
+                    <!-- Chart 1: Winner Breakdown -->
+                    <div class="chart-panel flex flex-col">
+                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Capacity Awarded by Winner</h3>
+                        <div id="winner-chart" class="flex-grow min-h-[400px]"></div>
                     </div>
-                    
-                    <!-- AI Chat Panel (COL 3) -->
-                    <div class="lg:col-span-1">
-                        <div class="chat-panel-container">
-                            <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Auction Analyst</h3>
-                            <div id="chat-messages-auction" class="chat-messages">
-                                <!-- AI Messages go here -->
-                                <div class="chat-message chat-ai">
-                                    <div class="chat-ai-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
-                                    </div>
-                                    <div class="chat-bubble">
-                                        Hello! I'm Greenie, your Auction Analyst. Ask me anything about the charts to the left, like "Who won the most capacity?" or "What does the red line mean?"
-                                    </div>
+                    <!-- Chart 2: Price Analysis (Dual-Axis) -->
+                    <div class="chart-panel flex flex-col">
+                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Competitiveness: Bid Price vs. Capacity by Producer</h3>
+                        <div id="price-capacity-chart" class="flex-grow min-h-[500px]"></div>
+                    </div>
+                </div>
+
+                <!-- Executive Summary -->
+                <div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left px-6">
+                    <p class="font-semibold text-teal-600">Executive Summary (Auction):</p>
+                    <p>The auction revealed strong competition, with bids concentrated in key locations enabling better logistics and economies of scale. ACME Cleantech secured the lowest bid at Rs 49.75/kg, leveraging high-volume capacity commitments. The dual-axis chart highlights the inverse relationship between capacity awarded (bars) and bid price (bubble size).</p>
+                </div>
+
+                <!-- AI Chat Panel (Below all charts, Full Width) -->
+                <div class="mt-8 px-6">
+                    <div class="chat-panel-container">
+                        <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Auction Analyst</h3>
+                        <div id="chat-messages-auction" class="chat-messages">
+                            <!-- AI Messages go here -->
+                            <div class="chat-message chat-ai">
+                                <div class="chat-ai-icon">
+                                    <!-- New Greenie Icon: Stylized Leaf -->
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                                        <path d="M11 20A7 7 0 0 1 9.86 8.7C10.74 8.24 12 6.5 12 3a2 2 0 0 0-2 2c0 2.22-2 3.16-2 3.16A8.5 8.5 0 0 0 2 15c0 4.42 3.58 8 8 8a9 9 0 0 0 6.07-2.75" fill="none" stroke="white"/>
+                                        <path d="M17 18.5a9 9 0 0 0-6.07-2.75"/>
+                                    </svg>
+                                </div>
+                                <div class="chat-bubble">
+                                    Hello! I'm Greenie, your Auction Analyst. Ask me anything about the charts above, like "Who won the most capacity?" or "What does the red line mean?"
                                 </div>
                             </div>
-                            <form onsubmit="sendAIChatMessage(event, 'auction')">
-                                <div class="flex">
-                                    <input type="text" id="chat-input-auction" placeholder="Ask for insights..." class="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-teal-500 focus:border-teal-500" required>
-                                    <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-r-lg">
-                                        <i data-feather="send" class="w-5 h-5"></i>
-                                    </button>
-                                </div>
-                            </form>
                         </div>
+                        <form onsubmit="sendAIChatMessage(event, 'auction')">
+                            <div class="flex">
+                                <input type="text" id="chat-input-auction" placeholder="Ask for insights..." class="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-teal-500 focus:border-teal-500" required>
+                                <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-r-lg">
+                                    <i data-feather="send" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. Policy Incentive Analysis Dashboard -->
-            <div id="policy-visualization" class="main-container hidden">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- 2. Policy Incentive Analysis Dashboard (Updated for stacking and full-width chat) -->
+            <div id="policy-visualization" class="main-container hidden px-0"> <!-- Remove default padding here -->
+                <div class="flex justify-between items-center mb-6 border-b pb-3 mx-6">
+                    <h2 class="text-2xl font-bold text-slate-800">Analysis: National Green Hydrogen Policy: Incentive Comparison</h2>
+                    <button onclick="hideVisualization('policy')" class="text-gray-500 hover:text-teal-500 transition">
+                            <i data-feather="minimize" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                
+                <!-- CHARTS AND TABLES AREA (Full Width, Stacked) -->
+                <div class="grid grid-cols-1 gap-6 px-6">
 
-                    <!-- VISUALIZATIONS (COL 1 & 2) -->
-                    <div class="lg:col-span-2">
-                        <div class="flex justify-between items-center mb-6 border-b pb-3">
-                            <h2 class="text-2xl font-bold text-slate-800">Analysis: National Green Hydrogen Policy: Incentive Comparison</h2>
-                            <button onclick="hideVisualization('policy')" class="text-gray-500 hover:text-teal-500 transition">
-                                 <i data-feather="minimize" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-                        
-                        <!-- Table 1: Detailed Incentive Breakdown (Reference Data) -->
-                        <div class="chart-panel incentive-table-wrapper">
-                            <h3 class="text-xl font-semibold mb-4 border-b pb-2">Full State-by-State Policy Waivers and Subsidies</h3>
-                            <div class="overflow-x-auto flex-grow">
-                                <table id="incentive-table" class="incentive-table min-w-[1200px] bg-white">
-                                    <!-- Table populated by JavaScript -->
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Visualization Row (Stacked Bar and Radar) - Stacked Vertically -->
-                        <div class="grid grid-cols-1 gap-6 mt-6">
-                            
-                            <!-- Chart 1: Total Strength (Horizontal Stacked Bar Chart) -->
-                            <div class="chart-panel flex flex-col">
-                                <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Policy Strength by State (Incentive Categories)</h3>
-                                <div id="policy-bar-chart" class="flex-grow min-h-[400px]"></div>
-                            </div>
-                            
-                            <!-- Chart 2: Comparative Radar View (Top States) -->
-                            <div class="chart-panel flex flex-col">
-                                <h3 class="text-xl font-semibold mb-4 border-b pb-2">Policy Balance and Depth (Top 5 States Radar View)</h3>
-                                <div id="incentive-chart" class="flex-grow min-h-[500px]"></div>
-                            </div>
-                        </div>
-
-                        <div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left">
-                            <p class="font-semibold text-teal-600">Executive Summary (Policy):</p>
-                            <p>The visualizations provide a clear benchmark for state-level support. The **Horizontal Bar Chart** ranks states by total policy strength, segmented by Financial, Land/Tax, and Infrastructure incentives. The **Radar Chart** illustrates the balance of incentives offered by the top performers, crucial for investors evaluating risk diversification and long-term project viability.</p>
+                    <!-- Table 1: Detailed Incentive Breakdown (Reference Data) -->
+                    <div class="chart-panel incentive-table-wrapper">
+                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Full State-by-State Policy Waivers and Subsidies</h3>
+                        <div class="overflow-x-auto flex-grow">
+                            <table id="incentive-table" class="incentive-table min-w-[1200px] bg-white">
+                                <!-- Table populated by JavaScript -->
+                            </table>
                         </div>
                     </div>
 
-                    <!-- AI Chat Panel (COL 3) -->
-                    <div class="lg:col-span-1">
-                        <div class="chat-panel-container">
-                             <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Policy Analyst</h3>
-                            <div id="chat-messages-policy" class="chat-messages">
-                                <!-- AI Messages go here -->
-                                <div class="chat-message chat-ai">
-                                    <div class="chat-ai-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
-                                    </div>
-                                    <div class="chat-bubble">
-                                        Hello! I'm Greenie, your Policy Analyst. Ask me questions like "Which state has the best land policy?" or "Compare Rajasthan and Kerala's scores."
-                                    </div>
+                    <!-- Chart 1: Total Strength (Horizontal Stacked Bar Chart) -->
+                    <div class="chart-panel flex flex-col">
+                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Policy Strength by State (Incentive Categories)</h3>
+                        <div id="policy-bar-chart" class="flex-grow min-h-[400px]"></div>
+                    </div>
+                    
+                    <!-- Chart 2: Comparative Radar View (Top States) -->
+                    <div class="chart-panel flex flex-col">
+                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Policy Balance and Depth (Top 5 States Radar View)</h3>
+                        <div id="incentive-chart" class="flex-grow min-h-[500px]"></div>
+                    </div>
+                </div>
+
+                <!-- Executive Summary -->
+                <div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left px-6">
+                    <p class="font-semibold text-teal-600">Executive Summary (Policy):</p>
+                    <p>The visualizations provide a clear benchmark for state-level support. The <strong>Horizontal Bar Chart</strong> ranks states by total policy strength, segmented by Financial, Land/Tax, and Infrastructure incentives. The <strong>Radar Chart</strong> illustrates the balance of incentives offered by the top performers, crucial for investors evaluating risk diversification and long-term project viability.</p>
+                </div>
+
+                <!-- AI Chat Panel (Below all charts, Full Width) -->
+                <div class="mt-8 px-6">
+                    <div class="chat-panel-container">
+                           <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Policy Analyst</h3>
+                        <div id="chat-messages-policy" class="chat-messages">
+                            <!-- AI Messages go here -->
+                            <div class="chat-message chat-ai">
+                                <div class="chat-ai-icon">
+                                    <!-- New Greenie Icon: Stylized Leaf -->
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                                        <path d="M11 20A7 7 0 0 1 9.86 8.7C10.74 8.24 12 6.5 12 3a2 2 0 0 0-2 2c0 2.22-2 3.16-2 3.16A8.5 8.5 0 0 0 2 15c0 4.42 3.58 8 8 8a9 9 0 0 0 6.07-2.75" fill="none" stroke="white"/>
+                                        <path d="M17 18.5a9 9 0 0 0-6.07-2.75"/>
+                                    </svg>
+                                </div>
+                                <div class="chat-bubble">
+                                    Hello! I'm Greenie, your Policy Analyst. Ask me questions like "Which state has the best land policy?" or "Compare Rajasthan and Kerala's scores."
                                 </div>
                             </div>
-                            <form onsubmit="sendAIChatMessage(event, 'policy')">
-                                <div class="flex">
-                                    <input type="text" id="chat-input-policy" placeholder="Ask for policy insights..." class="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-teal-500 focus:border-teal-500" required>
-                                    <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-r-lg">
-                                        <i data-feather="send" class="w-5 h-5"></i>
-                                    </button>
-                                </div>
-                            </form>
                         </div>
+                        <form onsubmit="sendAIChatMessage(event, 'policy')">
+                            <div class="flex">
+                                <input type="text" id="chat-input-policy" placeholder="Ask for policy insights..." class="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-teal-500 focus:border-teal-500" required>
+                                <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-r-lg">
+                                    <i data-feather="send" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -819,7 +820,7 @@
                 The Data Revolution is Brewing.
             </div>
             <p class="modal-cta">
-                We're currently finalizing the **quantifiable data and strategic frameworks** for this **<span id="modal-topic-placeholder" class="font-bold text-teal-600"></span>** section. It's coming soon and will be worth the wait!
+                We're currently finalizing the <strong>quantifiable data and strategic frameworks</strong> for this <strong><span id="modal-topic-placeholder" class="font-bold text-teal-600"></span></strong> section. It's coming soon and will be worth the wait!
             </p>
             <a href="#" class="back-button" onclick="closeComingSoonModal()">
                 Got It! Take Me Back
@@ -894,7 +895,7 @@
             if (!userQuery) return;
 
             const currentHistory = analysisType === 'auction' ? chatHistoryAuction : chatHistoryPolicy;
-            const dataContext = analysisType === 'auction' ? JSON.stringify(auctionData) : JSON.stringify(policyScoring);
+            // Removed direct data context for LLM due to size constraints, relying on SYSTEM_INSTRUCTION to state knowledge of the visualized data.
             
             let systemInstruction = SYSTEM_INSTRUCTION_BASE + 
                 " Base your analysis only on the charts and the raw policy data provided. Additionally, you can use Google Search for external, up-to-date context when the data context is insufficient.";
@@ -911,9 +912,16 @@
             // 3. Display AI loading indicator
             const aiMessageDiv = document.createElement('div');
             aiMessageDiv.className = 'chat-message chat-ai';
-            aiMessageDiv.innerHTML = `<div class="chat-ai-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
-                                      </div><div class="chat-bubble chat-loading"></div>`;
+            
+            // Use the new Greenie SVG icon
+            const greenieIconHtml = `<div class="chat-ai-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                    <path d="M11 20A7 7 0 0 1 9.86 8.7C10.74 8.24 12 6.5 12 3a2 2 0 0 0-2 2c0 2.22-2 3.16-2 3.16A8.5 8.5 0 0 0 2 15c0 4.42 3.58 8 8 8a9 9 0 0 0 6.07-2.75" fill="none" stroke="white"/>
+                    <path d="M17 18.5a9 9 0 0 0-6.07-2.75"/>
+                </svg>
+            </div><div class="chat-bubble chat-loading"></div>`;
+
+            aiMessageDiv.innerHTML = greenieIconHtml;
             messagesContainer.appendChild(aiMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
@@ -964,7 +972,7 @@
             { producer: "Madras/Dhule", location: "Dhule", state: "Maharashtra", capacity: 70000, bidPrice: 53.05, winner: "SCC Infrastructure" },
             { producer: "Gujarat Narmada", location: "Bharuch", state: "Gujarat", capacity: 50000, bidPrice: 52.5, winner: "Oaix Renewable" },
             { producer: "Coro./Kakinada", location: "Kakinada", state: "Andhra Pradesh", capacity: 85000, bidPrice: 50.75, winner: "Jakson Green" },
-            { producer: "Coro./V'patnam", location: "Vishakhapatnam", state: "Andhra Pradesh", capacity: 50000, bidPrice: 51.89, winner: "Acme" },
+            { producer: "Coro./V'patnam", location: "Vishakhapatnam", state: "A.P.", capacity: 50000, bidPrice: 51.89, winner: "Acme" },
             { producer: "Indian Farmers/Kandla", location: "Kandla", state: "Gujarat", capacity: 100000, bidPrice: 54.73, winner: "Acme" },
             { producer: "Indian Farmers/Paradeep", location: "Paradeep", state: "Odisha", capacity: 100000, bidPrice: 49.75, winner: "ACME Cleantech" },
             { producer: "ZuariNagar, Goa", location: "Zuarinagar", state: "Goa", capacity: 25000, bidPrice: 62.84, winner: "ACME Cleantech" },
@@ -1002,20 +1010,25 @@
             const capSubsidyValue = d.CapSubsidy || '-';
             const elecWaiverValue = d.ElecWaiver || '-';
             const infraSupportValue = d.InfraSupport || '-';
-            const landSubsidyValue = d.LandSubsidy || '-';
+            const landConversionValue = d.LandConversion || '-'; // Use LandConversion for scoring
+            const stampDutyValue = d.StampDuty || '-'; // Use StampDuty for scoring
 
-            // Check if subsidy contains "100%"
+            // Score based on presence and strength of financial incentives (Elec Waiver & Capital Subsidy)
             const scoreCap = capSubsidyValue.includes("100%") ? 3 : (capSubsidyValue !== "-" && capSubsidyValue !== "Yes" ? 2 : 1);
             const scoreElec = elecWaiverValue.includes("100%") ? 3 : (elecWaiverValue !== "-" ? 2 : 1);
-            const scoreInfra = (infraSupportValue === "Yes") ? 3 : 1;
-            const scoreLand = (landSubsidyValue.includes("100%")) ? 3 : 1; // FIX: Added safety check
 
+            // Score based on land/tax benefits (Land Conversion & Stamp Duty)
+            const scoreLand = (landConversionValue.includes("100%") && stampDutyValue.includes("100")) ? 3 : (landConversionValue !== "-" || stampDutyValue !== "-" ? 2 : 1);
+
+            // Score infrastructure support
+            const scoreInfra = (infraSupportValue === "Yes") ? 3 : 1;
+            
             return {
                 state: d.state,
                 Financial: scoreCap + scoreElec, // Combined score (Max 6)
-                LandTax: scoreLand, 
+                LandTax: scoreLand * 2, // Increased weight for visual effect (Max 6)
                 Infrastructure: scoreInfra * 2, // Increased weight for visual effect (Max 6)
-                Total: (scoreCap + scoreElec) + scoreLand + (scoreInfra * 2)
+                Total: (scoreCap + scoreElec) + (scoreLand * 2) + (scoreInfra * 2) // Max 18
             };
         });
 
@@ -1026,7 +1039,7 @@
         
         // Helper function for radar points (defined once globally)
         const angleSlice = (Math.PI * 2) / incentiveKeys.length;
-        const maxRadarScore = 6;
+        const maxRadarScore = 12; // Adjusted based on max combined score for categories
         function dataToPoints(dataPoint, index, radarScale, centerX, centerY) {
             const angle = angleSlice * index - Math.PI / 2;
             return {
@@ -1040,7 +1053,6 @@
         // --- D3 Visualization Functions ---
 
         function drawWinnerChart() {
-            // ... (drawWinnerChart logic remains the same)
             const container = document.getElementById('winner-chart');
             const parentWidth = container.offsetWidth;
             const margin = { top: 30, right: 20, bottom: 40, left: 60 };
@@ -1119,7 +1131,6 @@
         }
 
         function drawPriceCapacityChart() {
-            // ... (drawPriceCapacityChart logic remains the same)
             const container = document.getElementById('price-capacity-chart');
             const parentWidth = container.offsetWidth;
             const margin = { top: 30, right: 80, bottom: 120, left: 80 };
@@ -1274,13 +1285,13 @@
             const radarChartRadius = Math.min(width, height) / 2;
             const centerX = width / 2;
             const centerY = height / 2;
-            const maxScore = 6; // Max score for Financial/Infra
+            const maxScore = 12; // Max score for categories
             const radarScale = d3.scaleLinear().range([0, radarChartRadius]).domain([0, maxScore]);
             const stateColors = d3.scaleOrdinal().domain(topStates.map(d => d.state)).range(d3.schemeCategory10);
 
-            // Draw circular grid lines (0, 2, 4, 6 score levels)
+            // Draw circular grid lines (0, 4, 8, 12 score levels)
             svg.selectAll(".grid-circle")
-                .data(d3.range(0, maxScore + 1, 2).reverse())
+                .data(d3.range(0, maxScore + 1, 4).reverse())
                 .enter().append("circle")
                 .attr("cx", centerX)
                 .attr("cy", centerY)
@@ -1334,7 +1345,7 @@
                     tooltip.html(`
                         <strong>${d.state} Policy</strong>
                         Financial/Subsidies: ${d.data[0]} / 6<br>
-                        Land/Tax: ${d.data[1]} / 3<br>
+                        Land/Tax: ${d.data[1]} / 6<br>
                         Infrastructure: ${d.data[2]} / 6
                     `)
                     .style("left", (event.pageX + 10) + "px")
@@ -1426,7 +1437,7 @@
                     tooltip.transition().duration(200).style("opacity", 0.9);
                     tooltip.html(`
                         <strong>${d.data.state}</strong>
-                        Type: ${incentiveType}<br>
+                        Type: ${incentiveType.replace("LandTax", "Land/Tax")}<br>
                         Score: ${d.data[incentiveType]}
                     `)
                     .style("left", (event.pageX + 10) + "px")
@@ -1450,7 +1461,7 @@
                 .style("text-anchor", "middle")
                 .style("font-weight", "600")
                 .style("fill", "#008080")
-                .text("Total Policy Score (Max 15)");
+                .text("Total Policy Score (Max 18)");
                 
             // Legend
             const legend = svg.append("g")
