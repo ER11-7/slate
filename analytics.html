@@ -802,96 +802,96 @@
 
     
     <script>
-        // --- LLM API Configuration and Chat History ---
-        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=";
-        let chatHistoryAuction = [];
-        let chatHistoryPolicy = [];
+        // --- LLM API Configuration and Chat History ---
+        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=";
+        let chatHistoryAuction = [];
+        let chatHistoryPolicy = [];
 
-        // Contextual AI persona and instructions
-        const SYSTEM_INSTRUCTION_BASE = "You are a concise, world-class energy and policy analyst. Your goal is to provide simple, actionable insights based on the charts and the raw policy data provided. Additionally, you can use Google Search for external, up-to-date context when the data context is insufficient.";
+        // Contextual AI persona and instructions
+        const SYSTEM_INSTRUCTION_BASE = "You are a concise, world-class energy and policy analyst. Your goal is to provide simple, actionable insights based on the charts and the raw policy data provided. Additionally, you can use Google Search for external, up-to-date context when the data context is insufficient.";
 
-        // --- DATA AND D3.JS VISUALIZATION LOGIC ---
+        // --- DATA AND D3.JS VISUALIZATION LOGIC ---
 
-        // Consolidated and Processed Data for Ammonia Auction
-        const auctionData = [
-            { producer: "Paradeep Phos.", location: "Paradeep", state: "Odisha", capacity: 75000, bidPrice: 55.75, winner: "Acme" },
-            { producer: "Krishna Phos.", location: "Meghnagar", state: "Madhya Pradesh", capacity: 70000, bidPrice: 51.8, winner: "NTPC" },
-            { producer: "Madras/Saglar", location: "Saglar", state: "Madhya Pradesh", capacity: 60000, bidPrice: 52.25, winner: "Ortana Power" },
-            { producer: "Madras/Dhule", location: "Dhule", state: "Maharashtra", capacity: 70000, bidPrice: 53.05, winner: "SCC Infrastructure" },
-            { producer: "Gujarat Narmada", location: "Bharuch", state: "Gujarat", capacity: 50000, bidPrice: 52.5, winner: "Oaix Renewable" },
-            { producer: "Coro./Kakinada", location: "Kakinada", state: "Andhra Pradesh", capacity: 85000, bidPrice: 50.75, winner: "Jakson Green" },
-            { producer: "Coro./V'patnam", location: "Vishakhapatnam", state: "A.P.", capacity: 50000, bidPrice: 51.89, winner: "Acme" },
-            { producer: "Indian Farmers/Kandla", location: "Kandla", state: "Gujarat", capacity: 100000, bidPrice: 54.73, winner: "Acme" },
-            { producer: "Indian Farmers/Paradeep", location: "Paradeep", state: "Odisha", capacity: 100000, bidPrice: 49.75, winner: "ACME Cleantech" },
-            { producer: "ZuariNagar, Goa", location: "Zuarinagar", state: "Goa", capacity: 25000, bidPrice: 62.84, winner: "ACME Cleantech" },
-            { producer: "Indorama India", location: "Haldia", state: "West Bengal", capacity: 20000, bidPrice: 64.74, winner: "ACME Cleantech" },
-            { producer: "Mangalore Chemicals", location: "Mangalore", state: "Karnataka", capacity: 15000, bidPrice: 57.65, winner: "SCC Infrastructure" },
-            { producer: "Madras Fertilizers", location: "Manali", state: "Tamil Nadu", capacity: 4000, bidPrice: 50.00, winner: "Suryam International" }
-        ];
+        // Consolidated and Processed Data for Ammonia Auction
+        const auctionData = [
+            { producer: "Paradeep Phos.", location: "Paradeep", state: "Odisha", capacity: 75000, bidPrice: 55.75, winner: "ACME Cleantech" },
+            { producer: "Krishna Phos.", location: "Meghnagar", state: "Madhya Pradesh", capacity: 70000, bidPrice: 51.8, winner: "NTPC" },
+            { producer: "Madras/Saglar", location: "Saglar", state: "Madhya Pradesh", capacity: 60000, bidPrice: 52.25, winner: "Ortana Power" },
+            { producer: "Madras/Dhule", location: "Dhule", state: "Maharashtra", capacity: 70000, bidPrice: 53.05, winner: "SCC Infrastructure" },
+            { producer: "Gujarat Narmada", location: "Bharuch", state: "Gujarat", capacity: 50000, bidPrice: 52.5, winner: "Oaix Renewable" },
+            { producer: "Coro./Kakinada", location: "Kakinada", state: "Andhra Pradesh", capacity: 85000, bidPrice: 50.75, winner: "Jakson Green" },
+            { producer: "Coro./V'patnam", location: "Vishakhapatnam", state: "A.P.", capacity: 50000, bidPrice: 51.89, winner: "ACME Cleantech" },
+            { producer: "Indian Farmers/Kandla", location: "Kandla", state: "Gujarat", capacity: 100000, bidPrice: 54.73, winner: "ACME Cleantech" },
+            { producer: "Indian Farmers/Paradeep", location: "Paradeep", state: "Odisha", capacity: 100000, bidPrice: 49.75, winner: "ACME Cleantech" },
+            { producer: "ZuariNagar, Goa", location: "Zuarinagar", state: "Goa", capacity: 25000, bidPrice: 62.84, winner: "ACME Cleantech" },
+            { producer: "Indorama India", location: "Haldia", state: "West Bengal", capacity: 20000, bidPrice: 64.74, winner: "ACME Cleantech" },
+            { producer: "Mangalore Chemicals", location: "Mangalore", state: "Karnataka", capacity: 15000, bidPrice: 57.65, winner: "SCC Infrastructure" },
+            { producer: "Madras Fertilizers", location: "Manali", state: "Tamil Nadu", capacity: 4000, bidPrice: 50.00, winner: "Suryam International" }
+        ];
 
-        const winnerData = d3.rollups(auctionData, 
-            v => d3.sum(v, d => d.capacity), 
-            d => d.winner
-        ).map(([winner, totalCapacity]) => ({ winner, totalCapacity }));
+        const winnerData = d3.rollups(auctionData, 
+            v => d3.sum(v, d => d.capacity), 
+            d => d.winner
+        ).map(([winner, totalCapacity]) => ({ winner, totalCapacity }));
 
-        // Consolidated and Processed Data for Green Hydrogen Policy (Incentives)
-        const fullRawPolicyData = [
-            { state: "Odisha", ElecWaiver: "100% * 20 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "Yes" },
-            { state: "Madhya Pradesh", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "50", CapSubsidy: "100%", InfraSupport: "Yes" },
-            { state: "Gujarat", ElecWaiver: "100%", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "1.2", InfraSupport: "Yes" },
-            { state: "Andhra Pradesh", ElecWaiver: "50% * 5 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
-            { state: "West Bengal", ElecWaiver: "-", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "25 * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "Yes" },
-            { state: "Tamil Nadu", ElecWaiver: "-", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "25, 35, 45", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
-            { state: "Karnataka", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
-            { state: "Kerala", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "2 * 5", InfraSupport: "Yes" },
-            { state: "Rajasthan", ElecWaiver: "50% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "25", CapSubsidy: "5", InfraSupport: "Yes" },
-            { state: "Uttar Pradesh", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
-            { state: "Punjab", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
-            { state: "Haryana", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
-            { state: "Assam", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
-            { state: "Telangana", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
-        ];
+        // Consolidated and Processed Data for Green Hydrogen Policy (Incentives)
+        const fullRawPolicyData = [
+            { state: "Odisha", ElecWaiver: "100% * 20 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "Yes" },
+            { state: "Madhya Pradesh", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "50", CapSubsidy: "100%", InfraSupport: "Yes" },
+            { state: "Gujarat", ElecWaiver: "100%", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "1.2", InfraSupport: "Yes" },
+            { state: "Andhra Pradesh", ElecWaiver: "50% * 5 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
+            { state: "West Bengal", ElecWaiver: "-", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "25 * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "Yes" },
+            { state: "Tamil Nadu", ElecWaiver: "-", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "25, 35, 45", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
+            { state: "Karnataka", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
+            { state: "Kerala", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "2 * 5", InfraSupport: "Yes" },
+            { state: "Rajasthan", ElecWaiver: "50% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "25", CapSubsidy: "5", InfraSupport: "Yes" },
+            { state: "Uttar Pradesh", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
+            { state: "Punjab", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
+            { state: "Haryana", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
+            { state: "Assam", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
+            { state: "Telangana", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
+        ];
 
-        // Scoring for Radar Chart (Higher Score = More Comprehensive Policy)
-        const policyScoring = fullRawPolicyData.map(d => {
-            // Scoring logic: 3 for high incentive, 2 for medium, 1 for low/none/unspecified
-            const capSubsidyValue = d.CapSubsidy || '-';
-            const elecWaiverValue = d.ElecWaiver || '-';
-            const infraSupportValue = d.InfraSupport || '-';
-            const landSubsidyValue = d.LandSubsidy || '-';
+        // Scoring for Radar Chart (Higher Score = More Comprehensive Policy)
+        const policyScoring = fullRawPolicyData.map(d => {
+            // Scoring logic: 3 for high incentive, 2 for medium, 1 for low/none/unspecified
+            const capSubsidyValue = d.CapSubsidy || '-';
+            const elecWaiverValue = d.ElecWaiver || '-';
+            const infraSupportValue = d.InfraSupport || '-';
+            const landSubsidyValue = d.LandSubsidy || '-';
 
-            // Check if subsidy contains "100%"
-            const scoreCap = capSubsidyValue.includes("100%") ? 3 : (capSubsidyValue !== "-" && capSubsidyValue !== "Yes" ? 2 : 1);
-            const scoreElec = elecWaiverValue.includes("100%") ? 3 : (elecWaiverValue !== "-" ? 2 : 1);
-            const scoreInfra = (infraSupportValue === "Yes") ? 3 : 1;
-            const scoreLand = (landSubsidyValue.includes("100%")) ? 3 : 1; // FIX: Added safety check
+            // Check if subsidy contains "100%"
+            const scoreCap = capSubsidyValue.includes("100%") ? 3 : (capSubsidyValue !== "-" && capSubsidyValue !== "Yes" ? 2 : 1);
+            const scoreElec = elecWaiverValue.includes("100%") ? 3 : (elecWaiverValue !== "-" ? 2 : 1);
+            const scoreInfra = (infraSupportValue === "Yes") ? 3 : 1;
+            const scoreLand = (landSubsidyValue.includes("100%")) ? 3 : 1; // FIX: Added safety check
 
-            return {
-                state: d.state,
-                Financial: scoreCap + scoreElec, // Combined score (Max 6)
-                LandTax: scoreLand * 2, // Increased weight for visual effect (Max 6)
-                Infrastructure: scoreInfra * 2, // Increased weight for visual effect (Max 6)
-                Total: (scoreCap + scoreElec) + (scoreLand * 2) + (scoreInfra * 2) // Max 18
-            };
-        });
+            return {
+                state: d.state,
+                Financial: scoreCap + scoreElec, // Combined score (Max 6)
+                LandTax: scoreLand * 2, // Increased weight for visual effect (Max 6)
+                Infrastructure: scoreInfra * 2, // Increased weight for visual effect (Max 6)
+                Total: (scoreCap + scoreElec) + (scoreLand * 2) + (scoreInfra * 2) // Max 18
+            };
+        });
 
-        // Sort by Total Score for Bar Chart
-        policyScoring.sort((a, b) => b.Total - a.Total);
-        
-        const incentiveKeys = ["Financial", "LandTax", "Infrastructure"];
-        
-        // Helper function for radar points (defined once globally)
-        const angleSlice = (Math.PI * 2) / incentiveKeys.length;
-        const maxRadarScore = 12; // Adjusted based on max combined score for categories
-        function dataToPoints(dataPoint, index, radarScale, centerX, centerY) {
-            const angle = angleSlice * index - Math.PI / 2;
-            return {
-                x: centerX + Math.cos(angle) * radarScale(dataPoint),
-                y: centerY + Math.sin(angle) * radarScale(dataPoint),
-                angle: angle,
-                value: dataPoint
-            };
-        };
+        // Sort by Total Score for Bar Chart
+        policyScoring.sort((a, b) => b.Total - a.Total);
+        
+        const incentiveKeys = ["Financial", "LandTax", "Infrastructure"];
+        
+        // Helper function for radar points (defined once globally)
+        const angleSlice = (Math.PI * 2) / incentiveKeys.length;
+        const maxRadarScore = 12; // Adjusted based on max combined score for categories
+        function dataToPoints(dataPoint, index, radarScale, centerX, centerY) {
+            const angle = angleSlice * index - Math.PI / 2;
+            return {
+                x: centerX + Math.cos(angle) * radarScale(dataPoint),
+                y: centerY + Math.sin(angle) * radarScale(dataPoint),
+                angle: angle,
+                value: dataPoint
+            };
+        };
         
         // --- D3 Visualization Functions ---
 
