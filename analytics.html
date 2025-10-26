@@ -560,7 +560,7 @@
             
             <!-- Left Zone - Branding & Data -->
             <div class="brand-container">
-                <div class="logo">SLATE</div>
+                <div class="logo">SLATE">SLATE</div>
                 <div class="datetime-display">
                     <span id="time" class="time-display"></span>
                     <span id="date" class="date-display"></span>
@@ -1419,8 +1419,8 @@
             const currentHistory = analysisType === 'auction' ? chatHistoryAuction : chatHistoryPolicy;
             const dataContext = analysisType === 'auction' ? JSON.stringify(auctionData) : JSON.stringify(policyScoring);
             
-            let systemInstruction = SYSTEM_INSTRUCTION_BASE + 
-                " Base your analysis only on the charts and the raw policy data provided. Additionally, you can use Google Search for external, up-to-date context when the data context is insufficient.";
+            // CRITICAL: Updated System Instruction to focus AI on general topics and external/global data.
+            let systemInstruction = "You are Greenie, a global expert energy and policy analyst. You must use Google Search to provide current, relevant, and global insights on renewable energy, batteries, hydrogen fuels, and related government orders/policies. Do not summarize the specific chart data unless directly asked, and always prioritize external, worldwide context.";
 
             // 1. Display user message
             const userMessageDiv = document.createElement('div');
