@@ -560,7 +560,7 @@
             
             <!-- Left Zone - Branding & Data -->
             <div class="brand-container">
-                <div class="logo">SLATE">SLATE</div>
+                <div class="logo">SLATE</div>
                 <div class="datetime-display">
                     <span id="time" class="time-display"></span>
                     <span id="date" class="date-display"></span>
@@ -665,14 +665,14 @@
 
                 <!-- AI Chat Panel (Below all charts, Full Width) --><div class="mt-8 px-6">
                     <div class="chat-panel-container">
-                        <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Auction Analyst</h3>
+                        <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie</h3>
                         <div id="chat-messages-auction" class="chat-messages">
                             <!-- AI Messages go here --><div class="chat-message chat-ai">
                                 <div class="chat-ai-icon">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
                                 </div>
                                 <div class="chat-bubble">
-                                    Hello! I'm Greenie, your Auction Analyst. Ask me anything about the charts above, like "Who won the most capacity?" or "What does the red line mean?"
+                                    Hello! I'm Greenie. Ask me anything about the charts above, like "Who won the most capacity?" or "What does the red line mean?"
                                 </div>
                             </div>
                         </div>
@@ -727,7 +727,7 @@
 
                 <!-- AI Chat Panel (Below charts, Full Width) --><div class="mt-8 px-6 lg:col-span-3"> <!-- FIX: Added lg:col-span-3 to force full width on desktop -->
                     <div class="chat-panel-container">
-                         <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Policy Analyst</h3>
+                         <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie</h3>
                         <div id="chat-messages-policy" class="chat-messages">
                             <!-- AI Messages go here --><div class="chat-message chat-ai">
                                 <div class="chat-ai-icon">
@@ -793,7 +793,7 @@
             <p class="modal-cta">
                 We're currently finalizing the <strong>quantifiable data and strategic frameworks</strong> for this <strong><span id="modal-topic-placeholder" class="font-bold text-teal-600"></span></strong> section. It's coming soon and will be worth the wait!
             </p>
-            <a href="#" class="back-button" onclick="closeComingSoonModal()">
+            <a href="#" onclick="closeComingSoonModal()">
                 Got It! Take Me Back
             </a>
         </div>
@@ -806,8 +806,9 @@
         let chatHistoryAuction = [];
         let chatHistoryPolicy = [];
 
-        // Contextual AI persona and instructions
-        const SYSTEM_INSTRUCTION_BASE = "You are a concise, world-class energy and policy analyst. Your goal is to provide simple, actionable insights based on the charts and the raw policy data provided. Additionally, you can use Google Search for external, up-to-date context when the data context is insufficient.";
+        // CRITICAL: UPDATED SYSTEM INSTRUCTION FOR GLOBAL ENERGY EXPERTISE
+        // This unified instruction will be used for both chat panels.
+        const SYSTEM_INSTRUCTION_BASE = "You are Greenie, a highly capable global expert in energy transition and policy. Your responses must be concise, accurate, and focus on providing global context, current news, and comparative analysis related to renewable energy, battery storage, green fuels (like hydrogen/ammonia), and government regulations worldwide. Do not use asterisks or markdown formatting. Only reference the chart data when directly asked; otherwise, prioritize external, worldwide context using Google Search.";
 
         // --- DATA AND D3.JS VISUALIZATION LOGIC ---
 
