@@ -359,7 +359,7 @@
             fill: #4B5563;
         }
         .x-axis-bottom text {
-             text-anchor: end;
+             text-anchor: middle; /* Set default to middle for diverging chart */
         }
         .y-axis-right path, .y-axis-right line {
             stroke: #EF4444; /* Match Bid Price color */
@@ -773,7 +773,7 @@
                     </div>
 
                     <!-- Chart 1: Installed Wind and Solar Capacity (Stacked Bar) --><div class="chart-panel flex flex-col">
-                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Installed Solar & Wind Capacity by State (MW)</h3>
+                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Installed Solar & Wind Capacity by State (GW)</h3>
                         <div id="re-capacity-chart" class="flex-grow min-h-[600px]"></div>
                     </div>
 
@@ -840,27 +840,6 @@
         </div>
     </footer>
 
-    <!-- Modal HTML/JS (MUST be present in all files if called by modal links) --><div id="coming-soon-modal-overlay" class="modal-overlay hidden">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeComingSoonModal()">
-                <i data-feather="x" class="w-6 h-6"></i>
-            </button>
-            <div class="modal-title">
-                <span id="modal-topic-title"></span>
-            </div>
-            <div class="modal-subtitle">
-                The Data Revolution is Brewing.
-            </div>
-            <p class="modal-cta">
-                We're currently finalizing the <strong>quantifiable data and strategic frameworks</strong> for this <strong><span id="modal-topic-placeholder" class="font-bold text-teal-600"></span></strong> section. It's coming soon and will be worth the wait!
-            </p>
-            <a href="#" class="back-button" onclick="closeComingSoonModal()">
-                Got It! Take Me Back
-            </a>
-        </div>
-    </div>
-
-    
     <script>
         // --- LLM API Configuration and Chat History ---
         const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=";
@@ -869,12 +848,16 @@
         let chatHistoryRECapacity = []; // New chat history for RE Capacity
 
         // CRITICAL: UPDATED SYSTEM INSTRUCTION FOR GLOBAL ENERGY EXPERTISE
-        const SYSTEM_INSTRUCTION_BASE = "You are Greenie, a highly capable global expert in energy transition and policy. You must use Google Search to provide current, relevant, and global insights on renewable energy, batteries, hydrogen fuels, and related government orders/policies. Do not summarize the specific chart data unless directly asked, and always prioritize external, worldwide context.";
+        const SYSTEM_INSTRUCTION_BASE = "You are Greenie, a highly capable global expert in energy transition and policy. Your responses must be concise, accurate, and focus on providing global context, current news, and comparative analysis related to renewable energy, batteries, hydrogen fuels, and government regulations worldwide. Do not use asterisks or markdown formatting. Only reference the chart data when directly asked; otherwise, prioritize external, worldwide context using Google Search.";
 
         // --- DATA AND D3.JS VISUALIZATION LOGIC ---
 
+        // =======================================================
+        // DATA DEFINITIONS (HOISTED)
+        // =======================================================
+
         // Consolidated and Processed Data for Ammonia Auction (Updated with ACME Cleantech consolidated)
-        const auctionData = [
+        let auctionData = [
             { producer: "Paradeep Phos.", location: "Paradeep", state: "Odisha", capacity: 75000, bidPrice: 55.75, winner: "ACME Cleantech" },
             { producer: "Krishna Phos.", location: "Meghnagar", state: "Madhya Pradesh", capacity: 70000, bidPrice: 51.8, winner: "NTPC" },
             { producer: "Madras/Saglar", location: "Saglar", state: "Madhya Pradesh", capacity: 60000, bidPrice: 52.25, winner: "Ortana Power" },
@@ -890,13 +873,13 @@
             { producer: "Madras Fertilizers", location: "Manali", state: "Tamil Nadu", capacity: 4000, bidPrice: 50.00, winner: "Suryam International" }
         ];
 
-        const winnerData = d3.rollups(auctionData, 
+        let winnerData = d3.rollups(auctionData, 
             v => d3.sum(v, d => d.capacity), 
             d => d.winner
         ).map(([winner, totalCapacity]) => ({ winner, totalCapacity }));
 
         // Consolidated and Processed Data for Green Hydrogen Policy (Incentives)
-        const fullRawPolicyData = [
+        let fullRawPolicyData = [
             { state: "Odisha", ElecWaiver: "100% * 20 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "Yes" },
             { state: "Madhya Pradesh", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "50", CapSubsidy: "100%", InfraSupport: "Yes" },
             { state: "Gujarat", ElecWaiver: "100%", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "1.2", InfraSupport: "Yes" },
@@ -914,7 +897,7 @@
         ];
 
         // Scoring for Radar Chart (Higher Score = More Comprehensive Policy)
-        const policyScoring = fullRawPolicyData.map(d => {
+        let policyScoring = fullRawPolicyData.map(d => {
             // Scoring logic: 3 for high incentive, 2 for medium, 1 for low/none/unspecified
             const capSubsidyValue = d.CapSubsidy || '-';
             const elecWaiverValue = d.ElecWaiver || '-';
@@ -975,11 +958,16 @@
             { state: "Rajasthan", "Wind Capacity": 5208.75, "Ground mounted solar": 25169.45, "Solar Rooftop": 1591.8, "Hybrid Solar": 1980, "Off-grid Solar/KUSUM": 805.45, Total: 34755.45 },
             { state: "Tamil Nadu", "Wind Capacity": 11765.07, "Ground mounted solar": 9359.57, "Solar Rooftop": 1003.3, "Hybrid Solar": 0, "Off-grid Solar/KUSUM": 70.4, Total: 22198.34 },
             { state: "Telangana", "Wind Capacity": 128.1, "Ground mounted solar": 4360.49, "Solar Rooftop": 472.9, "Hybrid Solar": 0, "Off-grid Solar/KUSUM": 8.71, Total: 4970.2 },
-            // Grand Totals were calculated in the data extraction, but we process them here for the chart:
-            { state: "TOTAL", wind: 51292.25, solar: 84426.59 + 18369.53, hybrid: 3021.82, offgrid: 5014.34, Total: 162126.53 }
-        ];
+            { state: "Uttar Pradesh", "Wind Capacity": 0, "Ground mounted solar": 2722.12, "Solar Rooftop": 329.9, "Hybrid Solar": 0, "Off-grid Solar/KUSUM": 324.72, Total: 3376.74 },
+            { state: "Uttarakhand", "Wind Capacity": 0, "Ground mounted solar": 298.4, "Solar Rooftop": 273.71, "Hybrid Solar": 0, "Off-grid Solar/KUSUM": 20.96, Total: 593.07 },
+            { state: "West Bengal", "Wind Capacity": 0, "Ground mounted solar": 240.35, "Solar Rooftop": 67.13, "Hybrid Solar": 0, "Off-grid Solar/KUSUM": 13.14, Total: 320.62 },
+            // Filter out smaller states/UTs for clearer visualization in D3 chart
+        ].filter(d => d.Total > 500); 
 
-        // --- D3 Visualization Functions ---
+
+        // =======================================================
+        // FUNCTION DEFINITIONS (HOISTED)
+        // =======================================================
 
         function drawWinnerChart() {
             const container = document.getElementById('winner-chart');
@@ -998,12 +986,12 @@
 
             const tooltip = d3.select("body").select(".tooltip").empty() ? d3.select("body").append("div").attr("class", "tooltip") : d3.select("body").select(".tooltip");
             
-            const x = d3.scaleBand()
+            let x = d3.scaleBand()
                 .range([0, width])
                 .domain(winnerData.map(d => d.winner))
                 .padding(0.2);
 
-            const y = d3.scaleLinear()
+            let y = d3.scaleLinear()
                 .domain([0, d3.max(winnerData, d => d.totalCapacity) * 1.1])
                 .range([height, 0]);
 
@@ -1077,16 +1065,16 @@
             const tooltip = d3.select("body").select(".tooltip").empty() ? d3.select("body").append("div").attr("class", "tooltip") : d3.select("body").select(".tooltip");
 
             // --- Scales ---
-            const x = d3.scaleBand()
+            let x = d3.scaleBand()
                 .range([0, width])
                 .domain(auctionData.map(d => d.producer))
                 .padding(0.2);
 
-            const yCapacity = d3.scaleLinear()
+            let yCapacity = d3.scaleLinear()
                 .domain([0, d3.max(auctionData, d => d.capacity) * 1.1])
                 .range([height, 0]);
 
-            const yPrice = d3.scaleLinear()
+            let yPrice = d3.scaleLinear()
                 .domain([d3.min(auctionData, d => d.bidPrice) * 0.95, d3.max(auctionData, d => d.bidPrice) * 1.05])
                 .range([height, 0]);
 
@@ -1094,7 +1082,7 @@
                 .domain(auctionData.map(d => d.winner))
                 .range(["#008080", "#4B5563", "#D97706", "#EF4444", "#3B82F6", "#008080", "#4B5563"]); 
 
-            const rScale = d3.scaleLinear()
+            let rScale = d3.scaleLinear()
                 .domain([d3.min(auctionData, d => d.bidPrice), d3.max(auctionData, d => d.bidPrice)])
                 .range([12, 4]); // Size range: 12 (lowest bid) to 4 (highest bid)
 
@@ -1216,8 +1204,10 @@
             const centerX = width / 2;
             const centerY = height / 2;
             const maxScore = 12; // Max score for Financial/Infra
-            const radarScale = d3.scaleLinear().range([0, radarChartRadius]).domain([0, maxScore]);
-            const stateColors = d3.scaleOrdinal().domain(topStates.map(d => d.state)).range(d3.schemeCategory10);
+            let radarScale = d3.scaleLinear().range([0, radarChartRadius]).domain([0, maxScore]);
+            const stateColors = d3.scaleOrdinal()
+                .domain(topStates.map(d => d.state))
+                .range(["#008080", "#4B5563", "#D97706", "#EF4444", "#3B82F6"]); // Using distinct colors
 
             // Draw circular grid lines (0, 2, 4, 6 score levels)
             svg.selectAll(".grid-circle")
@@ -1336,11 +1326,11 @@
             const stackedData = stack(policyScoring); 
 
             // Scales
-            const x = d3.scaleLinear()
+            let x = d3.scaleLinear()
                 .domain([0, d3.max(policyScoring, d => d.Total)])
                 .range([0, width]);
 
-            const y = d3.scaleBand()
+            let y = d3.scaleBand()
                 .range([0, height])
                 .domain(policyScoring.map(d => d.state))
                 .padding(0.1);
@@ -1490,11 +1480,11 @@
                 .html(d => d.value);
         }
         
-        // --- NEW RE CAPACITY CHART ---
+        // --- NEW RE CAPACITY CHART (Tableau Style Diverging Stacked Bar) ---
         function drawInstalledREChart() {
             const container = document.getElementById('re-capacity-chart');
             const parentWidth = container.offsetWidth;
-            const margin = { top: 20, right: 20, bottom: 40, left: 160 }; // Increased left margin for longer state names
+            const margin = { top: 20, right: 30, bottom: 40, left: 160 }; // Increased left margin for longer state names
             const width = parentWidth - margin.left - margin.right;
             const height = reCapacityData.length * 35 + 50; // Dynamic height based on number of states
 
@@ -1508,51 +1498,65 @@
 
             const tooltip = d3.select("body").select(".tooltip").empty() ? d3.select("body").append("div").attr("class", "tooltip") : d3.select("body").select(".tooltip");
             
-            // Define keys for stacking (Wind Capacity, Ground Mounted Solar, Solar Rooftop, Hybrid Solar, Off-grid Solar/KUSUM)
-            const capacityKeys = ['Wind Capacity', 'Ground mounted solar', 'Solar Rooftop', 'Hybrid Solar', 'Off-grid Solar/KUSUM'];
+            // Define keys for Solar (positive stack) and Wind (negative stack)
+            const solarKeys = ['Ground mounted solar', 'Solar Rooftop', 'Hybrid Solar', 'Off-grid Solar/KUSUM'];
+            const windKeys = ['Wind Capacity'];
             
-            // Process data for stacking (Ensure all states are included)
-            const reDataStacked = reCapacityData
-                .filter(d => d.state !== 'Others' && d.state !== 'TOTAL') // Filter out totals if they exist in the raw set
+            // 1. Process data: Separate solar and wind, and calculate absolute max extent for symmetrical axis
+            let processedData = reCapacityData
                 .map(d => {
-                    // Calculate total needed for sorting, if not already provided in raw data
-                    let total = 0;
-                    capacityKeys.forEach(key => { total += d[key] || 0; });
-
+                    let solarSum = 0;
+                    solarKeys.forEach(key => { solarSum += d[key] || 0; });
+                    let windSum = d['Wind Capacity'] || 0;
+                    
                     return {
                         state: d.state,
-                        'Wind Capacity': d['Wind Capacity'] || 0,
                         'Ground mounted solar': d['Ground mounted solar'] || 0,
                         'Solar Rooftop': d['Solar Rooftop'] || 0,
                         'Hybrid Solar': d['Hybrid Solar'] || 0,
                         'Off-grid Solar/KUSUM': d['Off-grid Solar/KUSUM'] || 0,
-                        Total: total // Use calculated total
+                        'Wind Capacity': -windSum, // Diverging: Wind is negative
+                        TotalSolar: solarSum,
+                        TotalWind: windSum
                     };
-                }).sort((a, b) => b.Total - a.Total); // Sort descending
+                }).filter(d => d.TotalSolar + d.TotalWind > 0) // Filter out zero totals
+                .sort((a, b) => (b.TotalSolar + b.TotalWind) - (a.TotalSolar + a.TotalWind)); // Sort descending
 
-            const stack = d3.stack().keys(capacityKeys);
-            const stackedData = stack(reDataStacked);
+            const maxTotalCapacity = d3.max(processedData, d => d.TotalSolar + d.TotalWind);
+            const maxExtent = maxTotalCapacity; // Max value on either side of the 0 axis
 
-            // Scales
-            const x = d3.scaleLinear()
-                .domain([0, d3.max(reDataStacked, d => d.Total) * 1.05])
+            // 2. Stack the data separately for solar (positive) and wind (negative)
+            const stackSolar = d3.stack().keys(solarKeys);
+            let stackedSolar = stackSolar(processedData);
+
+            const stackWind = d3.stack().keys(windKeys);
+            let stackedWind = stackWind(processedData);
+
+            // 3. Scales
+            let x = d3.scaleLinear()
+                .domain([-maxExtent, maxExtent]) // Symmetrical domain for diverging chart
                 .range([0, width]);
 
-            const y = d3.scaleBand()
+            let y = d3.scaleBand()
                 .range([0, height])
-                .domain(reDataStacked.map(d => d.state))
+                .domain(processedData.map(d => d.state))
                 .padding(0.2);
 
-            const colorScale = d3.scaleOrdinal()
-                .domain(capacityKeys)
-                .range(["#3B82F6", "#008080", "#10B981", "#FBBF24", "#EF4444"]); // Blue (Wind), Teal (Ground), Emerald (Rooftop), Amber (Hybrid), Red (Off-grid)
+            // Separate color scales for the Solar stack (Green/Teal) and Wind stack (Blue)
+            const colorScaleSolar = d3.scaleOrdinal()
+                .domain(['Ground mounted solar', 'Solar Rooftop', 'Hybrid Solar', 'Off-grid Solar/KUSUM'])
+                .range(["#10B981", "#059669", "#FBBF24", "#EF4444"]); // Emerald, Darker Green, Amber, Red
 
-            // Draw bars
+            const colorScaleWind = d3.scaleOrdinal()
+                .domain(['Wind Capacity'])
+                .range(["#3B82F6"]); // Blue/Teal for Wind
+
+            // 4. Draw Bars (Solar Stack - Right/Positive Side)
             svg.append("g")
                 .selectAll("g")
-                .data(stackedData)
+                .data(stackedSolar)
                 .enter().append("g")
-                .attr("fill", d => colorScale(d.key))
+                .attr("fill", d => colorScaleSolar(d.key))
                 .selectAll("rect")
                 .data(d => d)
                 .enter().append("rect")
@@ -1564,9 +1568,9 @@
                     const capacityType = d3.select(event.currentTarget.parentNode).datum().key;
                     tooltip.transition().duration(200).style("opacity", 0.9);
                     tooltip.html(`
-                        <strong>${d.data.state}</strong>
+                        <strong>${d.data.state} (Solar)</strong>
                         Type: ${capacityType}<br>
-                        Capacity: ${(d.data[capacityType] / 1000).toFixed(2)} GW (${d.data[capacityType].toLocaleString()} MW)
+                        Capacity: ${(d.data[capacityType] / 1000).toFixed(2)} GW
                     `)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 28) + "px");
@@ -1575,13 +1579,56 @@
                     tooltip.transition().duration(500).style("opacity", 0);
                 });
 
-            // Axes
+            // 5. Draw Bars (Wind Stack - Left/Negative Side)
+            svg.append("g")
+                .selectAll("g")
+                .data(stackedWind)
+                .enter().append("g")
+                .attr("fill", d => colorScaleWind(d.key))
+                .selectAll("rect")
+                .data(d => d)
+                .enter().append("rect")
+                .attr("x", d => x(d[1])) // Start position is the end of the stack (d[1] since negative)
+                .attr("y", d => y(d.data.state))
+                .attr("width", d => x(d[0]) - x(d[1]))
+                .attr("height", y.bandwidth())
+                .on("mouseover", (event, d) => {
+                    const capacityType = d3.select(event.currentTarget.parentNode).datum().key;
+                    tooltip.transition().duration(200).style("opacity", 0.9);
+                    tooltip.html(`
+                        <strong>${d.data.state} (Wind)</strong>
+                        Capacity: ${(d.data.TotalWind / 1000).toFixed(2)} GW
+                    `)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", () => {
+                    tooltip.transition().duration(500).style("opacity", 0);
+                });
+
+            // 6. Axes
+            // X-Axis (Bottom)
+            const xAxis = d3.axisBottom(x).tickFormat(d => (Math.abs(d) / 1000).toFixed(0) + " GW");
             svg.append("g")
                 .attr("transform", `translate(0,${height})`)
-                .call(d3.axisBottom(x).tickFormat(d => d / 1000 + " GW"));
+                .call(xAxis);
 
+            // Y-Axis (States) - Centered at 0
+            const yAxis = d3.axisLeft(y).tickSize(0).tickPadding(8);
             svg.append("g")
-                .call(d3.axisLeft(y));
+                .attr("transform", `translate(${x(0)}, 0)`)
+                .call(yAxis)
+                .selectAll("text")
+                .style("text-anchor", "middle"); // Center state labels at the divergence line
+
+            // Center vertical line at X=0
+            svg.append("line")
+                .attr("x1", x(0))
+                .attr("x2", x(0))
+                .attr("y1", 0)
+                .attr("y2", height)
+                .style("stroke", "#4B5563")
+                .style("stroke-width", 1);
             
             // X-axis Label
             svg.append("text")
@@ -1589,28 +1636,36 @@
                 .style("text-anchor", "middle")
                 .style("font-weight", "600")
                 .style("fill", "#008080")
-                .text("Total Installed Capacity (GW)");
+                .text("Installed Capacity (Gigawatts)");
                 
-            // Legend
+            // 7. Legend (Updated for new components)
+            const legendKeys = [
+                { key: 'Wind Capacity', color: colorScaleWind('Wind Capacity') },
+                { key: 'Ground mounted solar', color: colorScaleSolar('Ground mounted solar') },
+                { key: 'Solar Rooftop', color: colorScaleSolar('Solar Rooftop') },
+                { key: 'Hybrid Solar', color: colorScaleSolar('Hybrid Solar') },
+                { key: 'Off-grid Solar/KUSUM', color: colorScaleSolar('Off-grid Solar/KUSUM') }
+            ];
+
             const legend = svg.append("g")
-                .attr("transform", `translate(0, ${height + 30})`);
+                .attr("transform", `translate(10, ${height + 35})`); // Adjust starting Y position
 
             legend.selectAll(".re-legend")
-                .data(capacityKeys)
+                .data(legendKeys)
                 .enter().append("g")
-                .attr("transform", (d, i) => `translate(${i % 3 * 200}, ${Math.floor(i / 3) * 20})`)
+                .attr("transform", (d, i) => `translate(${i % 3 * 220}, ${Math.floor(i / 3) * 20})`)
                 .each(function(d) {
                     d3.select(this).append("rect")
                         .attr("x", 0)
                         .attr("y", 0)
                         .attr("width", 10)
                         .attr("height", 10)
-                        .style("fill", colorScale(d));
+                        .style("fill", d.color);
                     
                     d3.select(this).append("text")
                         .attr("x", 15)
                         .attr("y", 9)
-                        .text(d)
+                        .text(d.key)
                         .style("font-size", "0.85rem")
                         .style("fill", "#4B5563");
                 });
