@@ -6,8 +6,7 @@
     <title>SLATE | SECI Green Ammonia Auction Analysis</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <!-- Load D3.js Library for Visualization -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Load D3.js Library for Visualization --><script src="https://d3js.org/d3.v7.min.js"></script>
     
     <style>
         /* TAILWIND CONFIG */
@@ -555,12 +554,10 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans">
     
-    <!-- Navigation Bar (Fixed) -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+    <!-- Navigation Bar (Fixed) --><nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
         <div class="container mx-auto px-6 py-3 flex items-center justify-between">
             
-            <!-- Left Zone - Branding & Data -->
-            <div class="brand-container">
+            <!-- Left Zone - Branding & Data --><div class="brand-container">
                 <div class="logo">SLATE</div>
                 <div class="datetime-display">
                     <span id="time" class="time-display"></span>
@@ -568,13 +565,11 @@
                 </div>
             </div>
 
-            <!-- Right Zones - Navigation and Search -->
-            <div class="nav-main">
+            <!-- Right Zones - Navigation and Search --><div class="nav-main">
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     
-                    <!-- Dropdown 1: Insights & Analytics -->
-                    <li class="dropdown">
+                    <!-- Dropdown 1: Insights & Analytics --><li class="dropdown">
                         <div class="dropdown-trigger">Insights & Analytics <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
                         <div class="dropdown-menu">
                             <a href="reports.html" class="dropdown-item">Reports</a>
@@ -584,8 +579,7 @@
                         </div>
                     </li>
                     
-                    <!-- Dropdown 2: Energy Nexus (STILL USES MODAL) -->
-                    <li class="dropdown">
+                    <!-- Dropdown 2: Energy Nexus (STILL USES MODAL) --><li class="dropdown">
                         <div class="dropdown-trigger">Energy Nexus <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
                         <div class="dropdown-menu">
                             <a href="policy.html" class="dropdown-item">Policy Updates</a>
@@ -611,11 +605,9 @@
         
         <section class="max-w-7xl mx-auto px-6">
             
-            <!-- Initial Card View Grid -->
-            <div id="intro-card-grid" class="analytics-dashboard-grid">
+            <!-- Initial Card View Grid --><div id="intro-card-grid" class="analytics-dashboard-grid">
                 
-                <!-- Card 1: SECI Auction Analysis -->
-                <div class="visualization-card" onclick="showVisualization('auction')">
+                <!-- Card 1: SECI Auction Analysis --><div class="visualization-card" onclick="showVisualization('auction')">
                     <i data-feather="bar-chart-2" class="w-12 h-12 mx-auto mb-4 text-teal-500"></i>
                     <h1 class="text-slate-800">SECI Green Ammonia Auction Results</h1>
                     <p class="text-gray-500">
@@ -627,8 +619,7 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Policy Incentive Analysis (NEW) -->
-                <div class="visualization-card" onclick="showVisualization('policy')">
+                <!-- Card 2: Policy Incentive Analysis (NEW) --><div class="visualization-card" onclick="showVisualization('policy')">
                     <i data-feather="compass" class="w-12 h-12 mx-auto mb-4 text-teal-500"></i>
                     <h1 class="text-slate-800">State Hydrogen Incentive Benchmarks</h1>
                     <p class="text-gray-500">
@@ -642,47 +633,36 @@
                 
             </div>
             
-            <!-- Visualization Containers (Hidden until clicked) -->
-            
-            <!-- 1. SECI Auction Analysis Dashboard (Updated for stacking and full-width chat) -->
-            <div id="auction-visualization" class="main-container hidden px-0"> <!-- Remove default padding here -->
-                <div class="flex justify-between items-center mb-6 border-b pb-3 mx-6">
+            <!-- Visualization Containers (Hidden until clicked) --><!-- 1. SECI Auction Analysis Dashboard (Updated for stacking and full-width chat) --><div id="auction-visualization" class="main-container hidden px-0"> <!-- Remove default padding here --><div class="flex justify-between items-center mb-6 border-b pb-3 mx-6">
                     <h2 class="text-2xl font-bold text-slate-800">Analysis: SECI Ammonia Auction Results</h2>
                     <button onclick="hideVisualization('auction')" class="text-gray-500 hover:text-teal-500 transition">
                             <i data-feather="minimize" class="w-5 h-5"></i>
                     </button>
                 </div>
                 
-                <!-- CHARTS AREA (Full Width, Stacked) -->
-                <div class="grid grid-cols-1 gap-6 px-6">
-                    <!-- Chart 1: Winner Breakdown -->
-                    <div class="chart-panel flex flex-col">
+                <!-- CHARTS AREA (Full Width, Stacked) --><div class="grid grid-cols-1 gap-6 px-6">
+                    <!-- Chart 1: Winner Breakdown --><div class="chart-panel flex flex-col">
                         <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Capacity Awarded by Winner</h3>
                         <div id="winner-chart" class="flex-grow min-h-[400px]"></div>
                     </div>
-                    <!-- Chart 2: Price Analysis (Dual-Axis) -->
-                    <div class="chart-panel flex flex-col">
+                    <!-- Chart 2: Price Analysis (Dual-Axis) --><div class="chart-panel flex flex-col">
                         <h3 class="text-xl font-semibold mb-4 border-b pb-2">Competitiveness: Bid Price vs. Capacity by Producer</h3>
                         <div id="price-capacity-chart" class="flex-grow min-h-[500px]"></div>
                     </div>
                 </div>
 
-                <!-- Executive Summary -->
-                <div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left px-6">
+                <!-- Executive Summary --><div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left px-6">
                     <p class="font-semibold text-teal-600">Executive Summary (Auction):</p>
                     <p>The auction revealed strong competition, with bids concentrated in key locations enabling better logistics and economies of scale. ACME Cleantech secured the lowest bid at Rs 49.75/kg, leveraging high-volume capacity commitments. The dual-axis chart highlights the inverse relationship between capacity awarded (bars) and bid price (bubble size).</p>
                 </div>
 
-                <!-- AI Chat Panel (Below all charts, Full Width) -->
-                <div class="mt-8 px-6">
+                <!-- AI Chat Panel (Below all charts, Full Width) --><div class="mt-8 px-6">
                     <div class="chat-panel-container">
                         <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Auction Analyst</h3>
                         <div id="chat-messages-auction" class="chat-messages">
-                            <!-- AI Messages go here -->
-                            <div class="chat-message chat-ai">
+                            <!-- AI Messages go here --><div class="chat-message chat-ai">
                                 <div class="chat-ai-icon">
-                                    <!-- New Greenie Icon: Stylized Leaf -->
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                                    <!-- New Greenie Icon: Stylized Leaf --><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
                                         <path d="M11 20A7 7 0 0 1 9.86 8.7C10.74 8.24 12 6.5 12 3a2 2 0 0 0-2 2c0 2.22-2 3.16-2 3.16A8.5 8.5 0 0 0 2 15c0 4.42 3.58 8 8 8a9 9 0 0 0 6.07-2.75" fill="none" stroke="white"/>
                                         <path d="M17 18.5a9 9 0 0 0-6.07-2.75"/>
                                     </svg>
@@ -704,57 +684,46 @@
                 </div>
             </div>
 
-            <!-- 2. Policy Incentive Analysis Dashboard (Updated for stacking and full-width chat) -->
-            <div id="policy-visualization" class="main-container hidden px-0"> <!-- Remove default padding here -->
-                <div class="flex justify-between items-center mb-6 border-b pb-3 mx-6">
+            <!-- 2. Policy Incentive Analysis Dashboard (Updated for stacking and full-width chat) --><div id="policy-visualization" class="main-container hidden px-0"> <!-- Remove default padding here --><div class="flex justify-between items-center mb-6 border-b pb-3 mx-6">
                     <h2 class="text-2xl font-bold text-slate-800">Analysis: National Green Hydrogen Policy: Incentive Comparison</h2>
                     <button onclick="hideVisualization('policy')" class="text-gray-500 hover:text-teal-500 transition">
                             <i data-feather="minimize" class="w-5 h-5"></i>
                     </button>
                 </div>
                 
-                <!-- CHARTS AND TABLES AREA (Full Width, Stacked) -->
-                <div class="grid grid-cols-1 gap-6 px-6">
+                <!-- CHARTS AND TABLES AREA (Full Width, Stacked) --><div class="grid grid-cols-1 gap-6 px-6">
 
-                    <!-- Table 1: Detailed Incentive Breakdown (Reference Data) -->
-                    <div class="chart-panel incentive-table-wrapper">
+                    <!-- Table 1: Detailed Incentive Breakdown (Reference Data) --><div class="chart-panel incentive-table-wrapper">
                         <h3 class="text-xl font-semibold mb-4 border-b pb-2">Full State-by-State Policy Waivers and Subsidies</h3>
                         <div class="overflow-x-auto flex-grow">
                             <table id="incentive-table" class="incentive-table min-w-[1200px] bg-white">
-                                <!-- Table populated by JavaScript -->
-                            </table>
+                                <!-- Table populated by JavaScript --></table>
                         </div>
                     </div>
 
-                    <!-- Chart 1: Total Strength (Horizontal Stacked Bar Chart) -->
-                    <div class="chart-panel flex flex-col">
+                    <!-- Chart 1: Total Strength (Horizontal Stacked Bar Chart) --><div class="chart-panel flex flex-col">
                         <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Policy Strength by State (Incentive Categories)</h3>
                         <div id="policy-bar-chart" class="flex-grow min-h-[400px]"></div>
                     </div>
                     
-                    <!-- Chart 2: Comparative Radar View (Top States) -->
-                    <div class="chart-panel flex flex-col">
+                    <!-- Chart 2: Comparative Radar View (Top States) --><div class="chart-panel flex flex-col">
                         <h3 class="text-xl font-semibold mb-4 border-b pb-2">Policy Balance and Depth (Top 5 States Radar View)</h3>
                         <div id="incentive-chart" class="flex-grow min-h-[500px]"></div>
                     </div>
                 </div>
 
-                <!-- Executive Summary -->
-                <div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left px-6">
+                <!-- Executive Summary --><div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left px-6">
                     <p class="font-semibold text-teal-600">Executive Summary (Policy):</p>
                     <p>The visualizations provide a clear benchmark for state-level support. The <strong>Horizontal Bar Chart</strong> ranks states by total policy strength, segmented by Financial, Land/Tax, and Infrastructure incentives. The <strong>Radar Chart</strong> illustrates the balance of incentives offered by the top performers, crucial for investors evaluating risk diversification and long-term project viability.</p>
                 </div>
 
-                <!-- AI Chat Panel (Below all charts, Full Width) -->
-                <div class="mt-8 px-6">
+                <!-- AI Chat Panel (Below all charts, Full Width) --><div class="mt-8 px-6">
                     <div class="chat-panel-container">
                            <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Policy Analyst</h3>
                         <div id="chat-messages-policy" class="chat-messages">
-                            <!-- AI Messages go here -->
-                            <div class="chat-message chat-ai">
+                            <!-- AI Messages go here --><div class="chat-message chat-ai">
                                 <div class="chat-ai-icon">
-                                    <!-- New Greenie Icon: Stylized Leaf -->
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                                    <!-- New Greenie Icon: Stylized Leaf --><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
                                         <path d="M11 20A7 7 0 0 1 9.86 8.7C10.74 8.24 12 6.5 12 3a2 2 0 0 0-2 2c0 2.22-2 3.16-2 3.16A8.5 8.5 0 0 0 2 15c0 4.42 3.58 8 8 8a9 9 0 0 0 6.07-2.75" fill="none" stroke="white"/>
                                         <path d="M17 18.5a9 9 0 0 0-6.07-2.75"/>
                                     </svg>
@@ -780,8 +749,7 @@
 
     </div>
     
-    <!-- Footer Section -->
-    <footer class="footer-style">
+    <!-- Footer Section --><footer class="footer-style">
         <div class="footer-content">
             <div class="footer-about">
                 <div class="footer-logo">SLATE</div>
@@ -791,8 +759,7 @@
                     <a href="mailto:emilroby9@gmail.com"><i data-feather="mail" class="w-4 h-4"></i></a>
                 </div>
             </div>
-            <!-- SERVICES SECTION -->
-            <div class="footer-links">
+            <!-- SERVICES SECTION --><div class="footer-links">
                 <h3>Services</h3>
                 <ul>
                     <li><a href="#">Policy Analysis</a></li>
@@ -807,8 +774,7 @@
         </div>
     </footer>
 
-    <!-- Modal HTML/JS (MUST be present in all files if called by modal links) -->
-    <div id="coming-soon-modal-overlay" class="modal-overlay hidden">
+    <!-- Modal HTML/JS (MUST be present in all files if called by modal links) --><div id="coming-soon-modal-overlay" class="modal-overlay hidden">
         <div class="modal-content">
             <button class="modal-close" onclick="closeComingSoonModal()">
                 <i data-feather="x" class="w-6 h-6"></i>
@@ -1133,7 +1099,7 @@
         function drawPriceCapacityChart() {
             const container = document.getElementById('price-capacity-chart');
             const parentWidth = container.offsetWidth;
-            const margin = { top: 30, right: 80, bottom: 120, left: 80 };
+            const margin = { top: 30, right: 100, bottom: 120, left: 80 }; // Increased right margin to 100
             const width = parentWidth - margin.left - margin.right;
             const height = 500 - margin.top - margin.bottom;
 
@@ -1187,20 +1153,21 @@
                 .attr("class", "y-axis-right")
                 .call(d3.axisRight(yPrice).tickFormat(d => `Rs ${d}/kg`));
             
-            // Y-axis Label (Left: Capacity)
+            // Y-axis Label (Left: Capacity) - Vertical
             svg.append("text")
                 .attr("transform", "rotate(-90)")
-                .attr("y", 0 - margin.left + 15)
+                .attr("y", 0 - margin.left)
                 .attr("x", 0 - (height / 2))
+                .attr("dy", "1em")
                 .style("text-anchor", "middle")
                 .style("font-weight", "600")
                 .style("fill", "#008080")
                 .text("Offtake Capacity (MT/yr)");
 
-            // Y-axis Label (Right: Price)
+            // Y-axis Label (Right: Price) - Now positioned vertically, matching the style on the left
             svg.append("text")
                 .attr("transform", "rotate(90)")
-                .attr("y", -(width + margin.right - 65) + 15) /* FIX: Adjusted for overlap */
+                .attr("y", -(width + margin.right) + 145) 
                 .attr("x", (height / 2))
                 .style("text-anchor", "middle")
                 .style("font-weight", "600")
@@ -1260,7 +1227,7 @@
         function drawIncentiveRadarChart() {
             const container = document.getElementById('incentive-chart');
             const parentWidth = container.offsetWidth;
-            const margin = { top: 30, right: 30, bottom: 100, left: 60 };
+            const margin = { top: 30, right: 30, bottom: 120, left: 60 }; // Increased bottom margin
             const width = parentWidth - margin.left - margin.right;
             const height = 500 - margin.top - margin.bottom;
 
@@ -1359,13 +1326,23 @@
 
             
             // Legend (Placed below the chart for clarity)
+            const legendItemWidth = 180; // INCREASED spacing to 180px for "Andhra Pradesh"
+            const legendColumns = 5; // Keep fixed for easier centering/wrapping visual
+            const legendTotalWidth = Math.min(topStates.length, legendColumns) * legendItemWidth;
+            const legendXStart = (width / 2) - (legendTotalWidth / 2); // Calculate starting X for centering
+
             const legend = svg.append("g")
-                .attr("transform", `translate(10, ${height + margin.top + 50})`);
+                .attr("transform", `translate(${legendXStart}, ${height + margin.top + 20})`); // Centered and moved down
 
             legend.selectAll(".radar-legend")
                 .data(topStates)
                 .enter().append("g")
-                .attr("transform", (d, i) => `translate(${i % 5 * 100}, ${Math.floor(i / 5) * 20})`)
+                .attr("transform", (d, i) => {
+                    // Use the increased itemWidth
+                    const xOffset = (i % legendColumns) * legendItemWidth;
+                    const yOffset = Math.floor(i / legendColumns) * 20;
+                    return `translate(${xOffset}, ${yOffset})`;
+                })
                 .each(function(d) {
                     d3.select(this).append("rect")
                         .attr("x", 0)
@@ -1387,9 +1364,9 @@
         function drawPolicyBarChart() {
             const container = document.getElementById('policy-bar-chart');
             const parentWidth = container.offsetWidth;
-            const margin = { top: 20, right: 20, bottom: 20, left: 140 }; // Increased left margin for state names
+            const margin = { top: 20, right: 20, bottom: 40, left: 140 }; 
             const width = parentWidth - margin.left - margin.right;
-            const height = policyScoring.length * 35 + 50; // Dynamic height based on number of states
+            const height = policyScoring.length * 35 + 50; 
 
             d3.select(container).selectAll("svg").remove();
             const svg = d3.select(container)
@@ -1457,7 +1434,7 @@
             
             // X-axis Label
             svg.append("text")
-                .attr("transform", `translate(${width / 2}, ${height + margin.bottom - 10})`)
+                .attr("transform", `translate(${width / 2}, ${height + margin.bottom - 10})`) /* Label positioned correctly with sufficient bottom margin */
                 .style("text-anchor", "middle")
                 .style("font-weight", "600")
                 .style("fill", "#008080")
