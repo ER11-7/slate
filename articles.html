@@ -649,7 +649,7 @@
                         <div class="article-card" data-id="article_1" data-title="Domestic Market Pathways and Carbon Abatement" data-desc="Analysis of market adoption routes and regulatory hurdles for Green Hydrogen/Ammonia.">
                             <h4>Domestic Market Pathways and Carbon Abatement</h4>
                             <p class="text-gray-500 text-sm mb-3">Analysis of market adoption routes and regulatory hurdles for Green Hydrogen/Ammonia.</p>
-                            <a href="#" onclick="viewSummary('article_1')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                            <a href="#" onclick="openDownloadModal(event, 'article_1', 'Domestic Market Pathways and Carbon Abatement')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
                                 View Summary
                                 <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
@@ -663,7 +663,7 @@
                         <div class="article-card" data-id="article_2" data-title="Financing Green Ammonia in India Blended Finance" data-desc="Exploring capital structures, blended finance, and risk mitigation strategies.">
                             <h4>Financing Green Ammonia in India Blended Finance</h4>
                             <p class="text-gray-500 text-sm mb-3">Exploring capital structures, blended finance, and risk mitigation strategies.</p>
-                            <a href="#" onclick="viewSummary('article_2')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                            <a href="#" onclick="openDownloadModal(event, 'article_2', 'Financing Green Ammonia in India Blended Finance')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
                                 View Summary
                                 <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
@@ -677,7 +677,7 @@
                         <div class="article-card" data-id="article_3" data-title="Reverse Auctions and Cost Discovery in India" data-desc="A study on current auction mechanisms and their impact on project viability.">
                             <h4>Reverse Auctions and Cost Discovery in India</h4>
                             <p class="text-gray-500 text-sm mb-3">A study on current auction mechanisms and their impact on project viability.</p>
-                            <a href="#" onclick="viewSummary('article_3')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                            <a href="#" onclick="openDownloadModal(event, 'article_3', 'Reverse Auctions and Cost Discovery in India')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
                                 View Summary
                                 <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
@@ -691,7 +691,7 @@
                         <div class="article-card" data-id="article_4" data-title="Strategic Analysis of India’s Green Ammonia Market" data-desc="Comprehensive outlook on supply chains, demand drivers, and long-term trends.">
                             <h4>Strategic Analysis of India’s Green Ammonia Market</h4>
                             <p class="text-gray-500 text-sm mb-3">Comprehensive outlook on supply chains, demand drivers, and long-term trends.</p>
-                            <a href="#" onclick="viewSummary('article_4')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                            <a href="#" onclick="openDownloadModal(event, 'article_4', 'Strategic Analysis of India’s Green Ammonia Market')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
                                 View Summary
                                 <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
@@ -719,9 +719,9 @@
                 </div>
 
                 <!-- AI Chat Panel (Right Column) -->
-                <div class="lg:col-span-1">
+                <div class="lg:col-span-3 mt-8"> <!-- FIX: Set to full width and moved below the main content -->
                     <div class="chat-panel-container">
-                        <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Article Assistant</h3>
+                        <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie</h3> <!-- FIX: Changed title to Greenie -->
                         <div id="chat-messages-article" class="chat-messages">
                             <!-- Initial AI Message -->
                             <div class="chat-message chat-ai">
@@ -729,13 +729,13 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
                                 </div>
                                 <div class="chat-bubble">
-                                    Hello! I'm Greenie, your Article Assistant. Ask me to summarize any of the four articles, or ask for the latest online information about these topics.
+                                    Hello! I'm Greenie. Ask me anything about global energy trends, policies, or batteries.
                                 </div>
                             </div>
                         </div>
                         <form onsubmit="sendAIChatMessage(event, 'article')">
                             <div class="flex">
-                                <input type="text" id="chat-input-article" placeholder="Ask Greenie for article insights..." class="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-teal-500 focus:border-teal-500" required>
+                                <input type="text" id="chat-input-article" placeholder="Ask Greenie for global energy insights..." class="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-teal-500 focus:border-teal-500" required>
                                 <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-r-lg">
                                     <i data-feather="send" class="w-5 h-5"></i>
                                 </button>
@@ -855,7 +855,8 @@
         };
 
         let chatHistoryArticle = [];
-        const ARTICLE_SYSTEM_INSTRUCTION = "You are Greenie, an expert Article Assistant. Your task is to provide a concise, one-paragraph summary (max 70 words) about the article requested, and provide relevant context. Use Google Search for the most current information and links related to the article topic if necessary. Never use asterisks or any markdown formatting in your response.";
+        // CRITICAL: UPDATED SYSTEM INSTRUCTION FOR GLOBAL ENERGY EXPERTISE
+        const ARTICLE_SYSTEM_INSTRUCTION = "You are Greenie, a global expert energy and policy analyst. You must use Google Search to provide current, relevant, and global insights on renewable energy, batteries, hydrogen fuels, and related government orders/policies. Do not summarize the specific article content unless directly asked. Provide a single, concise paragraph summary (max 70 words) about the general topic and focus on external context and relevance. Never use asterisks or any markdown formatting in your response.";
         const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=";
 
 
@@ -979,9 +980,13 @@
             // 3. Display AI loading indicator
             const aiMessageDiv = document.createElement('div');
             aiMessageDiv.className = 'chat-message chat-ai';
-            aiMessageDiv.innerHTML = `<div class="chat-ai-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
-                                      </div><div class="chat-bubble chat-loading"></div>`;
+            
+            // Use the new Greenie SVG icon
+            const greenieIconHtml = `<div class="chat-ai-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
+                                    </div><div class="chat-bubble chat-loading"></div>`;
+
+            aiMessageDiv.innerHTML = greenieIconHtml;
             messagesContainer.appendChild(aiMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
