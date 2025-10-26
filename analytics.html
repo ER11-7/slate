@@ -6,7 +6,8 @@
     <title>SLATE | SECI Green Ammonia Auction Analysis</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <!-- Load D3.js Library for Visualization --><script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Load D3.js Library for Visualization -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     
     <style>
         /* TAILWIND CONFIG */
@@ -539,7 +540,7 @@
         .main-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 3rem 2rem; /* Added horizontal padding to main content */
+            padding: 3rem 0;
         }
 
         /* New Grid Layout for multiple cards */
@@ -554,10 +555,12 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans">
     
-    <!-- Navigation Bar (Fixed) --><nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+    <!-- Navigation Bar (Fixed) -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
         <div class="container mx-auto px-6 py-3 flex items-center justify-between">
             
-            <!-- Left Zone - Branding & Data --><div class="brand-container">
+            <!-- Left Zone - Branding & Data -->
+            <div class="brand-container">
                 <div class="logo">SLATE</div>
                 <div class="datetime-display">
                     <span id="time" class="time-display"></span>
@@ -565,11 +568,13 @@
                 </div>
             </div>
 
-            <!-- Right Zones - Navigation and Search --><div class="nav-main">
+            <!-- Right Zones - Navigation and Search -->
+            <div class="nav-main">
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     
-                    <!-- Dropdown 1: Insights & Analytics --><li class="dropdown">
+                    <!-- Dropdown 1: Insights & Analytics -->
+                    <li class="dropdown">
                         <div class="dropdown-trigger">Insights & Analytics <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
                         <div class="dropdown-menu">
                             <a href="reports.html" class="dropdown-item">Reports</a>
@@ -579,7 +584,8 @@
                         </div>
                     </li>
                     
-                    <!-- Dropdown 2: Energy Nexus (STILL USES MODAL) --><li class="dropdown">
+                    <!-- Dropdown 2: Energy Nexus (STILL USES MODAL) -->
+                    <li class="dropdown">
                         <div class="dropdown-trigger">Energy Nexus <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
                         <div class="dropdown-menu">
                             <a href="policy.html" class="dropdown-item">Policy Updates</a>
@@ -603,7 +609,7 @@
 
         <h1 class="text-3xl md:text-4xl font-bold text-center mb-6 uppercase tracking-wider text-slate-800 pt-8">Interactive Analysis Dashboard</h1>
         
-        <section class="max-w-7xl mx-auto px-6">
+        <section class="max-w-7xl mx-auto">
             
             <!-- Initial Card View Grid --><div id="intro-card-grid" class="analytics-dashboard-grid">
                 
@@ -625,7 +631,7 @@
                     <p class="text-gray-500">
                         Compare incentives across Indian states: Financial, Tax, and Infrastructure support.
                     </p>
-                    <div class="text-teal-500 font-medium inline-flex items-flex items-center mt-3 hover:text-teal-600">
+                    <div class="text-teal-500 font-medium inline-flex items-center mt-3 hover:text-teal-600">
                         View Policy Analysis
                         <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
                     </div>
@@ -633,987 +639,996 @@
                 
             </div>
             
-            <!-- Visualization Containers (Hidden until clicked) --><!-- 1. SECI Auction Analysis Dashboard (Updated for stacking and full-width chat) --><div id="auction-visualization" class="main-container hidden px-0"> <!-- Remove default padding here --><div class="flex justify-between items-center mb-6 border-b pb-3 mx-6">
-                    <h2 class="text-2xl font-bold text-slate-800">Analysis: SECI Ammonia Auction Results</h2>
-                    <button onclick="hideVisualization('auction')" class="text-gray-500 hover:text-teal-500 transition">
-                            <i data-feather="minimize" class="w-5 h-5"></i>
-                    </button>
-                </div>
-                
-                <!-- CHARTS AREA (Full Width, Stacked) --><div class="grid grid-cols-1 gap-6 px-6">
-                    <!-- Chart 1: Winner Breakdown --><div class="chart-panel flex flex-col">
-                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Capacity Awarded by Winner</h3>
-                        <div id="winner-chart" class="flex-grow min-h-[400px]"></div>
-                    </div>
-                    <!-- Chart 2: Price Analysis (Dual-Axis) --><div class="chart-panel flex flex-col">
-                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Competitiveness: Bid Price vs. Capacity by Producer</h3>
-                        <div id="price-capacity-chart" class="flex-grow min-h-[500px]"></div>
-                    </div>
-                </div>
+            <!-- Visualization Containers (Hidden until clicked) --><!-- 1. SECI Auction Analysis Dashboard --><div id="auction-visualization" class="main-container hidden px-0"> <!-- Remove default padding here --><div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                <!-- Executive Summary --><div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left px-6">
-                    <p class="font-semibold text-teal-600">Executive Summary (Auction):</p>
-                    <p>The auction revealed strong competition, with bids concentrated in key locations enabling better logistics and economies of scale. ACME Cleantech secured the lowest bid at Rs 49.75/kg, leveraging high-volume capacity commitments. The dual-axis chart highlights the inverse relationship between capacity awarded (bars) and bid price (bubble size).</p>
-                </div>
-
-                <!-- AI Chat Panel (Below all charts, Full Width) --><div class="mt-8 px-6">
-                    <div class="chat-panel-container">
-                        <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Auction Analyst</h3>
-                        <div id="chat-messages-auction" class="chat-messages">
-                            <!-- AI Messages go here --><div class="chat-message chat-ai">
-                                <div class="chat-ai-icon">
-                                    <!-- New Greenie Icon: Stylized Leaf --><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                                        <path d="M11 20A7 7 0 0 1 9.86 8.7C10.74 8.24 12 6.5 12 3a2 2 0 0 0-2 2c0 2.22-2 3.16-2 3.16A8.5 8.5 0 0 0 2 15c0 4.42 3.58 8 8 8a9 9 0 0 0 6.07-2.75" fill="none" stroke="white"/>
-                                        <path d="M17 18.5a9 9 0 0 0-6.07-2.75"/>
-                                    </svg>
-                                </div>
-                                <div class="chat-bubble">
-                                    Hello! I'm Greenie, your Auction Analyst. Ask me anything about the charts above, like "Who won the most capacity?" or "What does the red line mean?"
-                                </div>
+                    <!-- VISUALIZATIONS (COL 1 & 2) --><div class="lg:col-span-2">
+                        <div class="flex justify-between items-center mb-6 border-b pb-3 mx-6">
+                            <h2 class="text-2xl font-bold text-slate-800">Analysis: SECI Ammonia Auction Results</h2>
+                            <button onclick="hideVisualization('auction')" class="text-gray-500 hover:text-teal-500 transition">
+                                 <i data-feather="minimize" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 gap-6 px-6"> 
+                            <!-- Chart 1: Winner Breakdown --><div class="chart-panel flex flex-col">
+                                <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Capacity Awarded by Winner</h3>
+                                <div id="winner-chart" class="flex-grow min-h-[400px]"></div>
+                            </div>
+                            <!-- Chart 2: Price Analysis (Dual-Axis) --><div class="chart-panel flex flex-col">
+                                <h3 class="text-xl font-semibold mb-4 border-b pb-2">Competitiveness: Bid Price vs. Capacity by Producer</h3>
+                                <div id="price-capacity-chart" class="flex-grow min-h-[500px]"></div>
                             </div>
                         </div>
-                        <form onsubmit="sendAIChatMessage(event, 'auction')">
-                            <div class="flex">
-                                <input type="text" id="chat-input-auction" placeholder="Ask for insights..." class="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-teal-500 focus:border-teal-500" required>
-                                <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-r-lg">
-                                    <i data-feather="send" class="w-5 h-5"></i>
-                                </button>
+                        <div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left px-6">
+                            <p class="font-semibold text-teal-600">Executive Summary (Auction):</p>
+                            <p>The auction revealed strong competition, with bids concentrated in key locations enabling better logistics and economies of scale. ACME Cleantech secured the lowest bid at Rs 49.75/kg, leveraging high-volume capacity commitments. The dual-axis chart highlights the inverse relationship between capacity awarded (bars) and bid price (bubble size).</p>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Chat Panel (COL 3) --><div class="lg:col-span-1">
+                        <div class="chat-panel-container">
+                            <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Auction Analyst</h3>
+                            <div id="chat-messages-auction" class="chat-messages">
+                                <!-- AI Messages go here --><div class="chat-message chat-ai">
+                                    <div class="chat-ai-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
+                                    </div>
+                                    <div class="chat-bubble">
+                                        Hello! I'm Greenie, your Auction Analyst. Ask me anything about the charts to the left, like "Who won the most capacity?" or "What does the red line mean?"
+                                    </div>
+                                </div>
                             </div>
-                        </form>
+                            <form onsubmit="sendAIChatMessage(event, 'auction')">
+                                <div class="flex">
+                                    <input type="text" id="chat-input-auction" placeholder="Ask for insights..." class="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-teal-500 focus:border-teal-500" required>
+                                    <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-r-lg">
+                                        <i data-feather="send" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. Policy Incentive Analysis Dashboard (Updated for stacking and full-width chat) --><div id="policy-visualization" class="main-container hidden px-0"> <!-- Remove default padding here --><div class="flex justify-between items-center mb-6 border-b pb-3 mx-6">
-                    <h2 class="text-2xl font-bold text-slate-800">Analysis: National Green Hydrogen Policy: Incentive Comparison</h2>
-                    <button onclick="hideVisualization('policy')" class="text-gray-500 hover:text-teal-500 transition">
-                            <i data-feather="minimize" class="w-5 h-5"></i>
-                    </button>
-                </div>
-                
-                <!-- CHARTS AND TABLES AREA (Full Width, Stacked) --><div class="grid grid-cols-1 gap-6 px-6">
+            <!-- 2. Policy Incentive Analysis Dashboard --><div id="policy-visualization" class="main-container hidden px-0"> <!-- Remove default padding here --><div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                    <!-- Table 1: Detailed Incentive Breakdown (Reference Data) --><div class="chart-panel incentive-table-wrapper">
-                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Full State-by-State Policy Waivers and Subsidies</h3>
-                        <div class="overflow-x-auto flex-grow">
-                            <table id="incentive-table" class="incentive-table min-w-[1200px] bg-white">
-                                <!-- Table populated by JavaScript --></table>
+                    <!-- VISUALIZATIONS (COL 1 & 2) --><div class="lg:col-span-2">
+                        <div class="flex justify-between items-center mb-6 border-b pb-3 mx-6">
+                            <h2 class="text-2xl font-bold text-slate-800">Analysis: National Green Hydrogen Policy: Incentive Comparison</h2>
+                            <button onclick="hideVisualization('policy')" class="text-gray-500 hover:text-teal-500 transition">
+                                 <i data-feather="minimize" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Table 1: Detailed Incentive Breakdown (Reference Data) --><div class="chart-panel incentive-table-wrapper mx-6">
+                            <h3 class="text-xl font-semibold mb-4 border-b pb-2">Full State-by-State Policy Waivers and Subsidies</h3>
+                            <div class="overflow-x-auto flex-grow">
+                                <table id="incentive-table" class="incentive-table min-w-[1200px] bg-white">
+                                    <!-- Table populated by JavaScript --></table>
+                            </div>
+                        </div>
+
+                        <!-- Visualization Row (Stacked Bar and Radar) - Stacked Vertically --><div class="grid grid-cols-1 gap-6 mt-6 px-6">
+                            
+                            <!-- Chart 1: Total Strength (Horizontal Stacked Bar Chart) --><div class="chart-panel flex flex-col">
+                                <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Policy Strength by State (Incentive Categories)</h3>
+                                <div id="policy-bar-chart" class="flex-grow min-h-[400px]"></div>
+                            </div>
+                            
+                            <!-- Chart 2: Comparative Radar View (Top States) --><div class="chart-panel flex flex-col">
+                                <h3 class="text-xl font-semibold mb-4 border-b pb-2">Policy Balance and Depth (Top 5 States Radar View)</h3>
+                                <div id="incentive-chart" class="flex-grow min-h-[500px]"></div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left px-6">
+                            <p class="font-semibold text-teal-600">Executive Summary (Policy):</p>
+                            <p>The visualizations provide a clear benchmark for state-level support. The <strong>Horizontal Bar Chart</strong> ranks states by total policy strength, segmented by Financial, Land/Tax, and Infrastructure incentives. The <strong>Radar Chart</strong> illustrates the balance of incentives offered by the top performers, crucial for investors evaluating risk diversification and long-term project viability.</p>
                         </div>
                     </div>
 
-                    <!-- Chart 1: Total Strength (Horizontal Stacked Bar Chart) --><div class="chart-panel flex flex-col">
-                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Total Policy Strength by State (Incentive Categories)</h3>
-                        <div id="policy-bar-chart" class="flex-grow min-h-[400px]"></div>
-                    </div>
-                    
-                    <!-- Chart 2: Comparative Radar View (Top States) --><div class="chart-panel flex flex-col">
-                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Policy Balance and Depth (Top 5 States Radar View)</h3>
-                        <div id="incentive-chart" class="flex-grow min-h-[500px]"></div>
-                    </div>
-                </div>
-
-                <!-- Executive Summary --><div class="mt-8 pt-4 border-t text-sm text-gray-600 text-left px-6">
-                    <p class="font-semibold text-teal-600">Executive Summary (Policy):</p>
-                    <p>The visualizations provide a clear benchmark for state-level support. The <strong>Horizontal Bar Chart</strong> ranks states by total policy strength, segmented by Financial, Land/Tax, and Infrastructure incentives. The <strong>Radar Chart</strong> illustrates the balance of incentives offered by the top performers, crucial for investors evaluating risk diversification and long-term project viability.</p>
-                </div>
-
-                <!-- AI Chat Panel (Below all charts, Full Width) --><div class="mt-8 px-6">
-                    <div class="chat-panel-container">
-                           <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Policy Analyst</h3>
-                        <div id="chat-messages-policy" class="chat-messages">
-                            <!-- AI Messages go here --><div class="chat-message chat-ai">
-                                <div class="chat-ai-icon">
-                                    <!-- New Greenie Icon: Stylized Leaf --><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                                        <path d="M11 20A7 7 0 0 1 9.86 8.7C10.74 8.24 12 6.5 12 3a2 2 0 0 0-2 2c0 2.22-2 3.16-2 3.16A8.5 8.5 0 0 0 2 15c0 4.42 3.58 8 8 8a9 9 0 0 0 6.07-2.75" fill="none" stroke="white"/>
-                                        <path d="M17 18.5a9 9 0 0 0-6.07-2.75"/>
-                                    </svg>
-                                </div>
-                                <div class="chat-bubble">
-                                    Hello! I'm Greenie, your Policy Analyst. Ask me questions like "Which state has the best land policy?" or "Compare Rajasthan and Kerala's scores."
+                    <!-- AI Chat Panel (COL 3) --><div class="lg:col-span-1">
+                        <div class="chat-panel-container">
+                             <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie - Policy Analyst</h3>
+                            <div id="chat-messages-policy" class="chat-messages">
+                                <!-- AI Messages go here --><div class="chat-message chat-ai">
+                                    <div class="chat-ai-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
+                                    </div>
+                                    <div class="chat-bubble">
+                                        Hello! I'm Greenie, your Policy Analyst. Ask me questions like "Which state has the best land policy?" or "Compare Rajasthan and Kerala's scores."
+                                    </div>
                                 </div>
                             </div>
+                            <form onsubmit="sendAIChatMessage(event, 'policy')">
+                                <div class="flex">
+                                    <input type="text" id="chat-input-policy" placeholder="Ask for policy insights..." class="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-teal-500 focus:border-teal-500" required>
+                                    <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-r-lg">
+                                        <i data-feather="send" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                        <form onsubmit="sendAIChatMessage(event, 'policy')">
-                            <div class="flex">
-                                <input type="text" id="chat-input-policy" placeholder="Ask for policy insights..." class="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-teal-500 focus:border-teal-500" required>
-                                <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-r-lg">
-                                    <i data-feather="send" class="w-5 h-5"></i>
-                                </button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
 
         </section>
 
-    </div>
-    
-    <!-- Footer Section --><footer class="footer-style">
-        <div class="footer-content">
-            <div class="footer-about">
-                <div class="footer-logo">SLATE</div>
-                <div class="footer-name">Insights from Emil Roby</div>
-                <div class="social-links">
-                    <a href="https://www.linkedin.com/in/emil-roby-878792314/" target="_blank" rel="noopener noreferrer"><i data-feather="linkedin" class="w-4 h-4"></i></a>
-                    <a href="mailto:emilroby9@gmail.com"><i data-feather="mail" class="w-4 h-4"></i></a>
-                </div>
-            </div>
-            <!-- SERVICES SECTION --><div class="footer-links">
-                <h3>Services</h3>
-                <ul>
-                    <li><a href="#">Policy Analysis</a></li>
-                    <li><a href="#">Strategic Consulting</a></li>
-                    <li><a href="#">Energy Data Analytics</a></li>
-                    <li><a href="#">Digital Energy Solutions</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            &copy; 2025 SLATE. All rights reserved.
-        </div>
-    </footer>
-
-    <!-- Modal HTML/JS (MUST be present in all files if called by modal links) --><div id="coming-soon-modal-overlay" class="modal-overlay hidden">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeComingSoonModal()">
-                <i data-feather="x" class="w-6 h-6"></i>
-            </button>
-            <div class="modal-title">
-                <span id="modal-topic-title"></span>
-            </div>
-            <div class="modal-subtitle">
-                The Data Revolution is Brewing.
-            </div>
-            <p class="modal-cta">
-                We're currently finalizing the <strong>quantifiable data and strategic frameworks</strong> for this <strong><span id="modal-topic-placeholder" class="font-bold text-teal-600"></span></strong> section. It's coming soon and will be worth the wait!
-            </p>
-            <a href="#" class="back-button" onclick="closeComingSoonModal()">
-                Got It! Take Me Back
-            </a>
-        </div>
-    </div>
-
-    
-    <script>
-        // --- LLM API Configuration and Chat History ---
-        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=";
-        let chatHistoryAuction = [];
-        let chatHistoryPolicy = [];
-
-        // Contextual AI persona and instructions
-        const SYSTEM_INSTRUCTION_BASE = "You are a concise, world-class energy and policy analyst. Your goal is to provide simple, actionable insights based on the charts and the raw policy data provided. Additionally, you can use Google Search for external, up-to-date context when the data context is insufficient.";
-
-        // --- DATA AND D3.JS VISUALIZATION LOGIC ---
-
-        // ********** START: Hoisted Functions **********
-        
-        // --- Toggle Functions ---
-        function showVisualization(type) {
-            // Hide all visuals first
-            document.getElementById('intro-card-grid').classList.add('hidden');
-            
-            // Safety check for visualization containers
-            const auctionViz = document.getElementById('auction-visualization');
-            const policyViz = document.getElementById('policy-visualization');
-
-            if (auctionViz) auctionViz.classList.add('hidden');
-            if (policyViz) policyViz.classList.add('hidden');
-            
-            // Show the requested visual
-            if (type === 'auction' && auctionViz) {
-                auctionViz.classList.remove('hidden');
-                drawWinnerChart();
-                drawPriceCapacityChart();
-                auctionViz.scrollIntoView({ behavior: 'smooth' });
-            } else if (type === 'policy' && policyViz) {
-                policyViz.classList.remove('hidden');
-                drawPolicyBarChart();
-                drawIncentiveRadarChart(); 
-                populateIncentiveTable();
-                policyViz.scrollIntoView({ behavior: 'smooth' });
-            }
-            window.dispatchEvent(new Event('resize')); 
-        }
-
-        function hideVisualization(type) {
-            const auctionViz = document.getElementById('auction-visualization');
-            const policyViz = document.getElementById('policy-visualization');
-
-            if (type === 'auction' && auctionViz) {
-                auctionViz.classList.add('hidden');
-            } else if (type === 'policy' && policyViz) {
-                policyViz.classList.add('hidden');
-            }
-            document.getElementById('intro-card-grid').classList.remove('hidden');
-        }
-        
-        // --- LLM CHAT FUNCTIONALITY ---
-        async function sendAIChatMessage(event, analysisType) {
-            event.preventDefault();
-
-            const inputId = `chat-input-${analysisType}`;
-            const messagesId = `chat-messages-${analysisType}`;
-            const inputElement = document.getElementById(inputId);
-            const messagesContainer = document.getElementById(messagesId);
-            const userQuery = inputElement.value.trim();
-
-            if (!userQuery) return;
-
-            const currentHistory = analysisType === 'auction' ? chatHistoryAuction : chatHistoryPolicy;
-            // Removed direct data context for LLM due to size constraints, relying on SYSTEM_INSTRUCTION to state knowledge of the visualized data.
-            
-            let systemInstruction = SYSTEM_INSTRUCTION_BASE + 
-                " Base your analysis only on the charts and the raw policy data provided. Additionally, you can use Google Search for external, up-to-date context when the data context is insufficient.";
-
-            // 1. Display user message
-            const userMessageDiv = document.createElement('div');
-            userMessageDiv.className = 'chat-message chat-user';
-            userMessageDiv.innerHTML = `<div class="chat-bubble">${userQuery}</div>`;
-            messagesContainer.appendChild(userMessageDiv);
-            
-            // 2. Add user message to history
-            currentHistory.push({ role: "user", parts: [{ text: userQuery }] });
-
-            // 3. Display AI loading indicator
-            const aiMessageDiv = document.createElement('div');
-            aiMessageDiv.className = 'chat-message chat-ai';
-            
-            // Use the new Greenie SVG icon
-            const greenieIconHtml = `<div class="chat-ai-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                    <path d="M11 20A7 7 0 0 1 9.86 8.7C10.74 8.24 12 6.5 12 3a2 2 0 0 0-2 2c0 2.22-2 3.16-2 3.16A8.5 8.5 0 0 0 2 15c0 4.42 3.58 8 8 8a9 9 0 0 0 6.07-2.75" fill="none" stroke="white"/>
-                    <path d="M17 18.5a9 9 0 0 0-6.07-2.75"/>
-                </svg>
-            </div><div class="chat-bubble chat-loading"></div>`;
-
-            aiMessageDiv.innerHTML = greenieIconHtml;
-            messagesContainer.appendChild(aiMessageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            // Clear input
-            inputElement.value = '';
-
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: currentHistory,
-                        systemInstruction: { parts: [{ text: systemInstruction }] },
-                        tools: [{ "google_search": {} }] 
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that request.";
-
-                // 4. Update AI response
-                aiMessageDiv.querySelector('.chat-bubble').classList.remove('chat-loading');
-                aiMessageDiv.querySelector('.chat-bubble').textContent = aiText;
-                
-                // 5. Add AI response to history
-                currentHistory.push({ role: "model", parts: [{ text: aiText }] });
-
-            } catch (error) {
-                console.error("AI API Call Failed:", error);
-                aiMessageDiv.querySelector('.chat-bubble').classList.remove('chat-loading');
-                aiMessageDiv.querySelector('.chat-bubble').textContent = "Error: Could not connect to the insight engine.";
-            }
-
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        // --- D3 Visualization Functions (Moved for Hoisting) ---
-
-        // Consolidated and Processed Data for Ammonia Auction
-        const auctionData = [
-            { producer: "Paradeep Phos.", location: "Paradeep", state: "Odisha", capacity: 75000, bidPrice: 55.75, winner: "Acme" },
-            { producer: "Krishna Phos.", location: "Meghnagar", state: "Madhya Pradesh", capacity: 70000, bidPrice: 51.8, winner: "NTPC" },
-            { producer: "Madras/Saglar", location: "Saglar", state: "Madhya Pradesh", capacity: 60000, bidPrice: 52.25, winner: "Ortana Power" },
-            { producer: "Madras/Dhule", location: "Dhule", state: "Maharashtra", capacity: 70000, bidPrice: 53.05, winner: "SCC Infrastructure" },
-            { producer: "Gujarat Narmada", location: "Bharuch", state: "Gujarat", capacity: 50000, bidPrice: 52.5, winner: "Oaix Renewable" },
-            { producer: "Coro./Kakinada", location: "Kakinada", state: "Andhra Pradesh", capacity: 85000, bidPrice: 50.75, winner: "Jakson Green" },
-            { producer: "Coro./V'patnam", location: "Vishakhapatnam", state: "A.P.", capacity: 50000, bidPrice: 51.89, winner: "Acme" },
-            { producer: "Indian Farmers/Kandla", location: "Kandla", state: "Gujarat", capacity: 100000, bidPrice: 54.73, winner: "Acme" },
-            { producer: "Indian Farmers/Paradeep", location: "Paradeep", state: "Odisha", capacity: 100000, bidPrice: 49.75, winner: "ACME Cleantech" },
-            { producer: "ZuariNagar, Goa", location: "Zuarinagar", state: "Goa", capacity: 25000, bidPrice: 62.84, winner: "ACME Cleantech" },
-            { producer: "Indorama India", location: "Haldia", state: "West Bengal", capacity: 20000, bidPrice: 64.74, winner: "ACME Cleantech" },
-            { producer: "Mangalore Chemicals", location: "Mangalore", state: "Karnataka", capacity: 15000, bidPrice: 57.65, winner: "SCC Infrastructure" },
-            { producer: "Madras Fertilizers", location: "Manali", state: "Tamil Nadu", capacity: 4000, bidPrice: 50.00, winner: "Suryam International" }
-        ];
-
-        const winnerData = d3.rollups(auctionData, 
-            v => d3.sum(v, d => d.capacity), 
-            d => d.winner
-        ).map(([winner, totalCapacity]) => ({ winner, totalCapacity }));
-
-        // Consolidated and Processed Data for Green Hydrogen Policy (Incentives)
-        const fullRawPolicyData = [
-            { state: "Odisha", ElecWaiver: "100% * 20 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "Yes" },
-            { state: "Madhya Pradesh", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "50", CapSubsidy: "100%", InfraSupport: "Yes" },
-            { state: "Gujarat", ElecWaiver: "100%", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "1.2", InfraSupport: "Yes" },
-            { state: "Andhra Pradesh", ElecWaiver: "50% * 5 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
-            { state: "West Bengal", ElecWaiver: "-", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "25 * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "Yes" },
-            { state: "Tamil Nadu", ElecWaiver: "-", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "25, 35, 45", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
-            { state: "Karnataka", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
-            { state: "Kerala", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "2 * 5", InfraSupport: "Yes" },
-            { state: "Rajasthan", ElecWaiver: "50% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "25", CapSubsidy: "5", InfraSupport: "Yes" },
-            { state: "Uttar Pradesh", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
-            { state: "Punjab", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
-            { state: "Haryana", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
-            { state: "Assam", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
-            { state: "Telangana", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
-        ];
-
-        // Scoring for Radar Chart (Higher Score = More Comprehensive Policy)
-        const policyScoring = fullRawPolicyData.map(d => {
-            // Scoring logic: 3 for high incentive, 2 for medium, 1 for low/none/unspecified
-            const capSubsidyValue = d.CapSubsidy || '-';
-            const elecWaiverValue = d.ElecWaiver || '-';
-            const infraSupportValue = d.InfraSupport || '-';
-            const landConversionValue = d.LandConversion || '-'; // Use LandConversion for scoring
-            const stampDutyValue = d.StampDuty || '-'; // Use StampDuty for scoring
-
-            // Score based on presence and strength of financial incentives (Elec Waiver & Capital Subsidy)
-            const scoreCap = capSubsidyValue.includes("100%") ? 3 : (capSubsidyValue !== "-" && capSubsidyValue !== "Yes" ? 2 : 1);
-            const scoreElec = elecWaiverValue.includes("100%") ? 3 : (elecWaiverValue !== "-" ? 2 : 1);
-
-            // Score based on land/tax benefits (Land Conversion & Stamp Duty)
-            const scoreLand = (landConversionValue.includes("100%") && stampDutyValue.includes("100")) ? 3 : (landConversionValue !== "-" || stampDutyValue !== "-" ? 2 : 1);
-
-            // Score infrastructure support
-            const scoreInfra = (infraSupportValue === "Yes") ? 3 : 1;
-            
-            return {
-                state: d.state,
-                Financial: scoreCap + scoreElec, // Combined score (Max 6)
-                LandTax: scoreLand * 2, // Increased weight for visual effect (Max 6)
-                Infrastructure: scoreInfra * 2, // Increased weight for visual effect (Max 6)
-                Total: (scoreCap + scoreElec) + (scoreLand * 2) + (scoreInfra * 2) // Max 18
-            };
-        });
-
-        // Sort by Total Score for Bar Chart
-        policyScoring.sort((a, b) => b.Total - a.Total);
-        
-        const incentiveKeys = ["Financial", "LandTax", "Infrastructure"];
-        
-        // Helper function for radar points (defined once globally)
-        const angleSlice = (Math.PI * 2) / incentiveKeys.length;
-        const maxRadarScore = 12; // Adjusted based on max combined score for categories
-        function dataToPoints(dataPoint, index, radarScale, centerX, centerY) {
-            const angle = angleSlice * index - Math.PI / 2;
-            return {
-                x: centerX + Math.cos(angle) * radarScale(dataPoint),
-                y: centerY + Math.sin(angle) * radarScale(dataPoint),
-                angle: angle,
-                value: dataPoint
-            };
-        };
-
-        // --- D3 Visualization Functions ---
-
-        function drawWinnerChart() {
-            const container = document.getElementById('winner-chart');
-            const parentWidth = container.offsetWidth;
-            const margin = { top: 30, right: 20, bottom: 40, left: 60 };
-            const width = parentWidth - margin.left - margin.right;
-            const height = 400 - margin.top - margin.bottom;
-
-            d3.select(container).selectAll("svg").remove();
-            const svg = d3.select(container)
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", `translate(${margin.left},${margin.top})`);
-
-            const tooltip = d3.select("body").select(".tooltip").empty() ? d3.select("body").append("div").attr("class", "tooltip") : d3.select("body").select(".tooltip");
-            
-            const x = d3.scaleBand()
-                .range([0, width])
-                .domain(winnerData.map(d => d.winner))
-                .padding(0.2);
-
-            const y = d3.scaleLinear()
-                .domain([0, d3.max(winnerData, d => d.totalCapacity) * 1.1])
-                .range([height, 0]);
-
-            const colorScale = d3.scaleOrdinal()
-                .domain(auctionData.map(d => d.winner))
-                .range(["#008080", "#4B5563", "#D97706", "#EF4444", "#3B82F6", "#008080", "#4B5563"]); 
-
-            // Draw bars
-            svg.selectAll(".bar")
-                .data(winnerData)
-                .enter().append("rect")
-                .attr("class", "bar")
-                .attr("x", d => x(d.winner))
-                .attr("y", height) // Start from bottom for animation effect
-                .attr("width", x.bandwidth())
-                .attr("height", 0)
-                .style("fill", d => colorScale(d.winner))
-                .on("mouseover", (event, d) => {
-                    tooltip.transition().duration(200).style("opacity", 0.9);
-                    tooltip.html(`
-                        <strong>${d.winner}</strong>
-                        Total Capacity: ${d.totalCapacity.toLocaleString()} T/yr
-                    `)
-                    .style("left", (event.pageX + 10) + "px")
-                    .style("top", (event.pageY - 28) + "px");
-                })
-                .on("mouseout", () => {
-                    tooltip.transition().duration(500).style("opacity", 0);
-                })
-                .transition() // Animation
-                .duration(800)
-                .attr("y", d => y(d.totalCapacity))
-                .attr("height", d => height - y(d.totalCapacity));
-
-            // Axes
-            svg.append("g")
-                .attr("transform", `translate(0,${height})`)
-                .call(d3.axisBottom(x))
-                .attr("class", "x-axis-bottom");
-
-            svg.append("g")
-                .call(d3.axisLeft(y).tickFormat(d => d / 1000 + "k"));
-            
-            // Y-axis Label
-            svg.append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 0 - margin.left)
-                .attr("x", 0 - (height / 2))
-                .attr("dy", "1em")
-                .style("text-anchor", "middle")
-                .style("font-weight", "600")
-                .style("fill", "#008080")
-                .text("Total Capacity Awarded (MT/yr)");
-        }
-
-        function drawPriceCapacityChart() {
-            const container = document.getElementById('price-capacity-chart');
-            const parentWidth = container.offsetWidth;
-            const margin = { top: 30, right: 100, bottom: 120, left: 80 }; // Increased right margin to 100
-            const width = parentWidth - margin.left - margin.right;
-            const height = 500 - margin.top - margin.bottom;
-
-            d3.select(container).selectAll("svg").remove();
-            const svg = d3.select(container)
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", `translate(${margin.left},${margin.top})`);
-
-            const tooltip = d3.select("body").select(".tooltip").empty() ? d3.select("body").append("div").attr("class", "tooltip") : d3.select("body").select(".tooltip");
-
-            // --- Scales ---
-            const x = d3.scaleBand()
-                .range([0, width])
-                .domain(auctionData.map(d => d.producer))
-                .padding(0.2);
-
-            const yCapacity = d3.scaleLinear()
-                .domain([0, d3.max(auctionData, d => d.capacity) * 1.1])
-                .range([height, 0]);
-
-            const yPrice = d3.scaleLinear()
-                .domain([d3.min(auctionData, d => d.bidPrice) * 0.95, d3.max(auctionData, d => d.bidPrice) * 1.05])
-                .range([height, 0]);
-
-            const colorScale = d3.scaleOrdinal()
-                .domain(auctionData.map(d => d.winner))
-                .range(["#008080", "#4B5563", "#D97706", "#EF4444", "#3B82F6", "#008080", "#4B5563"]); 
-
-            const rScale = d3.scaleLinear()
-                .domain([d3.min(auctionData, d => d.bidPrice), d3.max(auctionData, d => d.bidPrice)])
-                .range([12, 4]); // Size range: 12 (lowest bid) to 4 (highest bid)
-
-            // --- Axes ---
-            svg.append("g")
-                .attr("transform", `translate(0,${height})`)
-                .call(d3.axisBottom(x))
-                .selectAll("text")
-                .attr("transform", "translate(-10,0)rotate(-45)")
-                .style("text-anchor", "end");
-
-            // Left Y-Axis (Capacity)
-            svg.append("g")
-                .call(d3.axisLeft(yCapacity).tickFormat(d => d / 1000 + "k"));
-            
-            // Right Y-Axis (Price)
-            svg.append("g")
-                .attr("transform", `translate(${width}, 0)`)
-                .attr("class", "y-axis-right")
-                .call(d3.axisRight(yPrice).tickFormat(d => `Rs ${d}/kg`));
-            
-            // Y-axis Label (Left: Capacity) - Vertical
-            svg.append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 0 - margin.left)
-                .attr("x", 0 - (height / 2))
-                .attr("dy", "1em")
-                .style("text-anchor", "middle")
-                .style("font-weight", "600")
-                .style("fill", "#008080")
-                .text("Offtake Capacity (MT/yr)");
-
-            // Y-axis Label (Right: Price) - Now positioned vertically, matching the style on the left
-            svg.append("text")
-                .attr("transform", "rotate(90)")
-                .attr("y", -(width + margin.right) + 145) 
-                .attr("x", (height / 2))
-                .style("text-anchor", "middle")
-                .style("font-weight", "600")
-                .style("fill", "#EF4444")
-                .text("Winning Bid Price (Rs/kg)");
-
-            // --- Capacity Bars ---
-            svg.selectAll(".capacity-bar")
-                .data(auctionData)
-                .enter().append("rect")
-                .attr("class", "capacity-bar")
-                .attr("x", d => x(d.producer))
-                .attr("y", d => yCapacity(d.capacity))
-                .attr("width", x.bandwidth())
-                .attr("height", d => height - yCapacity(d.capacity))
-                .style("fill", "#008080")
-                .style("opacity", 0.2); // Low opacity to support bubbles
-
-            // --- Bid Price Bubbles ---
-            svg.selectAll(".price-bubble")
-                .data(auctionData)
-                .enter()
-                .append("circle")
-                .attr("class", "price-bubble")
-                .attr("cx", d => x(d.producer) + x.bandwidth() / 2)
-                .attr("cy", d => yPrice(d.bidPrice)) // Plotted on Price axis
-                .attr("r", d => rScale(d.bidPrice)) 
-                .style("fill", d => colorScale(d.winner))
-                .style("stroke", d => colorScale(d.winner))
-                .style("stroke-width", 2)
-                .style("opacity", 1.0)
-                .on("mouseover", (event, d) => {
-                    tooltip.transition().duration(200).style("opacity", 0.9);
-                    tooltip.html(`
-                        <strong>${d.producer}</strong>
-                        Capacity: ${d.capacity.toLocaleString()} T/yr<br>
-                        Bid Price: Rs ${d.bidPrice}/kg<br>
-                        Winner: ${d.winner}
-                    `)
-                    .style("left", (event.pageX + 10) + "px")
-                    .style("top", (event.pageY - 28) + "px");
-                })
-                .on("mouseout", () => {
-                    tooltip.transition().duration(500).style("opacity", 0);
-                });
-
-            // --- Lowest Bid Line ---
-            const lowestBidValue = 49.75;
-            svg.append("line")
-                .attr("class", "bid-line")
-                .attr("x1", 0)
-                .attr("x2", width)
-                .attr("y1", yPrice(lowestBidValue))
-                .attr("y2", yPrice(lowestBidValue));
-        }
-
-        function drawIncentiveRadarChart() {
-            const container = document.getElementById('incentive-chart');
-            const parentWidth = container.offsetWidth;
-            const margin = { top: 30, right: 30, bottom: 120, left: 60 }; // Increased bottom margin
-            const width = parentWidth - margin.left - margin.right;
-            const height = 500 - margin.top - margin.bottom;
-
-            d3.select(container).selectAll("svg").remove();
-            const svg = d3.select(container)
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", `translate(${margin.left},${margin.top})`);
-
-            const tooltip = d3.select("body").select(".tooltip").empty() ? d3.select("body").append("div").attr("class", "tooltip") : d3.select("body").select(".tooltip");
-            
-            // Prepare data for the radar lines/areas (using actual state scoring)
-            const radarData = policyScoring.map(d => ({
-                state: d.state,
-                data: [d.Financial, d.LandTax, d.Infrastructure]
-            }));
-            
-            // --- RADAR CHART LOGIC ---
-            const topStates = policyScoring.slice(0, 5); // Focus on Top 5 performing states
-            const radarChartRadius = Math.min(width, height) / 2;
-            const centerX = width / 2;
-            const centerY = height / 2;
-            const maxScore = 12; // Max score for categories
-            const radarScale = d3.scaleLinear().range([0, radarChartRadius]).domain([0, maxScore]);
-            const stateColors = d3.scaleOrdinal().domain(topStates.map(d => d.state)).range(d3.schemeCategory10);
-
-            // Draw circular grid lines (0, 4, 8, 12 score levels)
-            svg.selectAll(".grid-circle")
-                .data(d3.range(0, maxScore + 1, 4).reverse())
-                .enter().append("circle")
-                .attr("cx", centerX)
-                .attr("cy", centerY)
-                .attr("r", d => radarScale(d))
-                .style("fill", "none")
-                .style("stroke", "#ddd");
-
-            // Draw axis spokes
-            svg.selectAll(".axis-spoke")
-                .data(incentiveKeys)
-                .enter().append("line")
-                .attr("x1", centerX)
-                .attr("y1", centerY)
-                .attr("x2", (d, i) => dataToPoints(maxScore, i, radarScale, centerX, centerY).x)
-                .attr("y2", (d, i) => dataToPoints(maxScore, i, radarScale, centerX, centerY).y)
-                .style("stroke", "#9CA3AF")
-                .style("stroke-width", "1px");
-
-            // Draw axis labels (Incentive Types)
-            svg.selectAll(".legend-label")
-                .data(incentiveKeys)
-                .enter().append("text")
-                .attr("x", (d, i) => dataToPoints(maxScore * 1.1, i, radarScale, centerX, centerY).x) 
-                .attr("y", (d, i) => dataToPoints(maxScore * 1.1, i, radarScale, centerX, centerY).y)
-                .attr("dy", d => (d === "Financial" || d === "Infrastructure") ? "0.35em" : "-0.5em")
-                .style("font-size", "0.9rem")
-                .style("fill", "#1a202c")
-                .style("text-anchor", "middle")
-                .text(d => d.replace("LandTax", "Land/Tax").replace("Financial", "Financial/Subsidies").replace("Infrastructure", "Infrastructure"));
-
-            // Function to generate the radar area path
-            const radarLine = d3.lineRadial()
-                .curve(d3.curveCardinalClosed)
-                .radius(d => radarScale(d))
-                .angle((d, i) => angleSlice * i);
-
-            // Draw the radar areas
-            svg.selectAll(".radar-area")
-                .data(radarData.filter(d => topStates.map(s => s.state).includes(d.state))) // Filter only top states
-                .enter().append("path")
-                .attr("class", "radar-area")
-                .attr("d", d => radarLine(d.data))
-                .attr("transform", `translate(${centerX}, ${centerY})`)
-                .style("fill", d => stateColors(d.state))
-                .style("fill-opacity", 0.15)
-                .style("stroke-width", 2)
-                .style("stroke", d => stateColors(d.state))
-                .style("stroke-opacity", 0.8)
-                .on("mouseover", (event, d) => {
-                    tooltip.transition().duration(200).style("opacity", 0.9);
-                    tooltip.html(`
-                        <strong>${d.state} Policy</strong>
-                        Financial/Subsidies: ${d.data[0]} / 6<br>
-                        Land/Tax: ${d.data[1]} / 6<br>
-                        Infrastructure: ${d.data[2]} / 6
-                    `)
-                    .style("left", (event.pageX + 10) + "px")
-                    .style("top", (event.pageY - 28) + "px");
-                    d3.select(event.currentTarget).style("fill-opacity", 0.5);
-                })
-                .on("mouseout", (event, d) => {
-                    tooltip.transition().duration(500).style("opacity", 0);
-                    d3.select(event.currentTarget).style("fill-opacity", 0.15);
-                });
-
-            
-            // Legend (Placed below the chart for clarity)
-            const legendItemWidth = 180; // INCREASED spacing to 180px for "Andhra Pradesh"
-            const legendColumns = 5; // Keep fixed for easier centering/wrapping visual
-            const legendTotalWidth = Math.min(topStates.length, legendColumns) * legendItemWidth;
-            const legendXStart = (width / 2) - (legendTotalWidth / 2); // Calculate starting X for centering
-
-            const legend = svg.append("g")
-                .attr("transform", `translate(${legendXStart}, ${height + margin.top + 20})`); // Centered and moved down
-
-            legend.selectAll(".radar-legend")
-                .data(topStates)
-                .enter().append("g")
-                .attr("transform", (d, i) => {
-                    // Use the increased itemWidth
-                    const xOffset = (i % legendColumns) * legendItemWidth;
-                    const yOffset = Math.floor(i / legendColumns) * 20;
-                    return `translate(${xOffset}, ${yOffset})`;
-                })
-                .each(function(d) {
-                    d3.select(this).append("rect")
-                        .attr("x", 0)
-                        .attr("y", -8)
-                        .attr("width", 10)
-                        .attr("height", 10)
-                        .style("fill", stateColors(d.state));
-                    
-                    d3.select(this).append("text")
-                        .attr("x", 15)
-                        .attr("y", 0)
-                        .text(d.state)
-                        .style("font-size", "0.85rem")
-                        .style("fill", "#4B5563");
-                });
-        }
-        
-        // --- Horizontal Stacked Bar Chart for Policy Strength ---
-        function drawPolicyBarChart() {
-            const container = document.getElementById('policy-bar-chart');
-            const parentWidth = container.offsetWidth;
-            const margin = { top: 20, right: 20, bottom: 40, left: 140 }; 
-            const width = parentWidth - margin.left - margin.right;
-            const height = policyScoring.length * 35 + 50; 
-
-            d3.select(container).selectAll("svg").remove();
-            const svg = d3.select(container)
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", `translate(${margin.left},${margin.top})`);
-
-            const tooltip = d3.select("body").select(".tooltip").empty() ? d3.select("body").append("div").attr("class", "tooltip") : d3.select("body").select(".tooltip");
-            
-            // Stack the data
-            const stack = d3.stack().keys(incentiveKeys);
-            const stackedData = stack(policyScoring); 
-
-            // Scales
-            const x = d3.scaleLinear()
-                .domain([0, d3.max(policyScoring, d => d.Total)])
-                .range([0, width]);
-
-            const y = d3.scaleBand()
-                .range([0, height])
-                .domain(policyScoring.map(d => d.state))
-                .padding(0.1);
-
-            const colorScale = d3.scaleOrdinal()
-                .domain(incentiveKeys)
-                .range(["#008080", "#4B5563", "#3B82F6"]); 
-
-            // Draw bars
-            svg.append("g")
-                .selectAll("g")
-                .data(stackedData)
-                .enter().append("g")
-                .attr("fill", d => colorScale(d.key))
-                .selectAll("rect")
-                .data(d => d)
-                .enter().append("rect")
-                .attr("x", d => x(d[0]))
-                .attr("y", d => y(d.data.state))
-                .attr("width", d => x(d[1]) - x(d[0]))
-                .attr("height", y.bandwidth())
-                .on("mouseover", (event, d) => {
-                    const incentiveType = d3.select(event.currentTarget.parentNode).datum().key;
-                    tooltip.transition().duration(200).style("opacity", 0.9);
-                    tooltip.html(`
-                        <strong>${d.data.state}</strong>
-                        Type: ${incentiveType.replace("LandTax", "Land/Tax")}<br>
-                        Score: ${d.data[incentiveType]}
-                    `)
-                    .style("left", (event.pageX + 10) + "px")
-                    .style("top", (event.pageY - 28) + "px");
-                })
-                .on("mouseout", () => {
-                    tooltip.transition().duration(500).style("opacity", 0);
-                });
-
-            // Axes
-            svg.append("g")
-                .attr("transform", `translate(0,${height})`)
-                .call(d3.axisBottom(x).ticks(d3.max(policyScoring, d => d.Total)));
-
-            svg.append("g")
-                .call(d3.axisLeft(y));
-            
-            // X-axis Label
-            svg.append("text")
-                .attr("transform", `translate(${width / 2}, ${height + margin.bottom - 10})`) /* Label positioned correctly with sufficient bottom margin */
-                .style("text-anchor", "middle")
-                .style("font-weight", "600")
-                .style("fill", "#008080")
-                .text("Total Policy Score (Max 18)");
-                
-            // Legend
-            const legend = svg.append("g")
-                .attr("transform", `translate(${width - 250}, -20)`); // Move legend away from the main chart area
-
-            legend.selectAll(".incentive-legend")
-                .data(incentiveKeys)
-                .enter().append("g")
-                .attr("transform", (d, i) => `translate(${i * 100}, 0)`)
-                .each(function(d) {
-                    d3.select(this).append("rect")
-                        .attr("x", 0)
-                        .attr("y", -8)
-                        .attr("width", 10)
-                        .attr("height", 10)
-                        .style("fill", colorScale(d));
-                    
-                    d3.select(this).append("text")
-                        .attr("x", 15)
-                        .attr("y", 0)
-                        .text(d.replace("LandTax", "Land/Tax"))
-                        .style("font-size", "0.85rem")
-                        .style("fill", "#4B5563");
-                });
-        }
-        
-        // --- Table Population Function ---
-        function populateIncentiveTable() {
-            const table = d3.select("#incentive-table");
-            table.selectAll("*").remove();
-
-            // Note: Adding all columns from the provided image data here.
-            const columns = [
-                { key: 'state', title: 'State' },
-                { key: 'ElecWaiver', title: 'Elec. Waiver' },
-                { key: 'CrossSubsidy', title: 'Cross Subsidy' },
-                { key: 'AdditionalSurcharge', title: 'Addtl. Surcharge' },
-                { key: 'CapitalIncentment', title: 'Capital Incentive' },
-                { key: 'LandConversion', title: 'Land Conversion Charge' },
-                { key: 'StampDuty', title: 'Stamp Duty' },
-                { key: 'CapSubsidy', title: 'Capital Subsidy' },
-                { key: 'InfraSupport', title: 'Infra. Support' }
-            ];
-
-            const thead = table.append("thead");
-            thead.append("tr")
-                .selectAll("th")
-                .data(columns)
-                .enter().append("th")
-                .text(d => d.title);
-
-            const tbody = table.append("tbody");
-            const rows = tbody.selectAll("tr")
-                .data(fullRawPolicyData)
-                .enter().append("tr");
-
-            rows.selectAll("td")
-                .data(function(row) {
-                    // Mapping data to the displayed columns
-                    const fullRowData = [
-                        { key: 'state', value: row.state },
-                        { key: 'ElecWaiver', value: row.ElecWaiver },
-                        { key: 'CrossSubsidy', value: row.CrossSubsidy || '-' },
-                        { key: 'AdditionalSurcharge', value: row.AdditionalSurcharge || '-' },
-                        { key: 'CapitalIncentment', value: row.CapitalIncentment || '-' },
-                        { key: 'LandConversion', value: row.LandConversion || '-' },
-                        { key: 'StampDuty', value: row.StampDuty || '-' },
-                        { key: 'CapSubsidy', value: row.CapSubsidy || '-' },
-                        { key: 'InfraSupport', value: row.InfraSupport }
-                    ];
-
-                    return fullRowData.map(item => {
-                        let value = item.value;
-                        let content = value;
-                        let className = '';
-
-                        if (item.key !== 'state') {
-                             if (value && (value.includes("100%") || value === "Yes" || value.includes("10"))) {
-                                content = value;
-                                className = 'icon-check icon-value';
-                            } else if (value === "-" || value === "No / N/A") {
-                                content = "No / N/A";
-                                className = 'icon-minus';
-                            } else {
-                                content = value;
-                                className = 'icon-value';
-                            }
-                        }
-                        
-                        return { column: item.key, value: content, class: className };
-                    });
-                })
-                .enter().append("td")
-                .attr("class", d => d.class)
-                .html(d => d.value);
-        }
-
-        // --- UTILITY FUNCTIONS ---
-        
-        // 1. Clock/Date Logic
-        function updateClock() {
-            const now = new Date();
-            const timeElement = document.getElementById('time');
-            const dateElement = document.getElementById('date');
-            
-            if (timeElement) {
-                let hours = now.getHours();
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const seconds = now.getSeconds().toString().padStart(2, '0');
-                timeElement.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
-            }
-            
-            if (dateElement) {
-                const options = { weekday: 'short', month: 'short', day: 'numeric' };
-                dateElement.textContent = now.toLocaleDateString('en-US', options);
-            }
-        }
-
-        // 2. Modal Functions (Copied from index.html)
-        function showComingSoonModal(topic) {
-            const modal = document.getElementById('coming-soon-modal-overlay');
-            if(modal) {
-                document.getElementById('modal-topic-title').textContent = topic;
-                document.getElementById('modal-topic-placeholder').textContent = topic;
-                modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-            event.preventDefault(); 
-        }
-
-        function closeComingSoonModal() {
-            const modal = document.getElementById('coming-soon-modal-overlay');
-            if (modal) {
-                modal.classList.add('hidden');
-                document.body.style.overflow = '';
-            }
-        }
-
-        // 3. Event Listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            updateClock();
-            setInterval(updateClock, 1000);
-
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                const targetId = anchor.getAttribute('href');
-                if (targetId === '#contact') { 
-                    anchor.href = "index.html#contact"; 
-                }
-            });
-
-            // Initialize Feather Icons
-            if (window.feather) {
-                window.feather.replace();
-            }
-        });
-
-        // Redraw charts on window resize for responsiveness
-        window.addEventListener('resize', () => {
-            const auctionViz = document.getElementById('auction-visualization');
-            const policyViz = document.getElementById('policy-visualization');
-
-            if (auctionViz && !auctionViz.classList.contains('hidden')) {
-                drawWinnerChart();
-                drawPriceCapacityChart();
-            }
-            if (policyViz && !policyViz.classList.contains('hidden')) {
-                drawPolicyBarChart();
-                drawIncentiveRadarChart(); 
-                // Redraw table content on resize to handle responsive layout issues
-                populateIncentiveTable();
-            }
-        });
-    </script>
+    </div>
+    
+    <!-- Footer Section --><footer class="footer-style">
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="footer-logo">SLATE</div>
+                <div class="footer-name">Insights from Emil Roby</div>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/emil-roby-878792314/" target="_blank" rel="noopener noreferrer"><i data-feather="linkedin" class="w-4 h-4"></i></a>
+                    <a href="mailto:emilroby9@gmail.com"><i data-feather="mail" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+            <!-- SERVICES SECTION --><div class="footer-links">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Policy Analysis</a></li>
+                    <li><a href="#">Strategic Consulting</a></li>
+                    <li><a href="#">Energy Data Analytics</a></li>
+                    <li><a href="#">Digital Energy Solutions</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 SLATE. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Modal HTML/JS (MUST be present in all files if called by modal links) --><div id="coming-soon-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeComingSoonModal()">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+            <div class="modal-title">
+                <span id="modal-topic-title"></span>
+            </div>
+            <div class="modal-subtitle">
+                The Data Revolution is Brewing.
+            </div>
+            <p class="modal-cta">
+                We're currently finalizing the <strong>quantifiable data and strategic frameworks</strong> for this <strong><span id="modal-topic-placeholder" class="font-bold text-teal-600"></span></strong> section. It's coming soon and will be worth the wait!
+            </p>
+            <a href="#" class="back-button" onclick="closeComingSoonModal()">
+                Got It! Take Me Back
+            </a>
+        </div>
+    </div>
+
+    
+    <script>
+        // --- LLM API Configuration and Chat History ---
+        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=";
+        let chatHistoryAuction = [];
+        let chatHistoryPolicy = [];
+
+        // Contextual AI persona and instructions
+        const SYSTEM_INSTRUCTION_BASE = "You are a concise, world-class energy and policy analyst. Your goal is to provide simple, actionable insights based on the charts and the raw policy data provided. Additionally, you can use Google Search for external, up-to-date context when the data context is insufficient.";
+
+        // --- DATA AND D3.JS VISUALIZATION LOGIC ---
+
+        // ********** START: Hoisted Functions **********
+        
+        // --- Toggle Functions ---
+        function showVisualization(type) {
+            // Hide all visuals first
+            document.getElementById('intro-card-grid').classList.add('hidden');
+            
+            // Safety check for visualization containers
+            const auctionViz = document.getElementById('auction-visualization');
+            const policyViz = document.getElementById('policy-visualization');
+
+            if (auctionViz) auctionViz.classList.add('hidden');
+            if (policyViz) policyViz.classList.add('hidden');
+            
+            // Show the requested visual
+            if (type === 'auction' && auctionViz) {
+                auctionViz.classList.remove('hidden');
+                drawWinnerChart();
+                drawPriceCapacityChart();
+                auctionViz.scrollIntoView({ behavior: 'smooth' });
+            } else if (type === 'policy' && policyViz) {
+                policyViz.classList.remove('hidden');
+                drawPolicyBarChart();
+                drawIncentiveRadarChart(); 
+                populateIncentiveTable();
+                policyViz.scrollIntoView({ behavior: 'smooth' });
+            }
+            window.dispatchEvent(new Event('resize')); 
+        }
+
+        function hideVisualization(type) {
+            const auctionViz = document.getElementById('auction-visualization');
+            const policyViz = document.getElementById('policy-visualization');
+
+            if (type === 'auction' && auctionViz) {
+                auctionViz.classList.add('hidden');
+            } else if (type === 'policy' && policyViz) {
+                policyViz.classList.add('hidden');
+            }
+            document.getElementById('intro-card-grid').classList.remove('hidden');
+        }
+        
+        // --- LLM CHAT FUNCTIONALITY ---
+        async function sendAIChatMessage(event, analysisType) {
+            event.preventDefault();
+
+            const inputId = `chat-input-${analysisType}`;
+            const messagesId = `chat-messages-${analysisType}`;
+            const inputElement = document.getElementById(inputId);
+            const messagesContainer = document.getElementById(messagesId);
+            const userQuery = inputElement.value.trim();
+
+            if (!userQuery) return;
+
+            const currentHistory = analysisType === 'auction' ? chatHistoryAuction : chatHistoryPolicy;
+            const dataContext = analysisType === 'auction' ? JSON.stringify(auctionData) : JSON.stringify(policyScoring);
+            
+            let systemInstruction = SYSTEM_INSTRUCTION_BASE + 
+                " Base your analysis only on the charts and the raw policy data provided. Additionally, you can use Google Search for external, up-to-date context when the data context is insufficient.";
+
+            // 1. Display user message
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'chat-message chat-user';
+            userMessageDiv.innerHTML = `<div class="chat-bubble">${userQuery}</div>`;
+            messagesContainer.appendChild(userMessageDiv);
+            
+            // 2. Add user message to history
+            currentHistory.push({ role: "user", parts: [{ text: userQuery }] });
+
+            // 3. Display AI loading indicator
+            const aiMessageDiv = document.createElement('div');
+            aiMessageDiv.className = 'chat-message chat-ai';
+            
+            // Use the new Greenie SVG icon
+            const greenieIconHtml = `<div class="chat-ai-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                    <path d="M11 20A7 7 0 0 1 9.86 8.7C10.74 8.24 12 6.5 12 3a2 2 0 0 0-2 2c0 2.22-2 3.16-2 3.16A8.5 8.5 0 0 0 2 15c0 4.42 3.58 8 8 8a9 9 0 0 0 6.07-2.75" fill="none" stroke="white"/>
+                    <path d="M17 18.5a9 9 0 0 0-6.07-2.75"/>
+                </svg>
+            </div><div class="chat-bubble chat-loading"></div>`;
+
+            aiMessageDiv.innerHTML = greenieIconHtml;
+            messagesContainer.appendChild(aiMessageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Clear input
+            inputElement.value = '';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: currentHistory,
+                        systemInstruction: { parts: [{ text: systemInstruction }] },
+                        tools: [{ "google_search": {} }] 
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that request.";
+
+                // 4. Update AI response
+                aiMessageDiv.querySelector('.chat-bubble').classList.remove('chat-loading');
+                aiMessageDiv.querySelector('.chat-bubble').textContent = aiText;
+                
+                // 5. Add AI response to history
+                currentHistory.push({ role: "model", parts: [{ text: aiText }] });
+
+            } catch (error) {
+                console.error("AI API Call Failed:", error);
+                aiMessageDiv.querySelector('.chat-bubble').classList.remove('chat-loading');
+                aiMessageDiv.querySelector('.chat-bubble').textContent = "Error: Could not connect to the insight engine.";
+            }
+
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // --- D3 Visualization Functions (Moved for Hoisting) ---
+
+        // Consolidated and Processed Data for Ammonia Auction
+        const auctionData = [
+            { producer: "Paradeep Phos.", location: "Paradeep", state: "Odisha", capacity: 75000, bidPrice: 55.75, winner: "Acme" },
+            { producer: "Krishna Phos.", location: "Meghnagar", state: "Madhya Pradesh", capacity: 70000, bidPrice: 51.8, winner: "NTPC" },
+            { producer: "Madras/Saglar", location: "Saglar", state: "Madhya Pradesh", capacity: 60000, bidPrice: 52.25, winner: "Ortana Power" },
+            { producer: "Madras/Dhule", location: "Dhule", state: "Maharashtra", capacity: 70000, bidPrice: 53.05, winner: "SCC Infrastructure" },
+            { producer: "Gujarat Narmada", location: "Bharuch", state: "Gujarat", capacity: 50000, bidPrice: 52.5, winner: "Oaix Renewable" },
+            { producer: "Coro./Kakinada", location: "Kakinada", state: "Andhra Pradesh", capacity: 85000, bidPrice: 50.75, winner: "Jakson Green" },
+            { producer: "Coro./V'patnam", location: "Vishakhapatnam", state: "A.P.", capacity: 50000, bidPrice: 51.89, winner: "Acme" },
+            { producer: "Indian Farmers/Kandla", location: "Kandla", state: "Gujarat", capacity: 100000, bidPrice: 54.73, winner: "Acme" },
+            { producer: "Indian Farmers/Paradeep", location: "Paradeep", state: "Odisha", capacity: 100000, bidPrice: 49.75, winner: "ACME Cleantech" },
+            { producer: "ZuariNagar, Goa", location: "Zuarinagar", state: "Goa", capacity: 25000, bidPrice: 62.84, winner: "ACME Cleantech" },
+            { producer: "Indorama India", location: "Haldia", state: "West Bengal", capacity: 20000, bidPrice: 64.74, winner: "ACME Cleantech" },
+            { producer: "Mangalore Chemicals", location: "Mangalore", state: "Karnataka", capacity: 15000, bidPrice: 57.65, winner: "SCC Infrastructure" },
+            { producer: "Madras Fertilizers", location: "Manali", state: "Tamil Nadu", capacity: 4000, bidPrice: 50.00, winner: "Suryam International" }
+        ];
+
+        const winnerData = d3.rollups(auctionData, 
+            v => d3.sum(v, d => d.capacity), 
+            d => d.winner
+        ).map(([winner, totalCapacity]) => ({ winner, totalCapacity }));
+
+        // Consolidated and Processed Data for Green Hydrogen Policy (Incentives)
+        const fullRawPolicyData = [
+            { state: "Odisha", ElecWaiver: "100% * 20 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "Yes" },
+            { state: "Madhya Pradesh", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "50", CapSubsidy: "100%", InfraSupport: "Yes" },
+            { state: "Gujarat", ElecWaiver: "100%", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "1.2", InfraSupport: "Yes" },
+            { state: "Andhra Pradesh", ElecWaiver: "50% * 5 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
+            { state: "West Bengal", ElecWaiver: "-", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "25 * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "Yes" },
+            { state: "Tamil Nadu", ElecWaiver: "-", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "25, 35, 45", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
+            { state: "Karnataka", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "100%", InfraSupport: "Yes" },
+            { state: "Kerala", ElecWaiver: "100% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "2 * 5", InfraSupport: "Yes" },
+            { state: "Rajasthan", ElecWaiver: "50% * 10 years", CrossSubsidy: "100", AdditionalSurcharge: "100", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "25", CapSubsidy: "5", InfraSupport: "Yes" },
+            { state: "Uttar Pradesh", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
+            { state: "Punjab", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
+            { state: "Haryana", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
+            { state: "Assam", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
+            { state: "Telangana", ElecWaiver: "-", CrossSubsidy: "-", AdditionalSurcharge: "-", CapitalIncentment: "100% * 5", LandConversion: "100%", StampDuty: "100", CapSubsidy: "-", InfraSupport: "-" },
+        ];
+
+        // Scoring for Radar Chart (Higher Score = More Comprehensive Policy)
+        const policyScoring = fullRawPolicyData.map(d => {
+            // Scoring logic: 3 for high incentive, 2 for medium, 1 for low/none/unspecified
+            const capSubsidyValue = d.CapSubsidy || '-';
+            const elecWaiverValue = d.ElecWaiver || '-';
+            const infraSupportValue = d.InfraSupport || '-';
+            const landSubsidyValue = d.LandSubsidy || '-';
+
+            // Check if subsidy contains "100%"
+            const scoreCap = capSubsidyValue.includes("100%") ? 3 : (capSubsidyValue !== "-" && capSubsidyValue !== "Yes" ? 2 : 1);
+            const scoreElec = elecWaiverValue.includes("100%") ? 3 : (elecWaiverValue !== "-" ? 2 : 1);
+            const scoreInfra = (infraSupportValue === "Yes") ? 3 : 1;
+            const scoreLand = (landSubsidyValue.includes("100%")) ? 3 : 1; // FIX: Added safety check
+
+            return {
+                state: d.state,
+                Financial: scoreCap + scoreElec, // Combined score (Max 6)
+                LandTax: scoreLand * 2, // Increased weight for visual effect (Max 6)
+                Infrastructure: scoreInfra * 2, // Increased weight for visual effect (Max 6)
+                Total: (scoreCap + scoreElec) + (scoreLand * 2) + (scoreInfra * 2) // Max 18
+            };
+        });
+
+        // Sort by Total Score for Bar Chart
+        policyScoring.sort((a, b) => b.Total - a.Total);
+        
+        const incentiveKeys = ["Financial", "LandTax", "Infrastructure"];
+        
+        // Helper function for radar points (defined once globally)
+        const angleSlice = (Math.PI * 2) / incentiveKeys.length;
+        const maxRadarScore = 12; // Adjusted based on max combined score for categories
+        function dataToPoints(dataPoint, index, radarScale, centerX, centerY) {
+            const angle = angleSlice * index - Math.PI / 2;
+            return {
+                x: centerX + Math.cos(angle) * radarScale(dataPoint),
+                y: centerY + Math.sin(angle) * radarScale(dataPoint),
+                angle: angle,
+                value: dataPoint
+            };
+        };
+
+        // --- D3 Visualization Functions ---
+
+        function drawWinnerChart() {
+            const container = document.getElementById('winner-chart');
+            const parentWidth = container.offsetWidth;
+            const margin = { top: 30, right: 20, bottom: 40, left: 60 };
+            const width = parentWidth - margin.left - margin.right;
+            const height = 400 - margin.top - margin.bottom;
+
+            d3.select(container).selectAll("svg").remove();
+            const svg = d3.select(container)
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const tooltip = d3.select("body").select(".tooltip").empty() ? d3.select("body").append("div").attr("class", "tooltip") : d3.select("body").select(".tooltip");
+            
+            const x = d3.scaleBand()
+                .range([0, width])
+                .domain(winnerData.map(d => d.winner))
+                .padding(0.2);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(winnerData, d => d.totalCapacity) * 1.1])
+                .range([height, 0]);
+
+            const colorScale = d3.scaleOrdinal()
+                .domain(auctionData.map(d => d.winner))
+                .range(["#008080", "#4B5563", "#D97706", "#EF4444", "#3B82F6", "#008080", "#4B5563"]); 
+
+            // Draw bars
+            svg.selectAll(".bar")
+                .data(winnerData)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.winner))
+                .attr("y", height) // Start from bottom for animation effect
+                .attr("width", x.bandwidth())
+                .attr("height", 0)
+                .style("fill", d => colorScale(d.winner))
+                .on("mouseover", (event, d) => {
+                    tooltip.transition().duration(200).style("opacity", 0.9);
+                    tooltip.html(`
+                        <strong>${d.winner}</strong>
+                        Total Capacity: ${d.totalCapacity.toLocaleString()} T/yr
+                    `)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", () => {
+                    tooltip.transition().duration(500).style("opacity", 0);
+                })
+                .transition() // Animation
+                .duration(800)
+                .attr("y", d => y(d.totalCapacity))
+                .attr("height", d => height - y(d.totalCapacity));
+
+            // Axes
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x))
+                .attr("class", "x-axis-bottom");
+
+            svg.append("g")
+                .call(d3.axisLeft(y).tickFormat(d => d / 1000 + "k"));
+            
+            // Y-axis Label
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left)
+                .attr("x", 0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .style("font-weight", "600")
+                .style("fill", "#008080")
+                .text("Total Capacity Awarded (MT/yr)");
+        }
+
+        function drawPriceCapacityChart() {
+            const container = document.getElementById('price-capacity-chart');
+            const parentWidth = container.offsetWidth;
+            const margin = { top: 30, right: 100, bottom: 120, left: 80 }; // Increased right margin to 100
+            const width = parentWidth - margin.left - margin.right;
+            const height = 500 - margin.top - margin.bottom;
+
+            d3.select(container).selectAll("svg").remove();
+            const svg = d3.select(container)
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const tooltip = d3.select("body").select(".tooltip").empty() ? d3.select("body").append("div").attr("class", "tooltip") : d3.select("body").select(".tooltip");
+
+            // --- Scales ---
+            const x = d3.scaleBand()
+                .range([0, width])
+                .domain(auctionData.map(d => d.producer))
+                .padding(0.2);
+
+            const yCapacity = d3.scaleLinear()
+                .domain([0, d3.max(auctionData, d => d.capacity) * 1.1])
+                .range([height, 0]);
+
+            const yPrice = d3.scaleLinear()
+                .domain([d3.min(auctionData, d => d.bidPrice) * 0.95, d3.max(auctionData, d => d.bidPrice) * 1.05])
+                .range([height, 0]);
+
+            const colorScale = d3.scaleOrdinal()
+                .domain(auctionData.map(d => d.winner))
+                .range(["#008080", "#4B5563", "#D97706", "#EF4444", "#3B82F6", "#008080", "#4B5563"]); 
+
+            const rScale = d3.scaleLinear()
+                .domain([d3.min(auctionData, d => d.bidPrice), d3.max(auctionData, d => d.bidPrice)])
+                .range([12, 4]); // Size range: 12 (lowest bid) to 4 (highest bid)
+
+            // --- Axes ---
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "translate(-10,0)rotate(-45)")
+                .style("text-anchor", "end");
+
+            // Left Y-Axis (Capacity)
+            svg.append("g")
+                .call(d3.axisLeft(yCapacity).tickFormat(d => d / 1000 + "k"));
+            
+            // Right Y-Axis (Price)
+            svg.append("g")
+                .attr("transform", `translate(${width}, 0)`)
+                .attr("class", "y-axis-right")
+                .call(d3.axisRight(yPrice).tickFormat(d => `Rs ${d}/kg`));
+            
+            // Y-axis Label (Left: Capacity)
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left) // Adjusted margin
+                .attr("x", 0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .style("font-weight", "600")
+                .style("fill", "#008080")
+                .text("Offtake Capacity (MT/yr)");
+
+            // Y-axis Label (Right: Price)
+            svg.append("text")
+                .attr("transform", "rotate(90)")
+                .attr("y", -(width + margin.right) + 40) /* Adjusted to position it clearly off the chart boundary */
+                .attr("x", (height / 2))
+                .style("text-anchor", "middle")
+                .style("font-weight", "600")
+                .style("fill", "#EF4444")
+                .text("Winning Bid Price (Rs/kg)");
+
+            // --- Capacity Bars ---
+            svg.selectAll(".capacity-bar")
+                .data(auctionData)
+                .enter().append("rect")
+                .attr("class", "capacity-bar")
+                .attr("x", d => x(d.producer))
+                .attr("y", d => yCapacity(d.capacity))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - yCapacity(d.capacity))
+                .style("fill", "#008080")
+                .style("opacity", 0.2); // Low opacity to support bubbles
+
+            // --- Bid Price Bubbles ---
+            svg.selectAll(".price-bubble")
+                .data(auctionData)
+                .enter()
+                .append("circle")
+                .attr("class", "price-bubble")
+                .attr("cx", d => x(d.producer) + x.bandwidth() / 2)
+                .attr("cy", d => yPrice(d.bidPrice)) // Plotted on Price axis
+                .attr("r", d => rScale(d.bidPrice)) 
+                .style("fill", d => colorScale(d.winner))
+                .style("stroke", d => colorScale(d.winner))
+                .style("stroke-width", 2)
+                .style("opacity", 1.0)
+                .on("mouseover", (event, d) => {
+                    tooltip.transition().duration(200).style("opacity", 0.9);
+                    tooltip.html(`
+                        <strong>${d.producer}</strong>
+                        Capacity: ${d.capacity.toLocaleString()} T/yr<br>
+                        Bid Price: Rs ${d.bidPrice}/kg<br>
+                        Winner: ${d.winner}
+                    `)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", () => {
+                    tooltip.transition().duration(500).style("opacity", 0);
+                });
+
+            // --- Lowest Bid Line ---
+            const lowestBidValue = 49.75;
+            svg.append("line")
+                .attr("class", "bid-line")
+                .attr("x1", 0)
+                .attr("x2", width)
+                .attr("y1", yPrice(lowestBidValue))
+                .attr("y2", yPrice(lowestBidValue));
+        }
+
+        function drawIncentiveRadarChart() {
+            const container = document.getElementById('incentive-chart');
+            const parentWidth = container.offsetWidth;
+            const margin = { top: 30, right: 30, bottom: 120, left: 60 };
+            const width = parentWidth - margin.left - margin.right;
+            const height = 500 - margin.top - margin.bottom;
+
+            d3.select(container).selectAll("svg").remove();
+            const svg = d3.select(container)
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const tooltip = d3.select("body").select(".tooltip").empty() ? d3.select("body").append("div").attr("class", "tooltip") : d3.select("body").select(".tooltip");
+            
+            // Prepare data for the radar lines/areas (using actual state scoring)
+            const radarData = policyScoring.map(d => ({
+                state: d.state,
+                data: [d.Financial, d.LandTax, d.Infrastructure]
+            }));
+            
+            // --- RADAR CHART LOGIC ---
+            const topStates = policyScoring.slice(0, 5); // Focus on Top 5 performing states
+            const radarChartRadius = Math.min(width, height) / 2;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const maxScore = 12; // Max score for categories
+            const radarScale = d3.scaleLinear().range([0, radarChartRadius]).domain([0, maxScore]);
+            const stateColors = d3.scaleOrdinal().domain(topStates.map(d => d.state)).range(d3.schemeCategory10);
+
+            // Draw circular grid lines (0, 4, 8, 12 score levels)
+            svg.selectAll(".grid-circle")
+                .data(d3.range(0, maxScore + 1, 4).reverse())
+                .enter().append("circle")
+                .attr("cx", centerX)
+                .attr("cy", centerY)
+                .attr("r", d => radarScale(d))
+                .style("fill", "none")
+                .style("stroke", "#ddd");
+
+            // Draw axis spokes
+            svg.selectAll(".axis-spoke")
+                .data(incentiveKeys)
+                .enter().append("line")
+                .attr("x1", centerX)
+                .attr("y1", centerY)
+                .attr("x2", (d, i) => dataToPoints(maxScore, i, radarScale, centerX, centerY).x)
+                .attr("y2", (d, i) => dataToPoints(maxScore, i, radarScale, centerX, centerY).y)
+                .style("stroke", "#9CA3AF")
+                .style("stroke-width", "1px");
+
+            // Draw axis labels (Incentive Types)
+            svg.selectAll(".legend-label")
+                .data(incentiveKeys)
+                .enter().append("text")
+                .attr("x", (d, i) => dataToPoints(maxScore * 1.1, i, radarScale, centerX, centerY).x) 
+                .attr("y", (d, i) => dataToPoints(maxScore * 1.1, i, radarScale, centerX, centerY).y)
+                .attr("dy", d => (d === "Financial" || d === "Infrastructure") ? "0.35em" : "-0.5em")
+                .style("font-size", "0.9rem")
+                .style("fill", "#1a202c")
+                .style("text-anchor", "middle")
+                .text(d => d.replace("LandTax", "Land/Tax").replace("Financial", "Financial/Subsidies").replace("Infrastructure", "Infrastructure"));
+
+            // Function to generate the radar area path
+            const radarLine = d3.lineRadial()
+                .curve(d3.curveCardinalClosed)
+                .radius(d => radarScale(d))
+                .angle((d, i) => angleSlice * i);
+
+            // Draw the radar areas
+            svg.selectAll(".radar-area")
+                .data(radarData.filter(d => topStates.map(s => s.state).includes(d.state))) // Filter only top states
+                .enter().append("path")
+                .attr("class", "radar-area")
+                .attr("d", d => radarLine(d.data))
+                .attr("transform", `translate(${centerX}, ${centerY})`)
+                .style("fill", d => stateColors(d.state))
+                .style("fill-opacity", 0.15)
+                .style("stroke-width", 2)
+                .style("stroke", d => stateColors(d.state))
+                .style("stroke-opacity", 0.8)
+                .on("mouseover", (event, d) => {
+                    tooltip.transition().duration(200).style("opacity", 0.9);
+                    tooltip.html(`
+                        <strong>${d.state} Policy</strong>
+                        Financial/Subsidies: ${d.data[0]} / 6<br>
+                        Land/Tax: ${d.data[1]} / 6<br>
+                        Infrastructure: ${d.data[2]} / 6
+                    `)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+                    d3.select(event.currentTarget).style("fill-opacity", 0.5);
+                })
+                .on("mouseout", (event, d) => {
+                    tooltip.transition().duration(500).style("opacity", 0);
+                    d3.select(event.currentTarget).style("fill-opacity", 0.15);
+                });
+
+            
+            // Legend (Placed below the chart for clarity)
+            const legendItemWidth = 180; // INCREASED spacing to 180px for "Andhra Pradesh"
+            const legendColumns = 5; // Keep fixed for easier centering/wrapping visual
+            const legendTotalWidth = Math.min(topStates.length, legendColumns) * legendItemWidth;
+            const legendXStart = (width / 2) - (legendTotalWidth / 2); // Calculate starting X for centering
+
+            const legend = svg.append("g")
+                .attr("transform", `translate(${legendXStart}, ${height + margin.top + 20})`); // Centered and moved down
+
+            legend.selectAll(".radar-legend")
+                .data(topStates)
+                .enter().append("g")
+                .attr("transform", (d, i) => {
+                    // Use the increased itemWidth
+                    const xOffset = (i % legendColumns) * legendItemWidth;
+                    const yOffset = Math.floor(i / legendColumns) * 20;
+                    return `translate(${xOffset}, ${yOffset})`;
+                })
+                .each(function(d) {
+                    d3.select(this).append("rect")
+                        .attr("x", 0)
+                        .attr("y", -8)
+                        .attr("width", 10)
+                        .attr("height", 10)
+                        .style("fill", stateColors(d.state));
+                    
+                    d3.select(this).append("text")
+                        .attr("x", 15)
+                        .attr("y", 0)
+                        .text(d.state)
+                        .style("font-size", "0.85rem")
+                        .style("fill", "#4B5563");
+                });
+        }
+        
+        // --- Horizontal Stacked Bar Chart for Policy Strength ---
+        function drawPolicyBarChart() {
+            const container = document.getElementById('policy-bar-chart');
+            const parentWidth = container.offsetWidth;
+            const margin = { top: 20, right: 20, bottom: 40, left: 140 }; // Increased left margin for state names
+            const width = parentWidth - margin.left - margin.right;
+            const height = policyScoring.length * 35 + 50; // Dynamic height based on number of states
+
+            d3.select(container).selectAll("svg").remove();
+            const svg = d3.select(container)
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const tooltip = d3.select("body").select(".tooltip").empty() ? d3.select("body").append("div").attr("class", "tooltip") : d3.select("body").select(".tooltip");
+            
+            // Stack the data
+            const stack = d3.stack().keys(incentiveKeys);
+            const stackedData = stack(policyScoring); 
+
+            // Scales
+            const x = d3.scaleLinear()
+                .domain([0, d3.max(policyScoring, d => d.Total)])
+                .range([0, width]);
+
+            const y = d3.scaleBand()
+                .range([0, height])
+                .domain(policyScoring.map(d => d.state))
+                .padding(0.1);
+
+            const colorScale = d3.scaleOrdinal()
+                .domain(incentiveKeys)
+                .range(["#008080", "#4B5563", "#3B82F6"]); 
+
+            // Draw bars
+            svg.append("g")
+                .selectAll("g")
+                .data(stackedData)
+                .enter().append("g")
+                .attr("fill", d => colorScale(d.key))
+                .selectAll("rect")
+                .data(d => d)
+                .enter().append("rect")
+                .attr("x", d => x(d[0]))
+                .attr("y", d => y(d.data.state))
+                .attr("width", d => x(d[1]) - x(d[0]))
+                .attr("height", y.bandwidth())
+                .on("mouseover", (event, d) => {
+                    const incentiveType = d3.select(event.currentTarget.parentNode).datum().key;
+                    tooltip.transition().duration(200).style("opacity", 0.9);
+                    tooltip.html(`
+                        <strong>${d.data.state}</strong>
+                        Type: ${incentiveType.replace("LandTax", "Land/Tax")}<br>
+                        Score: ${d.data[incentiveType]}
+                    `)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", () => {
+                    tooltip.transition().duration(500).style("opacity", 0);
+                });
+
+            // Axes
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x).ticks(d3.max(policyScoring, d => d.Total)));
+
+            svg.append("g")
+                .call(d3.axisLeft(y));
+            
+            // X-axis Label
+            svg.append("text")
+                .attr("transform", `translate(${width / 2}, ${height + margin.bottom - 10})`)
+                .style("text-anchor", "middle")
+                .style("font-weight", "600")
+                .style("fill", "#008080")
+                .text("Total Policy Score (Max 18)");
+                
+            // Legend
+            const legend = svg.append("g")
+                .attr("transform", `translate(${width - 250}, -20)`); // Move legend away from the main chart area
+
+            legend.selectAll(".incentive-legend")
+                .data(incentiveKeys)
+                .enter().append("g")
+                .attr("transform", (d, i) => `translate(${i * 100}, 0)`)
+                .each(function(d) {
+                    d3.select(this).append("rect")
+                        .attr("x", 0)
+                        .attr("y", -8)
+                        .attr("width", 10)
+                        .attr("height", 10)
+                        .style("fill", colorScale(d));
+                    
+                    d3.select(this).append("text")
+                        .attr("x", 15)
+                        .attr("y", 0)
+                        .text(d.replace("LandTax", "Land/Tax"))
+                        .style("font-size", "0.85rem")
+                        .style("fill", "#4B5563");
+                });
+        }
+        
+        // --- Table Population Function ---
+        function populateIncentiveTable() {
+            const table = d3.select("#incentive-table");
+            table.selectAll("*").remove();
+
+            // Note: Adding all columns from the provided image data here.
+            const columns = [
+                { key: 'state', title: 'State' },
+                { key: 'ElecWaiver', title: 'Elec. Waiver' },
+                { key: 'CrossSubsidy', title: 'Cross Subsidy' },
+                { key: 'AdditionalSurcharge', title: 'Addtl. Surcharge' },
+                { key: 'CapitalIncentment', title: 'Capital Incentive' },
+                { key: 'LandConversion', title: 'Land Conversion Charge' },
+                { key: 'StampDuty', title: 'Stamp Duty' },
+                { key: 'CapSubsidy', title: 'Capital Subsidy' },
+                { key: 'InfraSupport', title: 'Infra. Support' }
+            ];
+
+            const thead = table.append("thead");
+            thead.append("tr")
+                .selectAll("th")
+                .data(columns)
+                .enter().append("th")
+                .text(d => d.title);
+
+            const tbody = table.append("tbody");
+            const rows = tbody.selectAll("tr")
+                .data(fullRawPolicyData)
+                .enter().append("tr");
+
+            rows.selectAll("td")
+                .data(function(row) {
+                    // Mapping data to the displayed columns
+                    const fullRowData = [
+                        { key: 'state', value: row.state },
+                        { key: 'ElecWaiver', value: row.ElecWaiver },
+                        { key: 'CrossSubsidy', value: row.CrossSubsidy || '-' },
+                        { key: 'AdditionalSurcharge', value: row.AdditionalSurcharge || '-' },
+                        { key: 'CapitalIncentment', value: row.CapitalIncentment || '-' },
+                        { key: 'LandConversion', value: row.LandConversion || '-' },
+                        { key: 'StampDuty', value: row.StampDuty || '-' },
+                        { key: 'CapSubsidy', value: row.CapSubsidy || '-' },
+                        { key: 'InfraSupport', value: row.InfraSupport }
+                    ];
+
+                    return fullRowData.map(item => {
+                        let value = item.value;
+                        let content = value;
+                        let className = '';
+
+                        if (item.key !== 'state') {
+                             if (value && (value.includes("100%") || value === "Yes" || value.includes("10"))) {
+                                content = value;
+                                className = 'icon-check icon-value';
+                            } else if (value === "-" || value === "No / N/A") {
+                                content = "No / N/A";
+                                className = 'icon-minus';
+                            } else {
+                                content = value;
+                                className = 'icon-value';
+                            }
+                        }
+                        
+                        return { column: item.key, value: content, class: className };
+                    });
+                })
+                .enter().append("td")
+                .attr("class", d => d.class)
+                .html(d => d.value);
+        }
+
+        // --- UTILITY FUNCTIONS ---
+        
+        // 1. Clock/Date Logic
+        function updateClock() {
+            const now = new Date();
+            const timeElement = document.getElementById('time');
+            const dateElement = document.getElementById('date');
+            
+            if (timeElement) {
+                let hours = now.getHours();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                timeElement.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+            }
+            
+            if (dateElement) {
+                const options = { weekday: 'short', month: 'short', day: 'numeric' };
+                dateElement.textContent = now.toLocaleDateString('en-US', options);
+            }
+        }
+
+        // 2. Modal Functions (Copied from index.html)
+        function showComingSoonModal(topic) {
+            const modal = document.getElementById('coming-soon-modal-overlay');
+            if(modal) {
+                document.getElementById('modal-topic-title').textContent = topic;
+                document.getElementById('modal-topic-placeholder').textContent = topic;
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+            event.preventDefault(); 
+        }
+
+        function closeComingSoonModal() {
+            const modal = document.getElementById('coming-soon-modal-overlay');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // 3. Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                const targetId = anchor.getAttribute('href');
+                if (targetId === '#contact') { 
+                    anchor.href = "index.html#contact"; 
+                }
+            });
+
+            // Initialize Feather Icons
+            if (window.feather) {
+                window.feather.replace();
+            }
+            
+            // Initial Check for Visualization (Hides all visuals until card is clicked)
+            const visualizationContentAuction = document.getElementById('auction-visualization');
+            const visualizationContentPolicy = document.getElementById('policy-visualization');
+            const introCardAuction = document.querySelector('.visualization-card[onclick*="auction"]');
+
+            if (introCardAuction && visualizationContentAuction && visualizationContentPolicy) {
+                if (!introCardAuction.classList.contains('hidden') && !visualizationContentAuction.classList.contains('hidden')) {
+                    visualizationContentAuction.classList.add('hidden');
+                    visualizationContentPolicy.classList.add('hidden');
+                }
+            }
+        });
+
+        // Redraw charts on window resize for responsiveness
+        window.addEventListener('resize', () => {
+            const auctionViz = document.getElementById('auction-visualization');
+            const policyViz = document.getElementById('policy-visualization');
+
+            if (auctionViz && !auctionViz.classList.contains('hidden')) {
+                drawWinnerChart();
+                drawPriceCapacityChart();
+            }
+            if (policyViz && !policyViz.classList.contains('hidden')) {
+                drawPolicyBarChart();
+                drawIncentiveRadarChart(); 
+                // Redraw table content on resize to handle responsive layout issues
+                populateIncentiveTable();
+            }
+        });
+    </script>
 </body>
 </html>
