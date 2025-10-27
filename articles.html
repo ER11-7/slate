@@ -833,29 +833,33 @@
         const articleData = {
             'article_1': { 
                 title: 'Domestic Market Pathways and Carbon Abatement',
-                fileId: '1CEAq6Y5hhTo5fU_iBamczj86Vcoa0oGE',
+                // FIX: Use raw CDN link to allow the AI to fetch and parse content
+                fileId: 'https://raw.githubusercontent.com/ER11-7/slate/main/articles/Domestic%20Market%20Pathways%20and%20Carbon%20Abatement%20Economics%20of%20Green%20Ammonia%20in%20India.pdf',
                 description: 'Analysis of market adoption routes and regulatory hurdles for Green Hydrogen/Ammonia.'
             },
             'article_2': { 
                 title: 'Financing Green Ammonia in India Blended Finance',
-                fileId: '15C0JKyr-ZYuO-or2gJwfCMBuuYJA9Lg5',
+                // FIX: Use raw CDN link to allow the AI to fetch and parse content
+                fileId: 'https://raw.githubusercontent.com/ER11-7/slate/main/articles/Financing%20Green%20Ammonia%20in%20India%20Blended%20Finance,%20CfDs,%20and%20Financial%20Modelling%20Approaches.pdf',
                 description: 'Exploring capital structures, blended finance, and risk mitigation strategies.'
             },
             'article_3': { 
                 title: 'Reverse Auctions and Cost Discovery in India',
-                fileId: '1docymroBLsvbn-F1aIjBfPDgdTY5nO2s',
+                // FIX: Use raw CDN link to allow the AI to fetch and parse content
+                fileId: 'https://raw.githubusercontent.com/ER11-7/slate/main/articles/Reverse%20Auctions%20and%20Cost%20Discovery%20in%20India%E2%80%99s%20Green%20Ammonia%20Sector%20Evidence%20from%20the%20SECI%20Tranche%20I%20Bidding%20Round.pdf',
                 description: 'A study analyzing the outcomes and effectiveness of the SECI Tranche I Reverse Auction, identifying key trends in cost discovery and the resulting capacity awarded to major producers.'
             },
             'article_4': { 
                 title: 'Strategic Analysis of India’s Green Ammonia Market',
-                fileId: '1yxJcFU2n42J0VoEp3_yAybIZ95fefnF6',
+                // FIX: Use raw CDN link to allow the AI to fetch and parse content
+                fileId: 'https://raw.githubusercontent.com/ER11-7/slate/main/articles/Strategic%20Analysis%20of%20India\'s%20Green%20Ammonia%20Market%20From%20Domestic%20Price%20Discovery%20to%20Global%20Export%20Leadership.pdf',
                 description: 'This strategic overview assesses the long-term potential of India’s Green Ammonia market, covering critical supply chain challenges, demand drivers, and policy steps required to establish global export leadership.'
             }
         };
 
         let chatHistoryArticle = [];
         // CRITICAL: UPDATED SYSTEM INSTRUCTION FOR GLOBAL ENERGY EXPERTISE
-        const ARTICLE_SYSTEM_INSTRUCTION = "You are Greenie, a global expert energy and policy analyst. You must use Google Search to provide current, relevant, and global insights on renewable energy, batteries, hydrogen fuels, and related government orders/policies. Do not summarize the specific article content unless directly asked. Provide a single, concise paragraph summary (max 70 words) about the general topic and focus on external context and relevance. Never use asterisks or any markdown formatting in your response.";
+        const ARTICLE_SYSTEM_INSTRUCTION = "You are Greenie, a global expert energy and policy analyst. Your task is to provide a concise, one-paragraph summary (max 70 words) about the article requested, and provide relevant context. Use Google Search for the most current information and links related to the article topic if necessary. Never use asterisks or any markdown formatting in your response.";
         const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=";
 
 
@@ -883,11 +887,11 @@
             displayArea.scrollIntoView({ behavior: 'smooth' });
 
             try {
-                // FIX: Pass API key into the URL string.
-                const apiUrlWithKey = `${API_URL}${window.initialAuthToken || ""}`;
+                // Construct the prompt to include a request to fetch and process the file content
+                const userQuery = `Summarize the contents of the following PDF file URL: ${article.fileId}. The summary must be a single, concise paragraph (max 70 words). Focus on the core findings and scope of the document. If the file cannot be fetched, provide a general summary based on the title: "${article.title}".`;
                 
-                // Generate query based on the article title
-                const userQuery = `Provide a single, concise paragraph summary (max 70 words) about the general topic: "${article.title}". Do not reveal the contents of the specific file itself. Focus on external context and relevance.`;
+                // Pass API key into the URL string.
+                const apiUrlWithKey = `${API_URL}${window.initialAuthToken || ""}`;
                 
                 // Call LLM for summary
                 const response = await fetch(apiUrlWithKey, {
@@ -901,7 +905,7 @@
                 });
 
                 if (!response.ok) {
-                    // This block catches the API failure (4xx or 5xx)
+                     // This block catches the API failure (4xx or 5xx)
                      throw new Error(`API call failed with status: ${response.status}`);
                 }
 
