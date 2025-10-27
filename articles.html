@@ -264,7 +264,7 @@
             text-align: center;
         }
         .footer-logo {
-            color: #008080; 
+            color: #008080; /* Teal 500 */
             font-weight: 700;
             font-size: 1.5rem; 
             text-transform: uppercase;
@@ -613,9 +613,9 @@
                     <li class="dropdown">
                         <div class="dropdown-trigger">Energy Nexus <i data-feather="chevron-down" class="ml-1 w-4 h-4 inline-block"></i></div>
                         <div class="dropdown-menu">
-                            <a href="policy.html" class="dropdown-item">Policy Updates</a>
-                            <a href="digital.html" class="dropdown-item">Digital Energy Solutions</a>
-                            <a href="project.html" class="dropdown-item">Project Spotlights</a>
+                            <a href="#" onclick="showComingSoonModal('Policy Updates')" class="dropdown-item">Policy Updates</a>
+                            <a href="#" onclick="showComingSoonModal('Digital Energy Solutions')" class="dropdown-item">Digital Energy Solutions</a>
+                            <a href="#" onclick="showComingSoonModal('Project Spotlights')" class="dropdown-item">Project Spotlights</a>
                         </div>
                     </li>
                     
@@ -633,7 +633,7 @@
     <div class="content-padding">
         
         <div class="page-header">
-            <h1>Articles</h1> <!-- Updated Title -->
+            <h1>Articles</h1>
             <p>In-depth articles available for viewing, with controlled access to downloadable PDFs.</p>
         </div>
 
@@ -641,15 +641,15 @@
             
             <div class="article-main-grid">
                 
-                <!-- Article List and Summary Display (Left/Main Column) -->
-                <div class="lg:col-span-2">
+                <!-- Article List and Summary Display (Main Content Area) -->
+                <div class="lg:col-span-3"> 
                     <!-- Article List -->
                     <div class="article-list-grid">
                         <!-- Article 1 Card -->
                         <div class="article-card" data-id="article_1" data-title="Domestic Market Pathways and Carbon Abatement" data-desc="Analysis of market adoption routes and regulatory hurdles for Green Hydrogen/Ammonia.">
                             <h4>Domestic Market Pathways and Carbon Abatement</h4>
                             <p class="text-gray-500 text-sm mb-3">Analysis of market adoption routes and regulatory hurdles for Green Hydrogen/Ammonia.</p>
-                            <a href="#" onclick="openDownloadModal(event, 'article_1', 'Domestic Market Pathways and Carbon Abatement')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                            <a href="#" onclick="viewSummary('article_1')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
                                 View Summary
                                 <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
@@ -663,7 +663,7 @@
                         <div class="article-card" data-id="article_2" data-title="Financing Green Ammonia in India Blended Finance" data-desc="Exploring capital structures, blended finance, and risk mitigation strategies.">
                             <h4>Financing Green Ammonia in India Blended Finance</h4>
                             <p class="text-gray-500 text-sm mb-3">Exploring capital structures, blended finance, and risk mitigation strategies.</p>
-                            <a href="#" onclick="openDownloadModal(event, 'article_2', 'Financing Green Ammonia in India Blended Finance')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                            <a href="#" onclick="viewSummary('article_2')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
                                 View Summary
                                 <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
@@ -677,7 +677,7 @@
                         <div class="article-card" data-id="article_3" data-title="Reverse Auctions and Cost Discovery in India" data-desc="A study on current auction mechanisms and their impact on project viability.">
                             <h4>Reverse Auctions and Cost Discovery in India</h4>
                             <p class="text-gray-500 text-sm mb-3">A study on current auction mechanisms and their impact on project viability.</p>
-                            <a href="#" onclick="openDownloadModal(event, 'article_3', 'Reverse Auctions and Cost Discovery in India')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                            <a href="#" onclick="viewSummary('article_3')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
                                 View Summary
                                 <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
@@ -691,7 +691,7 @@
                         <div class="article-card" data-id="article_4" data-title="Strategic Analysis of India’s Green Ammonia Market" data-desc="Comprehensive outlook on supply chains, demand drivers, and long-term trends.">
                             <h4>Strategic Analysis of India’s Green Ammonia Market</h4>
                             <p class="text-gray-500 text-sm mb-3">Comprehensive outlook on supply chains, demand drivers, and long-term trends.</p>
-                            <a href="#" onclick="openDownloadModal(event, 'article_4', 'Strategic Analysis of India’s Green Ammonia Market')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
+                            <a href="#" onclick="viewSummary('article_4')" class="text-teal-500 font-medium inline-flex items-center hover:text-teal-600 mr-4">
                                 View Summary
                                 <i data-feather="book-open" class="ml-1 w-4 h-4"></i>
                             </a>
@@ -715,13 +715,12 @@
                             </div>
                         </div>
                     </div>
+                </div> 
 
-                </div>
-
-                <!-- AI Chat Panel (Right Column) -->
-                <div class="lg:col-span-3 mt-8"> <!-- FIX: Set to full width and moved below the main content -->
+                <!-- AI Chat Panel (Full Width, Stacked Below Content) -->
+                <div class="lg:col-span-3 mt-8"> 
                     <div class="chat-panel-container">
-                        <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie</h3> <!-- FIX: Changed title to Greenie -->
+                        <h3 class="text-xl font-bold mb-3 text-slate-800 border-b pb-2">Greenie</h3> <!-- Unified Title -->
                         <div id="chat-messages-article" class="chat-messages">
                             <!-- Initial AI Message -->
                             <div class="chat-message chat-ai">
