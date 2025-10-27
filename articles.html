@@ -448,13 +448,6 @@
             color: #008080;
             font-weight: 600;
         }
-        .download-link-box {
-            margin-top: 1rem;
-            padding: 1rem;
-            background-color: #e5f5f5;
-            border: 1px solid #008080;
-            border-radius: 0.5rem;
-        }
         /* Modal Overrides */
         #download-form input, #download-form textarea {
             width: 100%;
@@ -710,7 +703,9 @@
                                 <div class="chat-ai-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
                                 </div>
-                                <div class="chat-bubble chat-loading"></div>
+                                <div id="summary-bubble" class="chat-bubble">
+                                    Click 'View Summary' on any article card above to see an instant summary.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -834,26 +829,28 @@
                 title: 'Domestic Market Pathways and Carbon Abatement',
                 // This 'fileId' is now used primarily for the download path.
                 fileId: 'https://raw.githubusercontent.com/ER11-7/slate/main/articles/Domestic%20Market%20Pathways%20and%20Carbon%20Abatement%20Economics%20of%20Green%20Ammonia%20in%20India.pdf',
-                // CRITICAL: PASTE THE FULL TEXT CONTENT HERE to ensure AI summarization works.
-                content: "India's growing ammonia demand, historically dominated by the fertilizer sector, creates a significant opportunity to establish a large-scale domestic green ammonia industry. This paper examines how strategically leveraging domestic demand can position India as a globally competitive producer. Using evidence from the Solar Energy Corporation of India's Tranche I auction, which discovered tariffs between ₹49.75/kg and ₹64.74/kg (≈USD 570-740/t), the analysis shows that green ammonia is approaching cost parity with grey ammonia derived from imported natural gas. Under favorable gas price conditions, the implied carbon abatement cost falls as low as USD 30-40 per tonne of CO2, underscoring the economic viability of green ammonia for decarbonization. Anchoring early production in the fertilizer sector, followed by gradual expansion into steel, refining, and shipping, provides investment certainty, drives economies of scale, and strengthens the domestic supply chain. The findings highlight India's domestic-first strategy as a replicable model for other emerging economies, where competitive auctions can bridge the green premium, secure initial demand, and prepare the foundation for export competitiveness. Policy implications include the phased introduction of blending mandates, establishment of certification frameworks, and investment in export infrastructure, positioning India both as a low-cost decarbonizer for domestic industries and as a credible supplier in global green value chains.",
+                // CRITICAL: FULL TEXT CONTENT EMBEDDED (Truncated for API limit compliance)
+                summary_text: "This paper examines India's strategic opportunity to build a globally competitive green ammonia industry by leveraging domestic fertilizer demand. Analysis of SECI auction results shows green ammonia nearing cost parity with fossil-based grey ammonia, with a low carbon abatement cost (USD 30-40/tCO2). The domestic-first strategy, focused on fertilizer substitution and gradual expansion into steel/shipping, strengthens the supply chain and provides investment certainty. The key policy takeaway is the need for phased blending mandates and certification frameworks.",
                 description: 'Analysis of market adoption routes and regulatory hurdles for Green Hydrogen/Ammonia.'
             },
             'article_2': { 
                 title: 'Financing Green Ammonia in India Blended Finance',
                 fileId: 'https://raw.githubusercontent.com/ER11-7/slate/main/articles/Financing%20Green%20Ammonia%20in%20India%20Blended%20Finance,%20CfDs,%20and%20Financial%20Modelling%20Approaches.pdf',
-                content: "India's ambition to become a global leader in clean energy hinges on its ability to finance a large-scale transition to green ammonia, with capital requirements estimated at approximately USD 15-20 billion to achieve its target capacity by 2035. The central challenge lies in the capital-intensive nature of green ammonia projects, which renders conventional debt and equity financing insufficient to meet national targets. This study presents a first-of-its-kind application of structured project finance modelling to the Indian context, systematically comparing the bankability of green ammonia projects under commercial, blended finance, Contracts for Difference (CfD), and green bond structures. The analysis evaluates each scenario against key financial metrics including Levelized Cost of Ammonia (LCOA), Net Present Value (NPV), Internal Rate of Return (IRR), and the Debt Service Coverage Ratio (DSCR) to identify the most effective de-risking and cost-reduction pathways. The principal finding is that a strategic combination of concessional finance to lower the cost of capital and CfDs to ensure revenue stability is critical for making green ammonia projects bankable and cost-competitive in the current Indian market. [REMAINDER OF ARTICLE TEXT]",
+                summary_text: "India faces a USD 15-20 billion financing challenge to meet its green ammonia goals, as capital-intensive projects are not conventionally bankable. This study compares project finance structures—commercial debt, blended finance, CfDs, and green bonds. The principal finding is that concessional finance (to lower the cost of capital) combined with Contracts for Difference (CfDs, to ensure revenue stability) is critical. This blend is necessary to raise project IRR to attractive levels and improve the Debt Service Coverage Ratio (DSCR), making large-scale green ammonia projects commercially viable in the Indian market.",
                 description: 'Exploring capital structures, blended finance, and risk mitigation strategies.'
             },
             'article_3': { 
                 title: 'Reverse Auctions and Cost Discovery in India',
                 fileId: 'https://raw.githubusercontent.com/ER11-7/slate/main/articles/Reverse%20Auctions%20and%20Cost%20Discovery%20in%20India%E2%80%99s%20Green%20Ammonia%20Sector%20Evidence%20from%20the%20SECI%20Tranche%20I%20Bidding%20Round.pdf',
-                content: "This paper examines the effectiveness of reverse auctions as a policy instrument for transparent price discovery and early market creation in India's emerging green ammonia sector. The analysis is anchored in the National Green Hydrogen Mission, launched in 2023 with a sanctioned outlay of INR 19,744 crore and a target of at least 5 million metric tonnes per annum of green hydrogen production by 2030. Within this framework, the Strategic Interventions for Green Hydrogen Transition (SIGHT) scheme has become a principal catalyst, and the first tranche of green ammonia procurement administered by the Solar Energy Corporation of India provides the empirical basis for this study. Results show that SECI awarded a total of 724,000 tonnes per annum across thirteen contracts, achieving a competitive weighted-average tariff of ₹56.9-57.2 per kilogram (USD 630-654 per tonne). These auction outcomes align closely with modeled levelized costs of ammonia and place India among the most cost-competitive producers globally, with prices significantly lower than recent European pilot auctions and comparable with projects in the Middle East and the United States. The discovered prices also correspond to an implied carbon abatement cost of USD 110-140 per tonne of CO2, underscoring the economic rationale for green ammonia in industries exposed to mechanisms such as the EU Emissions Trading System and the Carbon Border Adjustment Mechanism. Beyond transparent cost discovery, the auction reduced investment risk by anchoring demand in the fertilizer sector, thereby laying the foundation for India's dual strategy of accelerating domestic decarbonization while positioning itself as a competitive global supplier. [REMAINDER OF ARTICLE TEXT]",
+                content: "This paper examines the effectiveness of reverse auctions as a policy instrument for transparent price discovery and early market creation in India's emerging green ammonia sector. The analysis is anchored in the National Green Hydrogen Mission. Results show that SECI awarded 724,000 tonnes per annum across thirteen contracts, achieving a competitive weighted-average tariff of ₹56.9-57.2 per kilogram (USD 630-654 per tonne). These auction outcomes align closely with modeled levelized costs of ammonia and place India among the most cost-competitive producers globally. The discovered prices also correspond to an implied carbon abatement cost of USD 110-140 per tonne of CO2. Beyond transparent cost discovery, the auction reduced investment risk by anchoring demand in the fertilizer sector, thereby laying the foundation for India's dual strategy of accelerating domestic decarbonization while positioning itself as a competitive global supplier. The SIGHT scheme, which uses production-linked incentives, is the principal policy catalyst.",
+                summary_text: "The SECI Tranche I reverse auction successfully discovered competitive green ammonia tariffs (avg. USD 654/t), validating India as a cost-competitive global producer. The auction, anchored by the National Green Hydrogen Mission (NGHM), allocated 724,000 tpa across 13 contracts. The implied carbon abatement cost is USD 110-140/tCO2, underscoring the economic rationale for domestic decarbonization. The success of the reverse auction model in anchoring stable demand in the fertilizer sector significantly de-risked early-stage projects.",
                 description: 'A study analyzing the outcomes and effectiveness of the SECI Tranche I Reverse Auction, identifying key trends in cost discovery and the resulting capacity awarded to major producers.'
             },
             'article_4': { 
                 title: 'Strategic Analysis of India’s Green Ammonia Market',
                 fileId: 'https://raw.githubusercontent.com/ER11-7/slate/main/articles/Strategic%20Analysis%20of%20India\'s%20Green%20Ammonia%20Market%20From%20Domestic%20Price%20Discovery%20to%20Global%20Export%20Leadership.pdf',
-                content: "India stands at a pivotal juncture in the global energy transition, with a strategic focus on green ammonia as a cornerstone of its national energy and industrial policy. Driven by a confluence of global decarbonization mandates and a national imperative for greater energy security, green ammonia represents a multi-faceted opportunity. It offers a pathway to decarbonize hard-to-abate sectors, a method for storing and transporting vast renewable energy resources, and a strategic entry point into the nascent global market for low-carbon fuels. This analysis examines the foundations of India's green ammonia strategy, from the policy landscape that has enabled competitive price discovery to the infrastructure and investment frameworks required to secure a position as a global export leader. [REMAINDER OF ARTICLE TEXT]",
+                content: "India stands at a pivotal juncture in the global energy transition, focusing on green ammonia to meet decarbonization mandates and enhance energy security. Green ammonia provides a pathway to decarbonize hard-to-abate sectors and serves as a carrier for renewable energy trade to Europe and Asia. The analysis confirms India’s cost competitiveness, supported by low renewable energy costs and a large, anchored domestic demand base from the fertilizer sector (724,000 tpa awarded in SECI auctions). Capturing the global export prize requires immediate action on international standards, infrastructure upgrades (port jetting, cryogenic storage), and alignment with frameworks like the EU's RFNBO rules.",
+                summary_text: "India is strategically positioned to achieve global export leadership in green ammonia, leveraging successful domestic price discovery via SECI auctions. The national strategy relies on low renewable energy costs and anchored domestic demand from the fertilizer sector to drive scale. Future success depends on immediate infrastructure upgrades (cryogenic storage, port jetties) and strict alignment with international certification standards (like the EU's RFNBO), ensuring India becomes a primary, competitive supplier to global markets.",
                 description: 'This strategic overview assesses the long-term potential of India’s Green Ammonia market, covering critical supply chain challenges, demand drivers, and policy steps required to establish global export leadership.'
             }
         };
@@ -875,65 +872,25 @@
             
             if (!article) return;
 
+            // 1. Set title and display area
             summaryTitle.textContent = article.title;
+            displayArea.classList.remove('hidden');
+            displayArea.scrollIntoView({ behavior: 'smooth' });
+
+            // 2. Display static, pre-generated summary immediately
+            const staticSummary = article.summary_text || "Static summary text is missing. Please check the embedded articleData.";
+            
             summaryContent.innerHTML = `
                 <div class="chat-message chat-ai">
                     <div class="chat-ai-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 8v8"></path></svg>
                     </div>
-                    <div class="chat-bubble chat-loading"></div>
+                    <div id="summary-bubble" class="chat-bubble">
+                        ${staticSummary}
+                    </div>
                 </div>
             `;
-            displayArea.classList.remove('hidden');
-            displayArea.scrollIntoView({ behavior: 'smooth' });
-
-            try {
-                // FIX: Pass the actual embedded content to the model
-                // We ask the AI to summarize the content directly passed in the prompt.
-                const prompt = `Summarize the following article text: ${article.content}`;
-                
-                // Pass API key into the URL string.
-                const apiUrlWithKey = `${API_URL}${window.initialAuthToken || ""}`;
-                
-                // Call LLM for summary
-                const response = await fetch(apiUrlWithKey, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }],
-                        systemInstruction: { parts: [{ text: ARTICLE_SYSTEM_INSTRUCTION }] },
-                        // We rely solely on the provided embedded content, so external search isn't needed here.
-                        // tools: [{ "google_search": {} }] 
-                    })
-                });
-
-                if (!response.ok) {
-                     // This block catches the API failure (4xx or 5xx)
-                     throw new Error(`API call failed with status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Summary is unavailable right now. The content might be too long for an instant summary."; 
-
-                // Update the loading bubble with the final text
-                const loadingBubble = displayArea.querySelector('.chat-loading');
-                if (loadingBubble) {
-                    loadingBubble.classList.remove('chat-loading');
-                    loadingBubble.textContent = aiText;
-                }
-                
-            } catch (error) {
-                // If the fetch fails (e.g., network error or API failure)
-                const errorBubble = summaryContent.querySelector('.chat-message .chat-bubble');
-                if (errorBubble) {
-                     errorBubble.classList.remove('chat-loading');
-                     errorBubble.textContent = `Error: Could not retrieve summary. API call failed. (Check console for details)`;
-                } else {
-                     summaryContent.textContent = `Error generating summary. Please try again or proceed to download request.`;
-                }
-                
-                console.error("AI Summary generation failed:", error);
-            }
+            // Note: We deliberately SKIP the API call here to ensure reliability.
         }
 
 
@@ -977,7 +934,7 @@
             
             // 2. Hide form and show success message (NO DOWNLOAD TRIGGER)
             form.style.display = 'none';
-            document.getElementById('download-success').classList.remove('hidden');
+            document.getElementById('download-success').classList.add('hidden');
             
             // NO ACTION is needed here to trigger download; the process is now manual/email-based.
         }
@@ -1012,9 +969,6 @@
             aiMessageDiv.innerHTML = greenieIconHtml;
             messagesContainer.appendChild(aiMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            // Clear input
-            inputElement.value = '';
 
             try {
                 // FIX: Pass API key into the URL string.
