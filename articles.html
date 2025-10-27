@@ -480,7 +480,7 @@
         }
         @media (min-width: 1024px) {
             .article-main-grid {
-                grid-template-columns: 2fr 1fr; /* Article List/Viewer Left, Chat Right */
+                grid-template-columns: 1fr; /* Stacked columns for full width */
             }
         }
         .chat-panel-container {
@@ -862,6 +862,7 @@
         // --- Core Application Logic (Hoisted Functions) ---
 
         async function viewSummary(articleId) {
+            event.preventDefault(); // Prevent accidental navigation
             const article = articleData[articleId];
             const displayArea = document.getElementById('summary-display-area');
             const summaryTitle = document.getElementById('summary-title');
@@ -882,7 +883,7 @@
             displayArea.scrollIntoView({ behavior: 'smooth' });
 
             try {
-                // FIX: Modified userQuery to restrict AI access to specific content.
+                // Generate query based on the article title
                 const userQuery = `Provide a single, concise paragraph summary (max 70 words) about the general topic: "${article.title}". Do not reveal the contents of the specific file itself. Focus on external context and relevance.`;
                 
                 // Call LLM for summary
