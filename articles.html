@@ -883,11 +883,14 @@
             displayArea.scrollIntoView({ behavior: 'smooth' });
 
             try {
+                // FIX: Pass API key into the URL string.
+                const apiUrlWithKey = `${API_URL}${window.initialAuthToken || ""}`;
+                
                 // Generate query based on the article title
                 const userQuery = `Provide a single, concise paragraph summary (max 70 words) about the general topic: "${article.title}". Do not reveal the contents of the specific file itself. Focus on external context and relevance.`;
                 
                 // Call LLM for summary
-                const response = await fetch(API_URL, {
+                const response = await fetch(apiUrlWithKey, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -896,6 +899,11 @@
                         tools: [{ "google_search": {} }] // Crucial for external data
                     })
                 });
+
+                if (!response.ok) {
+                    // This block catches the API failure (4xx or 5xx)
+                     throw new Error(`API call failed with status: ${response.status}`);
+                }
 
                 const result = await response.json();
                 const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Summary is unavailable right now, but the topic covers key trends in clean energy finance and market mechanisms."; 
@@ -908,7 +916,15 @@
                 }
                 
             } catch (error) {
-                summaryContent.textContent = `Error generating summary. Please try again or proceed to download request.`;
+                // If the fetch fails (e.g., network error or API failure)
+                const errorBubble = summaryContent.querySelector('.chat-message .chat-bubble');
+                if (errorBubble) {
+                     errorBubble.classList.remove('chat-loading');
+                     errorBubble.textContent = `Error: Could not retrieve summary. The API call failed. (Check console for details)`;
+                } else {
+                     summaryContent.textContent = `Error generating summary. Please try again or proceed to download request.`;
+                }
+                
                 console.error("AI Summary generation failed:", error);
             }
         }
@@ -994,7 +1010,10 @@
             inputElement.value = '';
 
             try {
-                const response = await fetch(API_URL, {
+                // FIX: Pass API key into the URL string.
+                const apiUrlWithKey = `${API_URL}${window.initialAuthToken || ""}`;
+
+                const response = await fetch(apiUrlWithKey, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1005,7 +1024,8 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                     // This block catches the API failure (4xx or 5xx)
+                     throw new Error(`API call failed with status: ${response.status}`);
                 }
 
                 const result = await response.json();
@@ -1020,8 +1040,11 @@
 
             } catch (error) {
                 console.error("AI API Call Failed:", error);
-                aiMessageDiv.querySelector('.chat-bubble').classList.remove('chat-loading');
-                aiMessageDiv.querySelector('.chat-bubble').textContent = "Error: Could not connect to the insight engine.";
+                 const errorBubble = aiMessageDiv.querySelector('.chat-bubble');
+                if (errorBubble) {
+                     errorBubble.classList.remove('chat-loading');
+                     errorBubble.textContent = `Error: Could not connect to the insight engine. (Check console for details)`;
+                }
             }
 
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
